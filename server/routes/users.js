@@ -20,6 +20,24 @@ router.get('/', function(req, res) {
     });
 });
 
+router.get('/:id', function(req, res) {
+    let queryParams = getParsedParamObject(req);
+    let query = userSchema.findById(req.params.id);
+    applyQueryParamsToQuery(query, queryParams);
+
+    query.exec(function (err, user) {
+        if (err || user === null) {
+            let errorMessage = "User not found";
+            sendError(res, errorMessage, 404);
+        } else {
+            res.status(200).send({
+                message: 'OK',
+                data: user
+            });
+        }
+    });
+});
+
 router.post('/', function(req, res) {
     let user = {
         name: req.body.name,
