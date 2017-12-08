@@ -4,7 +4,9 @@ let express = require('express'),
     userSchema = require('../models/user.js');
 
 router.get('/', function(req, res) {
+    let queryParams = getParsedParamObject(req);
     let query = userSchema.find({});
+    applyQueryParamsToQuery(query, queryParams);
 
     query.exec(function (err, users) {
         if (err) {
@@ -37,11 +39,71 @@ router.post('/', function(req, res) {
     });
 });
 
+router.delete('/:id', function(req, res) {
+    userSchema.findById(req.params.id, function (err, user) {
+        if (err || user === null) {
+            let errorMessage = "User not found";
+            sendError(res, errorMessage, 404);
+        } else {
+            userSchema.remove({"_id": mongoose.Types.ObjectId(req.params.id)}, function (err, user) {
+                if (err) {
+                    let errorMessage = "User not found";
+                    sendError(res, errorMessage, 404);
+                } else {
+                    res.status(200).send({
+                        message: 'User deleted',
+                        data: user
+                    });
+                }
+            });
+        }
+    });
+});
+
 function sendError(res, errorMessage, errorNumber) {
     res.status(errorNumber).send({
         message: errorMessage,
         data: []
     });
+}
+
+function getParsedParamObject(req) {
+    let queryParams = {
+        whereParam: req.query.where,
+        sortParam: req.query.sort,
+        selectParam: req.query.select,
+        skipParam: req.query.skip,
+        limitParam: req.query.limit,
+        countParam: req.query.count
+    };
+
+    for (let key in queryParams) {
+        if (queryParams[key] === null || queryParams[key] === undefined) {
+            delete queryParams[key];
+        } else {
+            queryParams[key] = JSON.parse(queryParams[key]);
+        }
+    }
+
+    return queryParams;
+}
+
+function applyQueryParamsToQuery(query, queryParams) {
+    for (let key in queryParams) {
+        if (key === "limitParam") {
+            query.limit(queryParams.limitParam);
+        } else if (key === "countParam" && (queryParams.countParam === true)) {
+            query.count();
+        } else if (key === "selectParam") {
+            query.select(queryParams.selectParam);
+        } else if (key === "sortParam") {
+            query.sort(queryParams.sortParam);
+        } else if (key === "skipParam") {
+            query.skip(queryParams.skipParam);
+        } else if (key === "whereParam") {
+            query.where(queryParams.whereParam);
+        }
+    }
 }
 
 mongoose.Promise = global.Promise;
