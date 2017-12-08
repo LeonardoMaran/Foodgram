@@ -1,13 +1,8 @@
-/**
- *
- * Entry point for all routes
- *
+/*
+ * Connect all of your endpoints together here.
  */
-
-import api_v1 from './api_v1';
-import page from './page';
-
-export default {
-  api_v1,
-  page
+module.exports = function (app, router) {
+    app.use('/api', require('./home.js')(router));
+    app.use('/api/users', require('./users.js')(router));
+    app.use('/api/recipes', require('./recipes.js')(router));
 };

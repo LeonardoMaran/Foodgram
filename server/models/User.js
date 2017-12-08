@@ -1,20 +1,15 @@
-/**
- *
- * Example User model for mongodb
- *
- */
+// Load required packages
+let mongoose = require('mongoose');
 
-/*
- * 
- * import mongoose from 'mongoose';
- * const Schema = mongoose.Schema;
- *
- * let UserSchema = new Schema({
- *   email: {type: String, required: true, unique: true, dropDups: true},
- *   password: {type: String, required: true},
- *   created_at: {type: Date, default: Date.now},
- *   updated_at: {type: Date},
- *   deleted_at: {type: Date}
- * });
- * export default mongoose.model('User', UserSchema);
- */
+// Define our user schema
+let UserSchema = new mongoose.Schema({
+    name: {type: String, required: true},
+    username: {type: String, required: true, unique: true},
+    password: {type: String, required: true},
+    recipes: {type: [mongoose.Schema.RecipeSchema], default: []},
+    following: {type: [mongoose.Schema.UserSchema], default: []},
+    followers: {type: [mongoose.Schema.UserSchema], default: []}
+});
+
+// Export the Mongoose model
+module.exports = mongoose.model('User', UserSchema);
