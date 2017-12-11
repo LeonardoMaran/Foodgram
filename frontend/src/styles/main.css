@@ -1,0 +1,16 @@
+body {
+    text-align: center;
+}
+.header {
+    border: 1px solid black;
+    height: 50px;
+}
+
+span {
+    margin: 1%;
+    float: right;
+}
+
+.nav_title {
+    float: left;
+}

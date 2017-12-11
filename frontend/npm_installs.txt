@@ -1,0 +1,9 @@
+npm install react-router
+npm install react-router-dom
+npm install semantic-ui-css
+npm install sass-loader node-sass --save-dev
+    /*  npm install sass
+        npm install node-sass
+        npm install npm-sass
+        npm install sass-loader
+    */
