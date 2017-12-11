@@ -7,3 +7,4 @@ npm install sass-loader node-sass --save-dev
         npm install npm-sass
         npm install sass-loader
     */
+npm install semantic-ui-react

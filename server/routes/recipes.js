@@ -43,7 +43,11 @@ router.get('/:id', function(req, res) {
 router.post('/', function(req, res) {
     let recipe = {
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        postedBy: req.body.postedBy,
+        imageUrl: req.body.imageUrl,
+        ingredients: req.body.ingredients,
+        instructions: req.body.instructions
     };
 
     recipeSchema.create(recipe, function (err, createdRecipe) {

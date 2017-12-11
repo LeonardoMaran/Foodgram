@@ -7,7 +7,7 @@ module.exports = function (router) {
         var connectionString = secrets.token;
         res.json(
             {
-                message: 'Nothing here. Go to /users or /tasks to use the API.',
+                message: 'Nothing here. Go to /users or /recipes to use the API.',
                 data: []
             });
     });
