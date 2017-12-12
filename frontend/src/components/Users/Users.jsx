@@ -24,7 +24,6 @@ export class Users extends Component {
         getUsers()
             .then(function(response) {
                 this.setState({users: response.data.data, visible: response.data.data});
-                console.log(this.state.users);
             }.bind(this))
             .catch(function(error) {
                 console.log(error);

@@ -14,18 +14,21 @@ export class Main extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			show: "none"
+			show: "none",
+			username: ""
 		}
 		this.handler = this.handler.bind(this);
 	}
 
-	handler(e) {
-    	this.setState({ show: "block" });
+	handler(username) {
+    	this.setState({ 
+    		show: "block", 
+    		username: username 
+    	});
     	window.location = '/#/recipes';
 	}
 
     render(){
-
     	var headerStyle = {
             display: this.state.show
         };
@@ -43,10 +46,18 @@ export class Main extends Component {
 		            <Route exact path="/" render={(props) => (
   						<Login handler={this.handler} />
 					)}/>
-		            <Route path="/recipes" component={Recipes}/>
-		            <Route path="/users" component={Users}/>
-		            <Route path="/favorites" component={Favorites}/>
-		            <Route path="/profile" component={Profile}/>
+					<Route path="/recipes" render={(props) => (
+  						<Recipes user={this.handler} />
+					)}/>
+					<Route path="/users" render={(props) => (
+  						<Users user={this.handler} />
+					)}/>
+					<Route path="/favorites" render={(props) => (
+  						<Favorites user={this.handler} />
+					)}/>
+					<Route path="/profile" render={(props) => (
+  						<Profile user={this.handler} />
+					)}/>
 		        </div>
 		    </Router>
         );

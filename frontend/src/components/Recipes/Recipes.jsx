@@ -24,7 +24,6 @@ export class Recipes extends Component {
         getRecipes()
             .then(function(response) {
                 this.setState({recipes: response.data.data, visible: response.data.data});
-                console.log(this.state.recipes);
             }.bind(this))
             .catch(function(error) {
                 console.log(error);
