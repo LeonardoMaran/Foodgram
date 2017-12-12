@@ -23,6 +23,23 @@ export class Login extends Component {
 		this.setState({modalOpen: !this.state.modalOpen});
 	}
 
+	handleUpdateUser(event) {
+		this.setState({username: event.target.value});
+	}
+
+	handleUpdateName(event) {
+		this.setState({name: event.target.value});
+	}
+
+
+	handleUpdatePassword(event) {
+		this.setState({password: event.target.value});
+	}
+
+	handleUpdateVerify(event) {
+		this.setState({verify: event.target.value});
+	}
+
 
     render() {
         return(
