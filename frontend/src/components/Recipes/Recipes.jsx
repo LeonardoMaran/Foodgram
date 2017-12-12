@@ -79,21 +79,7 @@ export class Recipes extends Component {
               value: 'ingredients'
             }
         ];
-
-        // const recipes = this.state.visible.map((recipe, index) => {
-        //
-        //     var recipeStyle = {
-        //           backgroundImage: 'url(' + recipe.imageUrl + ')'
-        //     };
-        //     return (
-        //         <div key={index} className="Recipe" style={recipeStyle}>
-        //
-        //             <div className="RecipeText">
-        //                 <h2>{recipe.title}</h2>
-        //             </div>
-        //         </div>
-        //     );
-        // });
+        
         return(
             <div className="Recipes">
                 <h1>Recipes</h1>

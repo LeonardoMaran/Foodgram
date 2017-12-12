@@ -38,6 +38,22 @@ router.get('/:id', function(req, res) {
     });
 });
 
+router.get('/profilePicUrl/:id', function(req, res) {
+    let query = userSchema.findById(req.params.id);
+
+    query.exec(function (err, user) {
+        if (err || user === null) {
+            let errorMessage = "Profile pic not found";
+            sendError(res, errorMessage, 404);
+        } else {
+            res.status(200).send({
+                message: 'OK',
+                data: user.profilePicUrl
+            });
+        }
+    });
+});
+
 router.get('/favorites/:id', function(req, res) {
     let query = userSchema.findById(req.params.id);
 
