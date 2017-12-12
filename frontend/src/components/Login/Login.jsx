@@ -14,6 +14,7 @@ export class Login extends Component {
 		this.handleUpdateName = this.handleUpdateName.bind(this);
 		this.handleUpdatePassword = this.handleUpdatePassword.bind(this);
 		this.handleUpdateVerify = this.handleUpdateVerify.bind(this);
+		this.handleLogin = this.handleLogin.bind(this);
 	}
 
 
@@ -38,6 +39,10 @@ export class Login extends Component {
 	}
 
 
+	handleLogin(event) {
+		this.props.handler(this.state.username);
+	}
+
     render() {
         return(
             <div className="Login">
@@ -45,7 +50,7 @@ export class Login extends Component {
                 <div className="Main">
 	                <div className="ui input"><Input type="text" value={this.state.username} onChange={this.handleUpdateUser} placeholder="Username"/></div><br/>
 	                <div className="ui input"><Input type="text" value={this.state.password} onChange={this.handleUpdatePassword} placeholder="Password"/></div><br/>
-	                <button className="ui primary button" onClick = {this.props.handler}>Log In</button>
+	                <button className="ui primary button" onClick = {this.handleLogin}>Log In</button>
                 </div>
 
                 <div className="Register">
@@ -59,7 +64,7 @@ export class Login extends Component {
 	                <div className="ui input"><input type="text" value={this.state.username} onChange={this.handleUpdateUser} placeholder="Username"/></div><br/>
 	                <div className="ui input"><input type="text"  value={this.state.password} onChange={this.handleUpdatePassword} placeholder="Password"/></div><br/>
 	                <div className="ui input"><input type="text" value={this.state.password} onChange={this.handleUpdateVerify} placeholder="Verify Password"/></div><br/>
-	                <button className="ui primary button" onClick = {this.props.handler}>Sign Up</button>
+	                <button className="ui primary button" onClick = {this.handleLogin}>Sign Up</button>
                 </div>
                 </Modal>
 
