@@ -10,3 +10,5 @@ npm install react-modal
         npm install sass-loader
     */
 npm install semantic-ui-react
+npm install jsonwebtoken
+npm install bcryptjs

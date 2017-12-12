@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {Input} from 'semantic-ui-react'
-import ReactModal from 'react-modal';
 
 import styles from '../../styles/login.css';
 import Modal from '../Modal/Modal.jsx'
@@ -37,6 +36,7 @@ export class Login extends Component {
 	handleUpdateVerify(event) {
 		this.setState({verify: event.target.value});
 	}
+
 
     render() {
         return(
