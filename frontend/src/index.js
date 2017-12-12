@@ -25,6 +25,7 @@ render(
                 <span><Link to="/users">Users</Link></span>
                 <span><Link to="/recipes">Recipes</Link></span>
             </div>
+            <Route path="/login" component={Login}/>
             <Route path="/recipes" component={Recipes}/>
             <Route path="/users" component={Users}/>
             <Route path="/favorites" component={Favorites}/>
