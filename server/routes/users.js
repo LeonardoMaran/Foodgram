@@ -73,11 +73,16 @@ router.put('/favoriteRecipe/:id', function(req, res) {
             sendError(res, err.message, 404);
         } else {
             user.favorites.push(recipe);
-            user.save(function (err, favorite) {
-                res.status(200).send({
-                    message: 'Added favorite',
-                    data: favorite
-                });
+            user.save(function (err, user) {
+                if (err) {
+                    let errorMessage = "Favorite not found";
+                    sendError(res, errorMessage, 404);
+                } else {
+                    res.status(200).send({
+                        message: 'Favorite added',
+                        data: user
+                    });
+                }
             });
         }
     });
