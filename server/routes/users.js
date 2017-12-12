@@ -38,6 +38,54 @@ router.get('/:id', function(req, res) {
     });
 });
 
+router.get('/favorites/:id', function(req, res) {
+    let query = userSchema.findById(req.params.id);
+
+    query.exec(function (err, user) {
+        if (err || user === null) {
+            let errorMessage = "Favorites not found";
+            sendError(res, errorMessage, 404);
+        } else {
+            res.status(200).send({
+                message: 'OK',
+                data: user.favorites
+            });
+        }
+    });
+});
+
+router.get('/following/:id', function(req, res) {
+    let query = userSchema.findById(req.params.id);
+
+    query.exec(function (err, user) {
+        if (err || user === null) {
+            let errorMessage = "Following users not found";
+            sendError(res, errorMessage, 404);
+        } else {
+            res.status(200).send({
+                message: 'OK',
+                data: user.following
+            });
+        }
+    });
+});
+
+router.get('/followers/:id', function(req, res) {
+    let query = userSchema.findById(req.params.id);
+
+    query.exec(function (err, user) {
+        if (err || user === null) {
+            let errorMessage = "Followers not found";
+            sendError(res, errorMessage, 404);
+        } else {
+            res.status(200).send({
+                message: 'OK',
+                data: user.followers
+            });
+        }
+    });
+});
+
 router.post('/', function(req, res) {
     let user = {
         name: req.body.name,
@@ -57,22 +105,40 @@ router.post('/', function(req, res) {
     });
 });
 
+router.put('/profilePicUrl/:id', function(req, res) {
+    let query = userSchema.findById(req.params.id);
+    let profilePicUrl = req.body.profilePicUrl;
+
+    query.exec(function (err, user) {
+        if (err) {
+            sendError(res, err.message, 500);
+        } else {
+            user.profilePicUrl = profilePicUrl;
+            user.save(function (err, user) {
+                if (err) {
+                    let errorMessage = "Couldn't add profile pic";
+                    sendError(res, errorMessage, 404);
+                } else {
+                    res.status(200).send({
+                        message: 'Profile Pic Added Successfully',
+                        data: user
+                    });
+                }
+            });
+        }
+    });
+});
+
 // PUT A FAVORITE RECIPE FOR THIS USER
 router.put('/favoriteRecipe/:id', function(req, res) {
-    let recipe = {
-        title: req.body.title,
-        description: req.body.description,
-        postedBy: req.body.postedBy,
-        imageUrl: req.body.imageUrl,
-        ingredients: req.body.ingredients,
-        instructions: req.body.instructions
-    };
+    let query = userSchema.findById(req.params.id);
+    let recipeId = req.body.recipeId;
 
-    userSchema.findById(req.params.id, function(err, user) {
+    query.exec(function (err, user) {
         if (err) {
-            sendError(res, err.message, 404);
+            sendError(res, err.message, 500);
         } else {
-            user.favorites.push(recipe);
+            user.favorites.push(recipeId);
             user.save(function (err, user) {
                 if (err) {
                     let errorMessage = "Favorite not found";
@@ -80,6 +146,56 @@ router.put('/favoriteRecipe/:id', function(req, res) {
                 } else {
                     res.status(200).send({
                         message: 'Favorite added',
+                        data: user
+                    });
+                }
+            });
+        }
+    });
+});
+
+// PUT A FOLLOWING FOR THIS USER
+router.put('/following/:id', function(req, res) {
+    let query = userSchema.findById(req.params.id);
+    let followingId = req.body.followingId;
+
+    query.exec(function (err, user) {
+        if (err) {
+            sendError(res, err.message, 500);
+        } else {
+            user.following.push(followingId);
+            user.save(function (err, user) {
+                if (err) {
+                    let errorMessage = "User not found";
+                    sendError(res, errorMessage, 404);
+                } else {
+                    res.status(200).send({
+                        message: 'Following added',
+                        data: user
+                    });
+                }
+            });
+        }
+    });
+});
+
+// PUT A FOLLOWER FOR THIS USER
+router.put('/follower/:id', function(req, res) {
+    let query = userSchema.findById(req.params.id);
+    let followerId = req.body.followerId;
+
+    query.exec(function (err, user) {
+        if (err) {
+            sendError(res, err.message, 500);
+        } else {
+            user.followers.push(followerId);
+            user.save(function (err, user) {
+                if (err) {
+                    let errorMessage = "User not found";
+                    sendError(res, errorMessage, 404);
+                } else {
+                    res.status(200).send({
+                        message: 'Follower added',
                         data: user
                     });
                 }
