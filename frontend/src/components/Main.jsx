@@ -48,16 +48,16 @@ export class Main extends Component {
   						<Login handler={this.handler} />
 					)}/>
 					<Route path="/recipes" render={(props) => (
-  						<Recipes user={this.handler} />
+  						<Recipes user={this.state.username} />
 					)}/>
 					<Route path="/users" render={(props) => (
-  						<Users user={this.handler} />
+  						<Users user={this.state.username} />
 					)}/>
 					<Route path="/favorites" render={(props) => (
-  						<Favorites user={this.handler} />
+  						<Favorites user={this.state.username} />
 					)}/>
 					<Route path="/profile" render={(props) => (
-  						<Profile user={this.handler} />
+  						<Profile user={this.state.username} />
 					)}/>
 		        </div>
 		    </Router>
