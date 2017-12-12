@@ -9,6 +9,20 @@
     background-color: rgba(0,0,0,0.2);
     position: relative;
 }
+
+.Recipe:hover {
+    border: 2px solid black;
+}
+
+.search_bar {
+    width: 70%;
+}
+
+.Search {
+    display: inline;
+}
+
+
 .RecipeText {
     padding: 10px;
     width: 100%;

@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import styles from '../../styles/login.css';
 
 export class Login extends Component {
+
     render() {
         return(
             <div className="Login">
