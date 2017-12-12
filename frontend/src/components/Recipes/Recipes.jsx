@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Input, Dropdown } from 'semantic-ui-react';
+import { Input, Dropdown, List, Image } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import styles from '../../styles/recipes.css';
@@ -19,7 +20,7 @@ export class Recipes extends Component {
     }
 
     componentWillMount(){
-        
+
         getRecipes()
             .then(function(response) {
                 this.setState({recipes: response.data.data, visible: response.data.data});
@@ -38,9 +39,11 @@ export class Recipes extends Component {
                   recipes.push(this.state.recipes[i]);
               }
           } else {
+              var added = false;
               for(var j = 0; j < this.state.recipes[i].ingredients.length; j++) {
-                if(this.state.recipes[i].ingredients[j].toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value != '') {
+                if(!added && this.state.recipes[i].ingredients[j].toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value != '') {
                     recipes.push(this.state.recipes[i]);
+                    added = true;
                 }
               }
           }
@@ -77,31 +80,43 @@ export class Recipes extends Component {
             }
         ];
 
-        const recipes = this.state.visible.map((recipe, index) => {
-
-            var recipeStyle = {
-                  backgroundImage: 'url(' + recipe.imageUrl + ')'
-            };
-            return (
-                <div key={index} className="Recipe" style={recipeStyle}>
-
-                    <div className="RecipeText">
-                        <h2>{recipe.title}</h2>
-                    </div>
-                </div>
-            );
-        });
-
+        // const recipes = this.state.visible.map((recipe, index) => {
+        //
+        //     var recipeStyle = {
+        //           backgroundImage: 'url(' + recipe.imageUrl + ')'
+        //     };
+        //     return (
+        //         <div key={index} className="Recipe" style={recipeStyle}>
+        //
+        //             <div className="RecipeText">
+        //                 <h2>{recipe.title}</h2>
+        //             </div>
+        //         </div>
+        //     );
+        // });
         return(
             <div className="Recipes">
                 <h1>Recipes</h1>
                 <div className="Search">
-                  <Input className='search_bar' type='text' placeholder='Search recipes...' onChange={this.searchRecipes} />
-                  <p>Search By</p>
-                  <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
+                    <Input className='search_bar' type='text' placeholder='Search recipes...' onChange={this.searchRecipes} />
+                    <p>Search By</p>
+                    <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
                 </div>
                 <div className="Found">
-                  {recipes}
+                    <List horizontal animated relaxed="very">
+                        { this.state.visible.map((recipe, index) => (
+                            <List.Item key={index}>
+                                      <div className="Recipe">
+                                          <div className="RecipeText">
+                                              <h2>{recipe.title}</h2>
+                                          </div>
+                                          <div className="RecipeImage">
+                                              <Image inline size='medium' src={recipe.imageUrl} />
+                                          </div>
+                                      </div>
+                            </List.Item>
+                         ))}
+                      </List>
                 </div>
             </div>
         );
