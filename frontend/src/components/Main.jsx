@@ -25,6 +25,7 @@ export class Main extends Component {
     		show: "block", 
     		username: username 
     	});
+    	console.log(window.location);
     	window.location = '/#/recipes';
 	}
 
