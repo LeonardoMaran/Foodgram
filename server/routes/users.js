@@ -57,6 +57,32 @@ router.post('/', function(req, res) {
     });
 });
 
+// PUT A FAVORITE RECIPE FOR THIS USER
+router.put('/favoriteRecipe/:id', function(req, res) {
+    let recipe = {
+        title: req.body.title,
+        description: req.body.description,
+        postedBy: req.body.postedBy,
+        imageUrl: req.body.imageUrl,
+        ingredients: req.body.ingredients,
+        instructions: req.body.instructions
+    };
+
+    userSchema.findById(req.params.id, function(err, user) {
+        if (err) {
+            sendError(res, err.message, 404);
+        } else {
+            user.favorites.push(recipe);
+            user.save(function (err, favorite) {
+                res.status(200).send({
+                    message: 'Added favorite',
+                    data: favorite
+                });
+            });
+        }
+    });
+});
+
 router.delete('/:id', function(req, res) {
     userSchema.findById(req.params.id, function (err, user) {
         if (err || user === null) {
