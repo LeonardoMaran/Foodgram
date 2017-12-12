@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {Input} from 'semantic-ui-react'
 import ReactModal from 'react-modal';
-// import { } from 'semantic-ui-react';
 
 import styles from '../../styles/login.css';
 import Modal from '../Modal/Modal.jsx'
@@ -12,15 +11,31 @@ export class Login extends Component {
 		super(props);
 		this.state = {modalOpen: false, username: '', password: '', verify: '', name: ''};
 		this.toggleModal = this.toggleModal.bind(this);
-		// this.handleUpdateUser = this.handleUpdateUser.bind(this);
-		// this.handleUpdateName = this.handleUpdateName.bind(this);
-		// this.handleUpdatePassword = this.handleUpdatePassword.bind(this);
-		// this.handleUpdateVerify = this.handleUpdateVerify.bind(this);
+		this.handleUpdateUser = this.handleUpdateUser.bind(this);
+		this.handleUpdateName = this.handleUpdateName.bind(this);
+		this.handleUpdatePassword = this.handleUpdatePassword.bind(this);
+		this.handleUpdateVerify = this.handleUpdateVerify.bind(this);
 	}
 
 
 	toggleModal() {
 		this.setState({modalOpen: !this.state.modalOpen});
+	}
+
+	handleUpdateUser(event) {
+		this.setState({username: event.target.value});
+	}
+
+	handleUpdateName(event) {
+		this.setState({name: event.target.value});
+	}
+
+	handleUpdatePassword(event) {
+		this.setState({password: event.target.value});
+	}
+
+	handleUpdateVerify(event) {
+		this.setState({verify: event.target.value});
 	}
 
     render() {
