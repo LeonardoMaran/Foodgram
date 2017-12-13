@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Input, Dropdown, List, Image } from 'semantic-ui-react';
+import { Input, Dropdown, Image, Grid, Divider} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import styles from '../../styles/users.css';
+import '../../styles/users.css';
 
 export class Users extends Component {
 
@@ -42,16 +42,16 @@ export class Users extends Component {
         var users = [];
         for(var i = 0; i < this.state.users.length; i++) {
           if(this.state.searchBy === "name") {
-              if(this.state.users[i].name.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value != '') {
+              if(this.state.users[i].name.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value !== '') {
                   users.push(this.state.users[i]);
               }
           } else {
-              if(this.state.users[i].username.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value != '') {
+              if(this.state.users[i].username.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value !== '') {
                   users.push(this.state.users[i]);
               }
           }
         }
-        if(users.length == 0 && event.currentTarget.value == "") {
+        if(users.length === 0 && event.currentTarget.value === "") {
             this.setState({visible: this.state.users});
         } else {
             this.setState({visible: users});
@@ -72,7 +72,6 @@ export class Users extends Component {
     }
 
     render() {
-
     	const sortOptions = [
             {
               text: 'Name',
@@ -83,31 +82,42 @@ export class Users extends Component {
               value: 'username'
             }
         ];
-
+				var userprof = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg";
         return(
             <div className="Users">
                 <h1>Users</h1>
                 <div className="Search">
                     <Input className='search_bar' type='text' placeholder='Search users...' onChange={this.searchUsers} />
-                    <p>Search By</p>
-                    <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
-                </div>
-                <div className="Found">
-                    <List horizontal animated relaxed="very">
-                        { this.state.visible.map((user, index) => (
-                            <List.Item key={index}>
-                                      <div className="User">
-                                          <div className="UserText">
-                                              <h2>{user.name}</h2>
-                                          </div>
-                                          <div className="UserImage">
-                                              <Image inline size='medium' src={user.profilePicUrl} />
-                                          </div>
-                                      </div>
-                            </List.Item>
-                         ))}
-                      </List>
-                </div>
+										<div className="SortBy">
+									    	<p className="sort_text">Search By:</p>
+		                    <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
+										</div>
+								</div>
+								<Divider section></Divider>
+								<div className="Found">
+										<Grid centered relaxed padded='vertically' padded='horizontally'
+													verticalAlign='middle' columns='equal'>
+												{ this.state.visible.map((user, index) => (
+														<Link key={index} to={{ pathname: '/user/' + user.name,
+																				param: {  user_id : user.id,
+																									user_index : index
+																							  }
+																			}}>
+																			<div className="User">
+																					<div className="UserText">
+																							<h2>{user.name}</h2>
+																					</div>
+																					<div className="UserStar">
+																							<i class="fa fa-star-o fa-3x"></i>
+																					</div>
+																					<div className="UserImage">
+																							<Image size='medium' src={user.profilePicUrl} />
+																					</div>
+																			</div>
+															</Link>
+												 ))}
+											</Grid>
+									</div>
             </div>
         );
     }

@@ -1,31 +1,43 @@
-.User {
-    display: block;
-    width: auto;
-    height: auto;
-    border: 1px solid rgba(0,0,0,0.1);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: rgba(0,0,0,0.2);
-    position: relative;
+.Users {
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
 }
-
-.User:hover {
-    border: 1px solid rgba(0,0,0,0.5);
-    background-color: rgba(0, 0, 0, 0.4);
-    transform: translateY(-3px);
-    transition: .2s ease-in-out;
-}
-
-.search_bar {
-    width: 70%;
-}
-
 .Search {
     display: inline;
 }
+.search_bar {
+    width: 70%;
+}
+.sort_text {
+    display: inline-block;
+    margin-right: 10px;
+}
+.sort_menu {
+    display: inline-block;
+}
 .Found {
-    margin-top: 20px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+.UserStar {
+    color: yellow;
+    z-index: 10;
+    position: absolute;
+    right: 0;
+    margin: 10px;
+}
+.User {
+    display: block;
+    border: 1px solid rgba(0,0,0,0.1);
+    background-color: rgba(0,0,0,0.2);
+    position: relative;
+    margin: 5px;
+}
+.User:hover {
+    border: 1px solid rgba(0,0,0,0.4);
+    transform: translateY(-3px);
+    transition: .2s ease-in-out;
 }
 .UserImage {
     z-index: -1;
