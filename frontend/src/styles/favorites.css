@@ -1,0 +1,43 @@
+.Favorite {
+    display: block;
+    height: auto;
+    width: auto;
+    border: 1px solid rgba(0,0,0,0.1);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.Favorite:hover {
+    border: 1px solid rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px);
+    transition: .2s ease-in-out;
+}
+
+.search_bar {
+    width: 70%;
+}
+
+.Search {
+    display: inline;
+}
+.Found {
+    margin-top: 20px;
+}
+.FavoriteImage {
+    z-index: -1;
+}
+.FavoriteText {
+    z-index: 2;
+    padding: 10px;
+    width: 100%;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    color: white;
+}

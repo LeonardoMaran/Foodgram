@@ -10,9 +10,10 @@ export class Users extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-            currentUser: "samhanke",
+            currentUser: props.user,
             users: [],
             visible: [],
+            following: [],
             searchBy: ""
         };
         this.searchUsers = this.searchUsers.bind(this);
@@ -20,10 +21,17 @@ export class Users extends Component {
     }
 
     componentWillMount(){
-
         getUsers()
             .then(function(response) {
                 this.setState({users: response.data.data, visible: response.data.data});
+            }.bind(this))
+            .catch(function(error) {
+                console.log(error);
+        });
+        const url = 'http://localhost:4000/api/users/following/' + this.props.user;
+        axios.get(url)
+            .then(function(response) {
+                this.setState({following: response.data.data});
             }.bind(this))
             .catch(function(error) {
                 console.log(error);

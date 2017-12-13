@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {HashRouter as Router, Route, Link} from 'react-router-dom';
+import axios from 'axios';
 
 import Login from './Login/Login.jsx';
 import Recipes from './Recipes/Recipes.jsx';
@@ -15,17 +16,26 @@ export class Main extends Component {
 		super(props);
 		this.state = {
 			show: "none",
-			username: ""
+			id: ""
 		}
 		this.handler = this.handler.bind(this);
 	}
 
 	handler(username) {
+		const user = '';
+		const url = 'http://localhost:3000/api/users?&where={"username":"' + username + '"}';
+		axios.get(url)
+		.then(function(response) {
+                this.setState({id: response.data.data[0]._id});
+            }.bind(this))
+            .catch(function(error) {
+                console.log(error);
+        });
+
     	this.setState({ 
     		show: "block", 
-    		username: username 
+    		id: user
     	});
-    	console.log(window.location);
     	window.location = '/#/recipes';
 	}
 
@@ -33,6 +43,18 @@ export class Main extends Component {
     	var headerStyle = {
             display: this.state.show
         };
+
+        if(this.state.id != "") {
+        	var recipeRoute = <Route path="/recipes" render={(props) => (<Recipes user={this.state.id} />)} />;
+        	var userRoute = <Route path="/users" render={(props) => (<Users user={this.state.id} />)} />;
+        	var favoriteRoute = <Route path="/favorites" render={(props) => (<Favorites user={this.state.id} />)} />;
+        	var profileRoute = <Route path="/profile" render={(props) => (<Profile user={this.state.id} />)} />;
+        } else {
+        	var recipeRoute = null;
+        	var userRoute = null;
+        	var favoriteRoute = null;
+        	var profileRoute = null;
+        }
 
         return(
         	<Router>
@@ -47,18 +69,10 @@ export class Main extends Component {
 		            <Route exact path="/" render={(props) => (
   						<Login handler={this.handler} />
 					)}/>
-					<Route path="/recipes" render={(props) => (
-  						<Recipes user={this.state.username} />
-					)}/>
-					<Route path="/users" render={(props) => (
-  						<Users user={this.state.username} />
-					)}/>
-					<Route path="/favorites" render={(props) => (
-  						<Favorites user={this.state.username} />
-					)}/>
-					<Route path="/profile" render={(props) => (
-  						<Profile user={this.state.username} />
-					)}/>
+					{recipeRoute}
+					{userRoute}
+					{favoriteRoute}
+					{profileRoute}
 		        </div>
 		    </Router>
         );

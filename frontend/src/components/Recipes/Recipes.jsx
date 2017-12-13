@@ -10,9 +10,10 @@ export class Recipes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentUser: "samhanke",
+            currentUser: props.user,
             recipes: [],
             visible: [],
+            favorites: [],
             searchBy: ""
         };
         this.searchRecipes = this.searchRecipes.bind(this);
@@ -20,10 +21,17 @@ export class Recipes extends Component {
     }
 
     componentWillMount(){
-
         getRecipes()
             .then(function(response) {
                 this.setState({recipes: response.data.data, visible: response.data.data});
+            }.bind(this))
+            .catch(function(error) {
+                console.log(error);
+        });
+        const url = 'http://localhost:4000/api/users/favorites/' + this.props.user;
+        axios.get(url)
+            .then(function(response) {
+                this.setState({favorites: response.data.data});
             }.bind(this))
             .catch(function(error) {
                 console.log(error);
