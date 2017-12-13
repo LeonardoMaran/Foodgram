@@ -58,26 +58,25 @@ export class Main extends Component {
         }
 
         return(
-
 	        	<Router>
-			        <div className='Router'>
-			            <div className="header" style = {headerStyle}>
+		        	<div className='Router'>
+			            <div className="NavBar" style = {headerStyle}>
 			                <span className="nav_title">Foodgram</span>
 			                <span><Link to="/profile">Profile</Link></span>
 			                <span><Link to="/favorites">Favorites</Link></span>
 			                <span><Link to="/users">Users</Link></span>
 			                <span><Link to="/recipes">Recipes</Link></span>
 			            </div>
-									<Route path="/recipe_details" component={RecipesDetailed} />
-			            <Route exact path="/" render={(props) => (
-		  								<Login handler={this.handler} />
-									)}/>
-									{recipeRoute}
-									{userRoute}
-									{favoriteRoute}
-									{profileRoute}
-				        </div>
-			    	</Router>
+							<Route path="/recipe_details" component={RecipesDetailed} />
+		            		<Route exact path="/" render={(props) => (
+	  								<Login handler={this.handler} />
+								)}/>
+							{recipeRoute}
+							{userRoute}
+							{favoriteRoute}
+							{profileRoute}
+			        </div>
+		    	</Router>
         );
     }
 }

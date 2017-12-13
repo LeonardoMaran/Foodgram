@@ -97,7 +97,7 @@ export class Users extends Component {
 										<Grid centered relaxed padded='vertically' padded='horizontally'
 													verticalAlign='middle' columns='equal'>
 												{ this.state.visible.map((user, index) => (
-														<Link key={index} to={{ pathname: '/user/' + user.name,
+														<Link key={index} to={{ pathname: '/user/' + user.username,
 																				param: {  user_id : user.id,
 																									user_index : index
 																							  }

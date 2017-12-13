@@ -83,6 +83,7 @@ export class Login extends Component {
         return(
             <div className="Login">
                 <div className="Main">
+                	<i class="fa fa-cutlery fa-5x" aria-hidden="true"></i>
                 	<h1>Foodgram</h1>
 	                <div className="ui input"><Input type="text" value={this.state.username} onChange={this.handleUpdateUser} placeholder="Username"/></div><br/>
 	                <div className="ui input"><Input type="password" value={this.state.password} onChange={this.handleUpdatePassword} placeholder="Password"/></div><br/>
