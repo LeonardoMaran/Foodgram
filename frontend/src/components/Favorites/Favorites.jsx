@@ -98,7 +98,7 @@ export class Favorites extends Component {
 		                // Log response
 		                let user = response.data.data;
 		                this.setState({
-		                    favorites: user.favorites
+		                    favorites: user.favorites, visible: user.favorites
 		                });
 		            }.bind(this))
 		                .catch(function(error) {
@@ -113,7 +113,7 @@ export class Favorites extends Component {
 		                // Log response
 		                let user = response.data.data;
 		                this.setState({
-		                    favorites: user.favorites
+		                    favorites: user.favorites, visible: user.favorites
 		                });
 		            }.bind(this))
 		            .catch(function(error) {

@@ -81,37 +81,43 @@ export class Profile extends Component {
 	}
 
 	favoriteClick(idx, e) {
-        e.stopPropagation();
+		        //e.stopPropagation();
 
-        let favoritedRecipe = this.state.recipes[idx];
-        let recipeId = favoritedRecipe._id;
-        // check if this recipe is favorited or unfavorited
-        if (this.state.favorites.indexOf(recipeId) !== -1) {
-            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUserId;
-            axios.put(url, {
-                recipeId: recipeId
-            }).then(function(response) {
-                // Log response
-                console.log(response.data.message);
-            }.bind(this))
-                .catch(function(error) {
-                    // Log response
-                    console.log(error);
-                });
-        } else {
-            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUserId;
-            axios.put(url, {
-                recipeId: recipeId
-            }).then(function(response) {
-                // Log response
-                console.log(response.data.message);
-            }.bind(this))
-            .catch(function(error) {
-                // Log response
-                console.log(error);
-            });
-        }
-    }
+		        let favoritedRecipe = this.state.recipes[idx];
+		        let recipeId = favoritedRecipe._id;
+		        // check if this recipe is favorited or unfavorited
+		        if (this.state.favorites.indexOf(recipeId) !== -1) {
+		            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUser;
+		            axios.put(url, {
+		                recipeId: recipeId
+		            }).then(function(response) {
+		                // Log response
+		                let user = response.data.data;
+		                this.setState({
+		                    favorites: user.favorites
+		                });
+		            }.bind(this))
+		                .catch(function(error) {
+		                    // Log response
+		                    console.log(error);
+		                });
+		        } else {
+		            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUser;
+		            axios.put(url, {
+		                recipeId: recipeId
+		            }).then(function(response) {
+		                // Log response
+		                let user = response.data.data;
+		                this.setState({
+		                    favorites: user.favorites
+		                });
+		            }.bind(this))
+		            .catch(function(error) {
+		                // Log response
+		                console.log(error);
+		            });
+		        }
+		    }
 
 	followClick(idx, e) {
         e.stopPropagation();
@@ -119,12 +125,15 @@ export class Profile extends Component {
         let followUser = this.state.following[idx];
         let followUserId = followUser._id;
         // follow user
-        let url = 'http://localhost:4000/api/users/follow/' + this.state.currentUserId;
+        let url = 'http://localhost:4000/api/users/follow/' + this.state.currentUser;
         axios.put(url, {
             followingId: followUserId
         }).then(function(response) {
             // Log response
-            console.log(response.data.message);
+            let user = response.data.data;
+						this.setState({
+								following : user.following
+						});
         }.bind(this))
             .catch(function(error) {
                 // Log response
@@ -139,12 +148,14 @@ export class Profile extends Component {
         let unfollowUserId = unfollowUser._id;
         // unfollow user
         // follow user
-        let url = 'http://localhost:4000/api/users/unfollow/' + this.state.currentUserId;
+        let url = 'http://localhost:4000/api/users/unfollow/' + this.state.currentUser;
         axios.put(url, {
             followingId: unfollowUserId
         }).then(function(response) {
-            // Log response
-            console.log(response.data.message);
+					let user = response.data.data;
+					this.setState({
+							following : user.following
+					});
         }.bind(this))
             .catch(function(error) {
                 // Log response
@@ -214,25 +225,38 @@ export class Profile extends Component {
             }
 
             return (
-                <Link key={index}
-                      to={{
-                          pathname: '/recipe/' + recipe.title,
-                          param: {
-                              recipe_id : recipe._id,
-                              recipe_index : index
-                          }
-                      }}>
+              <div key={index} className="RecipeCard">
                     <div className="Recipe">
-                        <div className="RecipeText">
-                            <h2>{recipe.title}</h2>
-                        </div>
                         {favoriteImageDiv}
                         <div className="RecipeImage">
-                            <Image size='medium' src={recipe.imageUrl} />
+                          <Link key={index} style={{color: 'white'}}
+                                to={{
+                                    pathname: '/recipe_details',
+                                    param: {
+                                        recipe: recipe,
+                                        recipes: this.state.recipes,
+                                        index : index
+                                    }
+                                }}>
+                                <Image size='medium' src={recipe.imageUrl} />
+                          </Link>
                         </div>
-                    </div>
-                </Link>
-            )
+                        <div className="RecipeText">
+                          <Link key={index} style={{color: 'white'}}
+                                to={{
+                                    pathname: '/recipe_details',
+                                    param: {
+                                        recipe: recipe,
+                                        recipes: this.state.visible,
+                                        index : index
+                                    }
+                                }}>
+                            <h2>{recipe.title}</h2>
+                          </Link>
+                        </div>
+                   </div>
+              </div>
+            );
         });
 
     	if(this.state.recipes.length > 0)
@@ -251,9 +275,14 @@ export class Profile extends Component {
 
 	    let userCards =
             this.state.following.map((user, index) => {
+    	        if (user._id === this.state.currentUserId) {
+    	            // This user should not be shown
+    	            return;
+                }
+
                 let userId = user._id;
                 let followUserDiv;
-                if (this.state.followingId.indexOf(userId) !== -1) {
+                if (this.state.following.indexOf(userId) !== -1) {
                     followUserDiv =
                         <div className="UserStar" onClick={this.unfollowClick.bind(this, index)}>
                             <i className="fa fa-star fa-3x"></i>
@@ -266,22 +295,31 @@ export class Profile extends Component {
                 }
 
                 return (
-                    <Link key={index}
-                          to={{ pathname: '/user/' + user.username,
-                              param: {
-                                  user_id: user.id,
-                                  user_index: index
-                              }}}>
+											<div key={index} className="UserCard">
                         <div className="User">
+														{followUserDiv}
                             <div className="UserText">
-                                <h2>{user.name}</h2>
+																<Link key={index} style={{color: 'white'}}
+																			to={{ pathname: '/user_details/' + user.username,
+																					param: {
+																							user_id: user.id,
+																							user_index: index
+																					}}}>
+																				<h2>{user.name}</h2>
+																</Link>
                             </div>
-                            {followUserDiv}
                             <div className="UserImage">
-                                <Image size='medium' src={user.profilePicUrl} />
+															<Link key={index} style={{color: 'white'}}
+																		to={{ pathname: '/user_details/' + user.username,
+																				param: {
+																						user_id: user.id,
+																						user_index: index
+																				}}}>
+                                		<Image size='medium' src={user.profilePicUrl} />
+															</Link>
                             </div>
                         </div>
-                    </Link>
+										</div>
                 )
             });
 
