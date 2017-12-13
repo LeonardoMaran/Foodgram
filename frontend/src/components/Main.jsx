@@ -18,7 +18,7 @@ export class Main extends Component {
 		this.state = {
 			show: "none",
 			id: ""
-		}
+		};
 		this.handler = this.handler.bind(this);
 	}
 
@@ -60,21 +60,27 @@ export class Main extends Component {
         return(
 	        	<Router>
 		        	<div className='Router'>
-			            <div className="NavBar" style = {headerStyle}>
-			                <span className="nav_title">Foodgram<i class="fa fa-cutlery" aria-hidden="true"></i></span>
-			                <span><Link to="/profile">Profile</Link></span>
-			                <span><Link to="/favorites">Favorites</Link></span>
-			                <span><Link to="/users">Users</Link></span>
-			                <span><Link to="/recipes">Recipes</Link></span>
-			            </div>
-							<Route path="/recipe_details" component={RecipesDetailed} />
-		            		<Route exact path="/" render={(props) => (
-	  								<Login handler={this.handler} />
-								)}/>
-							{recipeRoute}
-							{userRoute}
-							{favoriteRoute}
-							{profileRoute}
+						<header style = {headerStyle}>
+							<div className="nav_bar_container">
+								<a href="" id="logo_text">Foodgram</a>
+								<nav>
+									<ul className="nav_bar_items">
+										<li><Link to="/profile"><p>Profile</p></Link></li>
+										<li><Link to="/favorites"><p>Favorites</p></Link></li>
+										<li><Link to="/users"><p>Users</p></Link></li>
+										<li><Link to="/recipes"><p>Recipes</p></Link></li>
+									</ul>
+								</nav>
+							</div>
+						</header>
+						<Route path="/recipe_details" component={RecipesDetailed} />
+						<Route exact path="/" render={(props) => (
+								<Login handler={this.handler} />
+							)}/>
+						{recipeRoute}
+						{userRoute}
+						{favoriteRoute}
+						{profileRoute}
 			        </div>
 		    	</Router>
         );
