@@ -14,7 +14,8 @@ class Modal extends Component {
       left: 0,
       right: 0,
       backgroundColor: 'rgba(0,0,0,0.3)',
-      padding: 50
+      padding: 20,
+      zIndex: 999
     };
 
     // modal 
@@ -25,9 +26,9 @@ class Modal extends Component {
       maxWidth: 500,
       minHeight: 300,
       margin: '0 auto',
-      padding: 50,
+      padding: 40,
       paddingTop: 70,
-      zIndex: 3
+      zIndex: 999
     };
 
 
@@ -36,7 +37,8 @@ class Modal extends Component {
       textAlign: 'right',
       position: 'fixed',
       top: 10,
-      right: 10
+      right: 10,
+      zIndex: 999
     };
 
 
@@ -46,7 +48,8 @@ class Modal extends Component {
       cursor: 'pointer',
       color: '#fff',
       backgroundColor: '#0E6EB8',
-      borderColor: '#0E6EB8'
+      borderColor: '#0E6EB8',
+      zIndex: 999
     };
 
     return (

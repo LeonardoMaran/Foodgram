@@ -370,7 +370,7 @@ export class Profile extends Component {
                 </div>
                 { recipeDisplay }
 	            { followingDisplay }
-	            <Modal className="Modal" show={this.state.modalOpen} onClose={this.toggleModal}>
+	            <Modal show={this.state.modalOpen} onClose={this.toggleModal}>
                 	<div>
 	                	<div className="ui input"><input type="text" value={this.state.title} onChange={this.handleUpdateTitle} placeholder="Title"/></div><br/>
 		                <div className="ui input"><input type="text" value={this.state.description} onChange={this.handleUpdateDescription} placeholder="Description"/></div><br/>
