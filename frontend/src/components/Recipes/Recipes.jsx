@@ -10,7 +10,7 @@ export class Recipes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentUser: props.user,
+            currentUserId: props.user,
             recipes: [],
             visible: [],
             favorites: [],
@@ -29,7 +29,7 @@ export class Recipes extends Component {
             .catch(function(error) {
                 console.log(error);
             });
-        const url = 'http://localhost:4000/api/users/favorites/' + this.state.currentUser;
+        const url = 'http://localhost:4000/api/users/favorites/' + this.state.currentUserId;
         axios.get(url)
             .then(function(response) {
                 this.setState({favorites: response.data.data});
@@ -83,7 +83,7 @@ export class Recipes extends Component {
         let recipeId = favoritedRecipe._id;
         // check if this recipe is favorited or unfavorited
         if (this.state.favorites.indexOf(recipeId) !== -1) {
-            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUser;
+            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUserId;
             axios.put(url, {
                 recipeId: recipeId
             }).then(function(response) {
@@ -95,7 +95,7 @@ export class Recipes extends Component {
                     console.log(error);
                 });
         } else {
-            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUser;
+            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUserId;
             axios.put(url, {
                 recipeId: recipeId
             }).then(function(response) {
@@ -107,7 +107,6 @@ export class Recipes extends Component {
                 console.log(error);
             });
         }
-
     }
 
 

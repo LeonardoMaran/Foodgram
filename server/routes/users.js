@@ -196,7 +196,7 @@ router.put('/unfavoriteRecipe/:id', function(req, res) {
 });
 
 // PUT A FOLLOWING FOR THIS USER
-router.put('/following/:id', function(req, res) {
+router.put('/follow/:id', function(req, res) {
     let query = userSchema.findById(req.params.id);
     let followingId = req.body.followingId;
 
@@ -212,6 +212,31 @@ router.put('/following/:id', function(req, res) {
                 } else {
                     res.status(200).send({
                         message: 'Following added',
+                        data: user
+                    });
+                }
+            });
+        }
+    });
+});
+
+// DELETE A FOLLOWING FOR THIS USER
+router.put('/unfollow/:id', function(req, res) {
+    let query = userSchema.findById(req.params.id);
+    let followingId = req.body.followingId;
+
+    query.exec(function (err, user) {
+        if (err) {
+            sendError(res, err.message, 500);
+        } else {
+            user.following.pull(followingId);
+            user.save(function (err, user) {
+                if (err) {
+                    let errorMessage = "User not found";
+                    sendError(res, errorMessage, 404);
+                } else {
+                    res.status(200).send({
+                        message: 'Following removed',
                         data: user
                     });
                 }
