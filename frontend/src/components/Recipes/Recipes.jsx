@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Dropdown, Image, Grid, Divider } from 'semantic-ui-react';
+import { Input, Dropdown, Image, Grid, Divider, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -18,6 +18,7 @@ export class Recipes extends Component {
         };
         this.searchRecipes = this.searchRecipes.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.favoriteClick = this.favoriteClick.bind(this);
     }
 
     componentWillMount(){
@@ -75,6 +76,27 @@ export class Recipes extends Component {
         }
     }
 
+    favoriteClick(idx, e) {
+        e.stopPropagation();
+
+        let favoritedRecipe = this.state.visible[idx];
+        let id = favoritedRecipe._id;
+        // Now add this id to user's favorite list
+        let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUser;
+        axios.put(url, {
+                recipeId: id
+            })
+            .then(function(response) {
+                // Log response
+                console.log(response.data.message);
+            }.bind(this))
+            .catch(function(error) {
+                // Log response
+                console.log(error);
+            });
+    }
+
+
     render() {
         const sortOptions = [
             {
@@ -87,39 +109,49 @@ export class Recipes extends Component {
             }
         ];
 
+        let topButtonDiv =
+            <div className="Search">
+                <Input className='search_bar' type='text' placeholder='Search recipes...' onChange={this.searchRecipes} />
+                <div className="SortBy">
+                    <p className="sort_text">Search By:</p>
+                    <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
+                </div>
+            </div>;
+
+        let recipeCards = this.state.visible.map((recipe, index) => (
+            <Link key={index}
+                  to={{
+                      pathname: '/recipe/' + recipe.title,
+                      param: {
+                          recipe_id : recipe._id,
+                          recipe_index : index
+                      }
+                  }}>
+                <div className="Recipe">
+                    <div className="RecipeText">
+                        <h2>{recipe.title}</h2>
+                    </div>
+                    <div className="RecipeHeart">
+                        <Button id="favorite" onClick={this.favoriteClick.bind(this, index)}>
+                            Favorite
+                        </Button>
+                    </div>
+                    <div className="RecipeImage">
+                        <Image size='medium' src={recipe.imageUrl} />
+                    </div>
+                </div>
+            </Link>
+        ));
+
         return(
             <div className="Recipes">
                 <h1>Recipes</h1>
-                <div className="Search">
-                    <Input className='search_bar' type='text' placeholder='Search recipes...' onChange={this.searchRecipes} />
-                    <div className="SortBy">
-                        <p className="sort_text">Search By:</p>
-                        <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
-                   </div>
-                </div>
+                {topButtonDiv}
                 <Divider section></Divider>
                 <div className="Found">
-                    <Grid centered relaxed padded='vertically' padded='horizontally'
+                    <Grid centered relaxed padded='horizontally'
                           verticalAlign='middle' columns='equal'>
-                        { this.state.visible.map((recipe, index) => (
-                            <Link key={index} to={{ pathname: '/recipe/' + recipe.title,
-                                        param: {  recipe_id : recipe._id,
-                                                  recipe_index : index
-                                                }
-                                      }}>
-                                      <div className="Recipe">
-                                          <div className="RecipeText">
-                                              <h2>{recipe.title}</h2>
-                                          </div>
-                                          <div className="RecipeHeart">
-                                              <i class="fa fa-heart-o fa-3x"></i>
-                                          </div>
-                                          <div className="RecipeImage">
-                                              <Image size='medium' src={recipe.imageUrl} />
-                                          </div>
-                                      </div>
-                              </Link>
-                         ))}
+                        {recipeCards}
                       </Grid>
                   </div>
             </div>
