@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {HashRouter as Router, Route, Link} from 'react-router-dom';
+import axios from 'axios';
 
 import Login from './Login/Login.jsx';
 import Recipes from './Recipes/Recipes.jsx';
@@ -16,17 +17,27 @@ export class Main extends Component {
 		super(props);
 		this.state = {
 			show: "none",
-			username: ""
+			id: ""
 		}
 		this.handler = this.handler.bind(this);
 	}
 
 	handler(username) {
-    	this.setState({
-    		show: "block",
-    		username: username
-    	});
-    	window.location = '/#/recipes';
+				const user = '';
+				const url = 'http://localhost:3000/api/users?&where={"username":"' + username + '"}';
+				axios.get(url)
+				.then(function(response) {
+		                this.setState({id: response.data.data[0]._id});
+		            }.bind(this))
+		            .catch(function(error) {
+		                console.log(error);
+		        });
+
+		    	this.setState({
+		    		show: "block",
+		    		id: user
+		    	});
+		    	window.location = '/#/recipes';
 	}
 
     render(){
@@ -34,34 +45,39 @@ export class Main extends Component {
             display: this.state.show
         };
 
+        if(this.state.id != "") {
+        	var recipeRoute = <Route path="/recipes" render={(props) => (<Recipes user={this.state.id} />)} />;
+        	var userRoute = <Route path="/users" render={(props) => (<Users user={this.state.id} />)} />;
+        	var favoriteRoute = <Route path="/favorites" render={(props) => (<Favorites user={this.state.id} />)} />;
+        	var profileRoute = <Route path="/profile" render={(props) => (<Profile user={this.state.id} />)} />;
+        } else {
+        	var recipeRoute = null;
+        	var userRoute = null;
+        	var favoriteRoute = null;
+        	var profileRoute = null;
+        }
+
         return(
-		        <Router>
-				        <div className='Router'>
-				            <div className="header" style = {headerStyle}>
-				                <span className="nav_title">Foodgram</span>
-				                <span><Link to="/profile">Profile</Link></span>
-				                <span><Link to="/favorites">Favorites</Link></span>
-				                <span><Link to="/users">Users</Link></span>
-				                <span><Link to="/recipes">Recipes</Link></span>
-				            </div>
-				            <Route exact path="/" render={(props) => (
-					  						<Login handler={this.handler} />
-										)}/>
-										<Route path="/recipes" render={(props) => (
-					  						<Recipes user={this.state.username} />
-										)}/>
-										<Route path="/users" render={(props) => (
-					  						<Users user={this.state.username} />
-										)}/>
-										<Route path="/favorites" render={(props) => (
-					  						<Favorites user={this.state.username} />
-										)}/>
-										<Route path="/profile" render={(props) => (
-					  						<Profile user={this.state.username} />
-										)}/>
-										<Route path="/recipe_details" component={RecipesDetailed} />
-						   </div>
-				    </Router>
+
+	        	<Router>
+			        <div className='Router'>
+			            <div className="header" style = {headerStyle}>
+			                <span className="nav_title">Foodgram</span>
+			                <span><Link to="/profile">Profile</Link></span>
+			                <span><Link to="/favorites">Favorites</Link></span>
+			                <span><Link to="/users">Users</Link></span>
+			                <span><Link to="/recipes">Recipes</Link></span>
+			            </div>
+									<Route path="/recipe_details" component={RecipesDetailed} />
+			            <Route exact path="/" render={(props) => (
+		  								<Login handler={this.handler} />
+									)}/>
+									{recipeRoute}
+									{userRoute}
+									{favoriteRoute}
+									{profileRoute}
+				        </div>
+			    	</Router>
         );
     }
 }
