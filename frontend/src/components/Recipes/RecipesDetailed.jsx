@@ -97,13 +97,12 @@ export class RecipesDetailed extends Component {
               let recipe = JSON.parse(this.state.recipe);
               let index = JSON.parse(this.state.index);
               let user = this.state.user;
-              console.log(user);
               return(
                   <div className="RecipesDetailed">
                       <h1> {index+1} / {recipes.length}</h1>
                       <div className="prev" onClick={this.handlePrev}>&#x21E6;</div>
                       <div className="next" onClick={this.handleNext}>&#x21E8;</div>
-                      <h1> {recipe.title}</h1>
+                      <h1> {recipe.title}{recipe.description}</h1>
                       <div className="RecipesImage">
                           <Image centered size='large' src={recipe.imageUrl} />
                       </div>
