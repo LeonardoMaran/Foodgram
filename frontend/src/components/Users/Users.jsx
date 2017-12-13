@@ -158,20 +158,18 @@ export class Users extends Component {
 														{followUserDiv}
                             <div className="UserText">
 																<Link key={index} style={{color: 'white'}}
-																			to={{ pathname: '/user_details/' + user.username,
+																			to={{ pathname: '/user_details',
 																					param: {
-																							user_id: user.id,
-																							user_index: index
+																							user_id: user._id
 																					}}}>
 																				<h2>{user.name}</h2>
 																</Link>
                             </div>
                             <div className="UserImage">
 															<Link key={index} style={{color: 'white'}}
-																		to={{ pathname: '/user_details/' + user.username,
+																		to={{ pathname: '/user_details',
 																				param: {
-																						user_id: user.id,
-																						user_index: index
+																						user_id: user._id
 																				}}}>
                                 		<Image size='medium' src={user.profilePicUrl} />
 															</Link>

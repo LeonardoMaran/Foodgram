@@ -8,6 +8,7 @@ import Users from './Users/Users.jsx';
 import Favorites from './Favorites/Favorites.jsx';
 import Profile from './Profile/Profile.jsx';
 import RecipesDetailed from './Recipes/RecipesDetailed.jsx';
+import UserDetails from './Users/UserDetails.jsx';
 
 require('../styles/main.css');
 
@@ -87,6 +88,7 @@ export class Main extends Component {
 							</div>
 						</header>
 						<Route path="/recipe_details" component={RecipesDetailed} />
+						<Route path="/user_details" component={UserDetails} />
 						<Route exact path="/" render={(props) => (
 								<Login handler={this.handler} />
 							)}/>
