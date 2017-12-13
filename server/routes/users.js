@@ -170,6 +170,31 @@ router.put('/favoriteRecipe/:id', function(req, res) {
     });
 });
 
+// DELETE A FAVORITED RECIPE FOR THIS USER
+router.put('/unfavoriteRecipe/:id', function(req, res) {
+    let query = userSchema.findById(req.params.id);
+    let recipeId = req.body.recipeId;
+
+    query.exec(function (err, user) {
+        if (err) {
+            sendError(res, err.message, 500);
+        } else {
+            user.favorites.pull(recipeId);
+            user.save(function (err, user) {
+                if (err) {
+                    let errorMessage = "Favorite not found";
+                    sendError(res, errorMessage, 404);
+                } else {
+                    res.status(200).send({
+                        message: 'Favorite deleted',
+                        data: user
+                    });
+                }
+            });
+        }
+    });
+});
+
 // PUT A FOLLOWING FOR THIS USER
 router.put('/following/:id', function(req, res) {
     let query = userSchema.findById(req.params.id);
