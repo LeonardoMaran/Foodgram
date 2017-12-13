@@ -101,6 +101,7 @@ export class Login extends Component {
 		                <div className="ui input"><input type="text" value={this.state.username} onChange={this.handleUpdateUser} placeholder="Username"/></div><br/>
 		                <div className="ui input"><input type="password"  value={this.state.password} onChange={this.handleUpdatePassword} placeholder="Password"/></div><br/>
 		                <div className="ui input"><input type="password" value={this.state.verify} onChange={this.handleUpdateVerify} placeholder="Verify Password"/></div><br/>
+				        <div className="ui input"><input type="text" value={this.state.url} onChange={this.handleUpdateUrl} placeholder="Link to profile photo"/></div><br/>
 		                <button className="SignupButton ui primary button" onClick = {this.handleRegister.bind(this)}>Sign Up</button>
                 	</div>
                 </Modal>
