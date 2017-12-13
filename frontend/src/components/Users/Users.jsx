@@ -44,12 +44,16 @@ export class Users extends Component {
         var users = [];
         for(var i = 0; i < this.state.users.length; i++) {
           if(this.state.searchBy === "name") {
-              if(this.state.users[i].name.toLowerCase().includes(event.currentTarget.value)
+              console.log(this.state.users[i].name.toLowerCase());
+              console.log(event.currentTarget.value.toLowerCase());
+              if(this.state.users[i].name.toLowerCase().indexOf(event.currentTarget.value.toLowerCase()) >= 0
                   && event.currentTarget.value !== '') {
                   users.push(this.state.users[i]);
               }
           } else {
-              if(this.state.users[i].username.toLowerCase().includes(event.currentTarget.value)
+              console.log(this.state.users[i].name.toLowerCase());
+              console.log(event.currentTarget.value);
+              if(this.state.users[i].username.toLowerCase().indexOf(event.currentTarget.value.toLowerCase()) >= 0
                   && event.currentTarget.value !== '') {
                   users.push(this.state.users[i]);
               }

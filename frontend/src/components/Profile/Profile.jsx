@@ -312,9 +312,9 @@ export class Profile extends Component {
                 	<div className="Modal">
 	                	<div className="ui input"><input type="text" value={this.state.title} onChange={this.handleUpdateTitle} placeholder="Title"/></div><br/>
 		                <div className="ui input"><input type="text" value={this.state.description} onChange={this.handleUpdateDescription} placeholder="Description"/></div><br/>
-		                <div className="ui input"><input type="text"  value={this.state.ingredients} onChange={this.handleUpdateIngredients} placeholder="Ingredients"/></div><br/>
+		                <div className="ui input"><input type="text"  value={this.state.ingredients} onChange={this.handleUpdateIngredients} placeholder='Ingredients with ","'/></div><br/>
 		                <div className="ui input"><input type="text" value={this.state.instructions} onChange={this.handleUpdateInstructions} placeholder="Instructions"/></div><br/>
-				        <div className="ui input"><input type="text" value={this.state.imageUrl} onChange={this.handleUpdateUrl} placeholder="Link to recipe photo"/></div><br/>
+				        <div className="ui input"><input type="text" value={this.state.imageUrl} onChange={this.handleUpdateUrl} placeholder="Link to recipe photo" width='400px'/></div><br/>
 		                <button className="SignupButton ui primary button" onClick = {this.handleAddRecipe.bind(this)}>Add</button>
                 	</div>
                 </Modal>

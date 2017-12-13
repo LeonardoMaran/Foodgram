@@ -51,13 +51,13 @@ export class Favorites extends Component {
         var favorites = [];
         for(var i = 0; i < this.state.recipes.length; i++) {
           if(this.state.searchBy === "title") {
-              if(this.state.recipes[i].title.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value !== '') {
+              if(this.state.recipes[i].title.toLowerCase().indexOf(event.currentTarget.value) >= 0 && event.currentTarget.value !== '') {
                   favorites.push(this.state.recipes[i]);
               }
           } else {
               var added = false;
               for(var j = 0; j < this.state.recipes[i].ingredients.length; j++) {
-                if(!added && this.state.recipes[i].ingredients[j].toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value !== '') {
+                if(!added && this.state.recipes[i].ingredients[j].toLowerCase().indexOf(event.currentTarget.value) >= 0 && event.currentTarget.value !== '') {
                     favorites.push(this.state.recipes[i]);
                     added = true;
                 }
