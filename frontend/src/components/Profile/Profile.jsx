@@ -146,6 +146,10 @@ export class Profile extends Component {
         });
     }
 
+    handleLogout(event) {
+        window.location = '/#/';
+    }
+
     render() {
 
     	let recipeCards = this.state.recipes.map((recipe, index) => {
@@ -252,14 +256,9 @@ export class Profile extends Component {
 					        </Item.Header>
 					        <Item.Description>Number of Followers: {this.state.followers}</Item.Description>
 					        <Item.Description>Number of Recipes: {this.state.recipes.length}</Item.Description>
-					      </Item.Content>
-					      <Item.Content verticalAlign='bottom'>
-					      	<Item.Extra>
-					          <Button floated='right'>
-					            Add Recipe
-					          </Button>
-					        </Item.Extra>
-					      </Item.Content>
+                            <Button className="ProfileButton">Add Recipe</Button>
+                            <Button className="ProfileButton" onClick={this.handleLogout}>Log out</Button>					       
+                          </Item.Content>
 					    </Item>
 					</Item.Group>
                 </div>

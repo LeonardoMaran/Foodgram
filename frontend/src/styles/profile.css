@@ -2,6 +2,7 @@
     margin-top: 30px;
 }
 
+
 .Bio {
     margin-left: 150px;
     margin-right: 200px;
@@ -112,4 +113,8 @@
     bottom: 0;
     text-align: center;
     color: white;
+}
+
+.ProfileButton {
+    margin-top: 2% !important;
 }
