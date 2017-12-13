@@ -154,23 +154,33 @@ export class Recipes extends Component {
 
             return (
               <div className="RecipeCard">
-                    <Link key={index}
-                          to={{
-                              pathname: '/recipe_details',
-                              param: {
-                                  recipe: recipe,
-                                  recipes: this.state.visible,
-                                  index : index
-                              }
-                          }}>
-                    </Link>
                     <div className="Recipe">
                         {favoriteImageDiv}
                         <div className="RecipeImage">
-                            <Image size='medium' src={recipe.imageUrl} />
+                          <Link key={index} style={{color: 'white'}}
+                                to={{
+                                    pathname: '/recipe_details',
+                                    param: {
+                                        recipe: recipe,
+                                        recipes: this.state.visible,
+                                        index : index
+                                    }
+                                }}>
+                                <Image size='medium' src={recipe.imageUrl} />
+                          </Link>
                         </div>
                         <div className="RecipeText">
+                          <Link key={index} style={{color: 'white'}}
+                                to={{
+                                    pathname: '/recipe_details',
+                                    param: {
+                                        recipe: recipe,
+                                        recipes: this.state.visible,
+                                        index : index
+                                    }
+                                }}>
                             <h2>{recipe.title}</h2>
+                          </Link>
                         </div>
                    </div>
               </div>

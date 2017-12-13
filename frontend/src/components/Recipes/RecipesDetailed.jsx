@@ -100,6 +100,7 @@ export class RecipesDetailed extends Component {
               if(typeof user === "undefined"){
                   user.name = "unknown";
                   user.profilePicUrl = "http://laoblogger.com/images/default-profile-picture-5.jpg";
+                  console.log(user.name);
               }
               return(
                   <div className="RecipesDetailed">
@@ -108,7 +109,7 @@ export class RecipesDetailed extends Component {
                       <div className="next" onClick={this.handleNext}>&#x21E8;</div>
                       <h1> {recipe.title}</h1>
                       <div className="RecipesImage">
-                          <Image centered size='large' src={recipe.imageUrl} />
+                          <Image centered size='medium' src={recipe.imageUrl} />
                       </div>
                       <div className="RecipesContent">
                           <Divider section></Divider>
@@ -126,7 +127,7 @@ export class RecipesDetailed extends Component {
                           <Divider section></Divider>
                           <div className="RecipesContentStuff">
                               <h2>Posted By:</h2>
-                              <img className="img-circle" src={user.profilePicUrl} />
+                              <Image centered size='tiny' src={user.profilePicUrl} />
                               <h3>{user.name}</h3>
                           </div>
                       </div>
