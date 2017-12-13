@@ -353,7 +353,9 @@ export class Profile extends Component {
                 <div className="Bio">
 	                <Item.Group>
 					    <Item>
-					      <Item.Image size='medium' src={this.state.profilePicUrl} />
+					      <Item.Image>
+					      	<div className="ProfPic"><Image size='medium' src={this.state.profilePicUrl} /></div>
+					      </Item.Image>
 					      <Item.Content verticalAlign='middle'>
 					        <Item.Header>
 					        	<h1 className="Names">{this.state.name}</h1>
@@ -368,8 +370,8 @@ export class Profile extends Component {
                 </div>
                 { recipeDisplay }
 	            { followingDisplay }
-	            <Modal show={this.state.modalOpen} onClose={this.toggleModal}>
-                	<div className="Modal">
+	            <Modal className="Modal" show={this.state.modalOpen} onClose={this.toggleModal}>
+                	<div>
 	                	<div className="ui input"><input type="text" value={this.state.title} onChange={this.handleUpdateTitle} placeholder="Title"/></div><br/>
 		                <div className="ui input"><input type="text" value={this.state.description} onChange={this.handleUpdateDescription} placeholder="Description"/></div><br/>
 		                <div className="ui input"><input type="text"  value={this.state.ingredients} onChange={this.handleUpdateIngredients} placeholder='Ingredients with ","'/></div><br/>

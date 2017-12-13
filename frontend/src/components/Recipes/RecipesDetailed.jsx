@@ -126,7 +126,7 @@ export class RecipesDetailed extends Component {
                           <Divider section></Divider>
                           <div className="RecipesContentStuff">
                               <h2>Posted By:</h2>
-                              <Image centered size='tiny' src={user.profilePicUrl} />
+                              <div className="UserPic"><Image size='tiny' src={user.profilePicUrl} /></div>
                               <h3>{user.name}</h3>
                           </div>
                       </div>
