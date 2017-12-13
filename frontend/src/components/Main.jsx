@@ -61,7 +61,7 @@ export class Main extends Component {
 	        	<Router>
 		        	<div className='Router'>
 			            <div className="NavBar" style = {headerStyle}>
-			                <span className="nav_title">Foodgram</span>
+			                <span className="nav_title">Foodgram<i class="fa fa-cutlery" aria-hidden="true"></i></span>
 			                <span><Link to="/profile">Profile</Link></span>
 			                <span><Link to="/favorites">Favorites</Link></span>
 			                <span><Link to="/users">Users</Link></span>
