@@ -147,25 +147,26 @@ export class Recipes extends Component {
             }
 
             return (
-                <Link key={index}
-                      to={{
-                          pathname: '/recipe_details',
-                          param: {
-                              recipe: recipe,
-                              recipes: this.state.visible,
-                              index : index
-                          }
-                      }}>
                     <div className="Recipe">
-                        <div className="RecipeText">
-                            <h2>{recipe.title}</h2>
-                        </div>
                         {favoriteImageDiv}
-                        <div className="RecipeImage">
-                            <Image size='medium' src={recipe.imageUrl} />
-                        </div>
+                        <Link key={index}
+                              to={{
+                                  pathname: '/recipe_details',
+                                  param: {
+                                      recipe: recipe,
+                                      recipes: this.state.visible,
+                                      index : index
+                                  }
+                              }}>
+                              <div className="RecipeText">
+                                  <h2>{recipe.title}</h2>
+                              </div>
+                              <div className="RecipeImage">
+                                  <Image size='medium' src={recipe.imageUrl} />
+                              </div>
+                        </Link>
                     </div>
-                </Link>
+
             );
         });
 
