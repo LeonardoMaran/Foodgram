@@ -174,11 +174,10 @@ export class Recipes extends Component {
                 {topButtonDiv}
                 <Divider section></Divider>
                 <div className="Found">
-                    <Grid centered relaxed padded='horizontally'
-                          verticalAlign='middle' columns='equal'>
+                    <Grid centered relaxed padded='horizontally' verticalAlign='middle' columns='equal'>
                         {recipeCards}
-                      </Grid>
-                  </div>
+                    </Grid>
+                </div>
             </div>
         );
     }
