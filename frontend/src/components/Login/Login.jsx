@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
-import {Input, Image} from 'semantic-ui-react'
+import {Input} from 'semantic-ui-react'
 import axios from 'axios';
 
-import styles from '../../styles/login.css';
+import '../../styles/login.css';
+
 import Modal from '../Modal/Modal.jsx'
 
 export class Login extends Component {

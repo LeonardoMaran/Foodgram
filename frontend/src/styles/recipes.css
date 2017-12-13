@@ -1,3 +1,16 @@
+.Recipes {
+    margin-top: 30px;
+}
+.search_bar {
+    width: 70%;
+}
+.sort_text {
+    display: inline-block;
+    margin-right: 10px;
+}
+.sort_menu {
+    display: inline-block;
+}
 .Recipe {
     display: block;
     height: auto;
@@ -14,13 +27,8 @@
     transition: .2s ease-in-out;
 }
 
-.search_bar {
-    width: 70%;
-}
-.sort_menu {
-    margin-bottom: 30px;
-}
 .Found {
+    margin-top: 40px;
     margin-bottom: 30px;
 }
 .RecipeImage {

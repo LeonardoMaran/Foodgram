@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Input, Dropdown, List, Image } from 'semantic-ui-react';
+import { Input, Dropdown, Image, Grid, Divider} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import styles from '../../styles/users.css';
+import '../../styles/users.css';
 
 export class Users extends Component {
 
@@ -20,7 +20,6 @@ export class Users extends Component {
     }
 
     componentWillMount(){
-
         getUsers()
             .then(function(response) {
                 this.setState({users: response.data.data, visible: response.data.data});
@@ -81,25 +80,33 @@ export class Users extends Component {
                 <h1>Users</h1>
                 <div className="Search">
                     <Input className='search_bar' type='text' placeholder='Search users...' onChange={this.searchUsers} />
-                    <p>Search By</p>
-                    <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
-                </div>
-                <div className="Found">
-                    <List horizontal animated relaxed="very">
-                        { this.state.visible.map((user, index) => (
-                            <List.Item key={index}>
-                                      <div className="User">
-                                          <div className="UserText">
-                                              <h2>{user.name}</h2>
-                                          </div>
-                                          <div className="UserImage">
-                                              <Image inline size='medium' src={user.profilePicUrl} />
-                                          </div>
-                                      </div>
-                            </List.Item>
-                         ))}
-                      </List>
-                </div>
+										<div className="SortBy">
+									    	<p className="sort_text">Search By</p>
+		                    <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
+										</div>
+								</div>
+								<Divider section></Divider>
+								<div className="Found">
+										<Grid centered relaxed padded='vertically' padded='horizontally'
+													verticalAlign='middle' columns='equal'>
+												{ this.state.visible.map((user, index) => (
+														<Link key={index} to={{ pathname: '/user/' + user.name,
+																				param: {  user_id : user.id,
+																									user_index : index
+																							  }
+																			}}>
+																			<div className="User">
+																					<div className="UserText">
+																							<h2>{user.name}</h2>
+																					</div>
+																					<div className="UserImage">
+																							<Image size='medium' src={user.profilePicUrl} />
+																					</div>
+																			</div>
+															</Link>
+												 ))}
+											</Grid>
+									</div>
             </div>
         );
     }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Input, Dropdown, List, Image, Grid, Segment} from 'semantic-ui-react';
+import { Input, Dropdown, Image, Grid, Divider} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import styles from '../../styles/recipes.css';
+import '../../styles/recipes.css';
 
 export class Recipes extends Component {
 
@@ -20,7 +20,6 @@ export class Recipes extends Component {
     }
 
     componentWillMount(){
-
         getRecipes()
             .then(function(response) {
                 this.setState({recipes: response.data.data, visible: response.data.data});
@@ -84,16 +83,19 @@ export class Recipes extends Component {
                 <h1>Recipes</h1>
                 <div className="Search">
                     <Input className='search_bar' type='text' placeholder='Search recipes...' onChange={this.searchRecipes} />
-                    <p>Search By</p>
-                    <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
+                    <div className="SortBy">
+                        <p className="sort_text">Search By:</p>
+                        <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
+                   </div>
                 </div>
+                <Divider section></Divider>
                 <div className="Found">
                     <Grid centered relaxed padded='vertically' padded='horizontally'
                           verticalAlign='middle' columns='equal'>
                         { this.state.visible.map((recipe, index) => (
                             <Link key={index} to={{ pathname: '/recipe/' + recipe.title,
-                                        param: {  results : recipe._id,
-                                                  index : index
+                                        param: {  recipe_id : recipe._id,
+                                                  recipe_index : index
                                                 }
                                       }}>
                                       <div className="Recipe">
