@@ -124,6 +124,7 @@ export class Profile extends Component {
 
         let followUser = this.state.following[idx];
         let followUserId = followUser._id;
+        var id = this.state.followingId
         // follow user
         let url = 'http://localhost:4000/api/users/follow/' + this.state.currentUser;
         axios.put(url, {
@@ -131,9 +132,11 @@ export class Profile extends Component {
         }).then(function(response) {
             // Log response
             let user = response.data.data;
-						this.setState({
-								following : user.following
-						});
+					id.push(id.indexOf(followUserId));
+					this.setState({
+							following : user.following,
+							followingId: id
+					});
         }.bind(this))
             .catch(function(error) {
                 // Log response
@@ -146,6 +149,8 @@ export class Profile extends Component {
 
         let unfollowUser = this.state.following[idx];
         let unfollowUserId = unfollowUser._id;
+        var id = this.state.followingId
+        var following = this.state.following;
         // unfollow user
         // follow user
         let url = 'http://localhost:4000/api/users/unfollow/' + this.state.currentUser;
@@ -153,8 +158,14 @@ export class Profile extends Component {
             followingId: unfollowUserId
         }).then(function(response) {
 					let user = response.data.data;
+					id.splice(id.indexOf(unfollowUserId), 1);
+					for (var i = 0; i < following.length; i++) {
+						if(following[i]._id === unfollowUserId)
+							following.splice(i, 1);
+					}
 					this.setState({
-							following : user.following
+							following : following,
+							followingId: id
 					});
         }.bind(this))
             .catch(function(error) {
@@ -275,14 +286,14 @@ export class Profile extends Component {
 
 	    let userCards =
             this.state.following.map((user, index) => {
-    	        if (user._id === this.state.currentUserId) {
+    	        if (user._id === this.state.currentUser) {
     	            // This user should not be shown
     	            return;
                 }
 
                 let userId = user._id;
                 let followUserDiv;
-                if (this.state.following.indexOf(userId) !== -1) {
+                if (this.state.followingId.indexOf(userId) !== -1) {
                     followUserDiv =
                         <div className="UserStar" onClick={this.unfollowClick.bind(this, index)}>
                             <i className="fa fa-star fa-3x"></i>

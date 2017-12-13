@@ -89,6 +89,7 @@ export class Favorites extends Component {
 
 		        let favoritedRecipe = this.state.visible[idx];
 		        let recipeId = favoritedRecipe._id;
+            var visible = this.state.visible;
 		        // check if this recipe is favorited or unfavorited
 		        if (this.state.favorites.indexOf(recipeId) !== -1) {
 		            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUser;
@@ -97,29 +98,18 @@ export class Favorites extends Component {
 		            }).then(function(response) {
 		                // Log response
 		                let user = response.data.data;
+                    for (var i = 0; i < visible.length; i++) {
+                      if(visible[i]._id === recipeId)
+                        visible.splice(i, 1);
+                    }
 		                this.setState({
-		                    favorites: user.favorites, visible: user.favorites
+		                    favorites: user.favorites, visible: visible
 		                });
 		            }.bind(this))
 		                .catch(function(error) {
 		                    // Log response
 		                    console.log(error);
 		                });
-		        } else {
-		            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUser;
-		            axios.put(url, {
-		                recipeId: recipeId
-		            }).then(function(response) {
-		                // Log response
-		                let user = response.data.data;
-		                this.setState({
-		                    favorites: user.favorites, visible: user.favorites
-		                });
-		            }.bind(this))
-		            .catch(function(error) {
-		                // Log response
-		                console.log(error);
-		            });
 		        }
 		    }
     render() {
