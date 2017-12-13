@@ -10,7 +10,7 @@ export class Users extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-            currentUser: props.user,
+            currentUserId: props.user,
             users: [],
             visible: [],
             following: [],
@@ -18,6 +18,8 @@ export class Users extends Component {
         };
         this.searchUsers = this.searchUsers.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.followClick = this.followClick.bind(this);
+        this.unfollowClick = this.unfollowClick.bind(this);
     }
 
     componentWillMount(){
@@ -42,11 +44,13 @@ export class Users extends Component {
         var users = [];
         for(var i = 0; i < this.state.users.length; i++) {
           if(this.state.searchBy === "name") {
-              if(this.state.users[i].name.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value !== '') {
+              if(this.state.users[i].name.toLowerCase().includes(event.currentTarget.value)
+                  && event.currentTarget.value !== '') {
                   users.push(this.state.users[i]);
               }
           } else {
-              if(this.state.users[i].username.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value !== '') {
+              if(this.state.users[i].username.toLowerCase().includes(event.currentTarget.value)
+                  && event.currentTarget.value !== '') {
                   users.push(this.state.users[i]);
               }
           }
@@ -71,6 +75,45 @@ export class Users extends Component {
         }
     }
 
+    followClick(idx, e) {
+        e.stopPropagation();
+
+        let followUser = this.state.visible[idx];
+        let followUserId = followUser._id;
+        // follow user
+        let url = 'http://localhost:4000/api/users/follow/' + this.state.currentUserId;
+        axios.put(url, {
+            followingId: followUserId
+        }).then(function(response) {
+            // Log response
+            console.log(response.data.message);
+        }.bind(this))
+            .catch(function(error) {
+                // Log response
+                console.log(error);
+            });
+    }
+
+    unfollowClick(idx, e) {
+        e.stopPropagation();
+
+        let unfollowUser = this.state.visible[idx];
+        let unfollowUserId = unfollowUser._id;
+        // unfollow user
+        // follow user
+        let url = 'http://localhost:4000/api/users/unfollow/' + this.state.currentUserId;
+        axios.put(url, {
+            followingId: unfollowUserId
+        }).then(function(response) {
+            // Log response
+            console.log(response.data.message);
+        }.bind(this))
+            .catch(function(error) {
+                // Log response
+                console.log(error);
+            });
+    }
+
     render() {
     	const sortOptions = [
             {
@@ -82,41 +125,75 @@ export class Users extends Component {
               value: 'username'
             }
         ];
+
+    	let userCards =
+            this.state.visible.map((user, index) => {
+    	        if (user._id === this.state.currentUserId) {
+    	            // This user should not be shown
+    	            return;
+                }
+
+                let userId = user._id;
+                let followUserDiv;
+                if (this.state.following.indexOf(userId) !== -1) {
+                    followUserDiv =
+                        <div className="UserStar" onClick={this.unfollowClick.bind(this, index)}>
+                            <i className="fa fa-star fa-3x"></i>
+                        </div>
+                } else {
+                    followUserDiv =
+                        <div className="UserStar" onClick={this.followClick.bind(this, index)}>
+                            <i className="fa fa-star-o fa-3x"></i>
+                        </div>
+                }
+
+                return (
+                    <Link key={index}
+                          to={{ pathname: '/user/' + user.username,
+                              param: {
+                                  user_id: user.id,
+                                  user_index: index
+                              }}}>
+                        <div className="User">
+                            <div className="UserText">
+                                <h2>{user.name}</h2>
+                            </div>
+                            {followUserDiv}
+                            <div className="UserImage">
+                                <Image size='medium' src={user.profilePicUrl} />
+                            </div>
+                        </div>
+                    </Link>
+                )
+            });
+
         return(
             <div className="Users">
                 <h1>Users</h1>
                 <div className="Search">
-                    <Input className='search_bar' type='text' placeholder='Search users...' onChange={this.searchUsers} />
-										<div className="SortBy">
-									    	<p className="sort_text">Search By:</p>
-		                    <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
-										</div>
-								</div>
-								<Divider section></Divider>
-								<div className="Found">
-										<Grid centered relaxed padded='vertically' padded='horizontally'
-													verticalAlign='middle' columns='equal'>
-												{ this.state.visible.map((user, index) => (
-														<Link key={index} to={{ pathname: '/user/' + user.username,
-																				param: {  user_id : user.id,
-																									user_index : index
-																							  }
-																			}}>
-																			<div className="User">
-																					<div className="UserText">
-																							<h2>{user.name}</h2>
-																					</div>
-																					<div className="UserStar">
-																							<i class="fa fa-star-o fa-3x"></i>
-																					</div>
-																					<div className="UserImage">
-																							<Image size='medium' src={user.profilePicUrl} />
-																					</div>
-																			</div>
-															</Link>
-												 ))}
-											</Grid>
-									</div>
+                    <Input className='search_bar'
+                           type='text'
+                           placeholder='Search users...'
+                           onChange={this.searchUsers} />
+                    <div className="SortBy">
+                        <p className="sort_text">Search By:</p>
+		                    <Dropdown
+                                className='sort_menu'
+                                defaultValue={sortOptions[0].value}
+                                onChange={this.handleChange} search selection
+                                options={sortOptions} />
+                    </div>
+                </div>
+                <Divider section></Divider>
+                <div className="Found">
+                        <Grid centered
+                              relaxed
+                              padded='vertically'
+                              verticalAlign='middle'
+                              columns='equal'>
+                            {userCards}
+                        </Grid>
+                    </div>
             </div>
         );
     }

@@ -10,7 +10,7 @@ export class Recipes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentUser: props.user,
+            currentUserId: props.user,
             recipes: [],
             visible: [],
             favorites: [],
@@ -29,7 +29,7 @@ export class Recipes extends Component {
             .catch(function(error) {
                 console.log(error);
             });
-        const url = 'http://localhost:4000/api/users/favorites/' + this.props.user;
+        const url = 'http://localhost:4000/api/users/favorites/' + this.state.currentUserId;
         axios.get(url)
             .then(function(response) {
                 this.setState({favorites: response.data.data});
@@ -80,13 +80,25 @@ export class Recipes extends Component {
         e.stopPropagation();
 
         let favoritedRecipe = this.state.visible[idx];
-        let id = favoritedRecipe._id;
-        // Now add this id to user's favorite list
-        let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUser;
-        axios.put(url, {
-                recipeId: id
-            })
-            .then(function(response) {
+        let recipeId = favoritedRecipe._id;
+        // check if this recipe is favorited or unfavorited
+        if (this.state.favorites.indexOf(recipeId) !== -1) {
+            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUserId;
+            axios.put(url, {
+                recipeId: recipeId
+            }).then(function(response) {
+                // Log response
+                console.log(response.data.message);
+            }.bind(this))
+                .catch(function(error) {
+                    // Log response
+                    console.log(error);
+                });
+        } else {
+            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUserId;
+            axios.put(url, {
+                recipeId: recipeId
+            }).then(function(response) {
                 // Log response
                 console.log(response.data.message);
             }.bind(this))
@@ -94,6 +106,7 @@ export class Recipes extends Component {
                 // Log response
                 console.log(error);
             });
+        }
     }
 
 
@@ -122,35 +135,39 @@ export class Recipes extends Component {
             let recipeId = recipe._id;
             let favoriteImageDiv;
             if (this.state.favorites.indexOf(recipeId) !== -1) {
-                favoriteImageDiv = <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
-                    <i className="fa fa-heart fa-3x"></i>
-                </div>
+                favoriteImageDiv =
+                    <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
+                        <i className="fa fa-heart fa-3x"></i>
+                    </div>
             } else {
-                favoriteImageDiv = <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
-                    <i className="fa fa-heart-o fa-3x"></i>
-                </div>
+                favoriteImageDiv =
+                    <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
+                        <i className="fa fa-heart-o fa-3x"></i>
+                    </div>
             }
 
             return (
-                <Link key={index}
-                      to={{
-                          pathname: '/recipe/' + recipe.title,
-                          param: {
-                              recipe_id : recipe._id,
-                              recipe_index : index
-                          }
-                      }}>
                     <div className="Recipe">
-                        <div className="RecipeText">
-                            <h2>{recipe.title}</h2>
-                        </div>
                         {favoriteImageDiv}
-                        <div className="RecipeImage">
-                            <Image size='medium' src={recipe.imageUrl} />
-                        </div>
+                        <Link key={index}
+                              to={{
+                                  pathname: '/recipe_details',
+                                  param: {
+                                      recipe: recipe,
+                                      recipes: this.state.visible,
+                                      index : index
+                                  }
+                              }}>
+                              <div className="RecipeText">
+                                  <h2>{recipe.title}</h2>
+                              </div>
+                              <div className="RecipeImage">
+                                  <Image size='medium' src={recipe.imageUrl} />
+                              </div>
+                        </Link>
                     </div>
-                </Link>
-            )
+
+            );
         });
 
         return(
@@ -159,32 +176,10 @@ export class Recipes extends Component {
                 {topButtonDiv}
                 <Divider section></Divider>
                 <div className="Found">
-                    <Grid centered relaxed padded='horizontally'
-                          verticalAlign='middle' columns='equal'>
-                        { this.state.visible.map((recipe, index) => (
-                            <Link key={index} to={{ pathname: '/recipe_details',
-                                        param: {  recipe : recipe,
-                                                  recipes: this.state.visible,
-                                                  index : index,
-                                                  user : this.props.user
-                                                }
-                                      }}>
-                                      <div className="Recipe">
-                                          <div className="RecipeText">
-                                              <h2>{recipe.title}</h2>
-                                          </div>
-                                          <div className="RecipeHeart">
-                                              <i className="fa fa-heart-o fa-3x"></i>
-                                          </div>
-                                          <div className="RecipeImage">
-                                              <Image size='medium' src={recipe.imageUrl} />
-                                          </div>
-                                      </div>
-                              </Link>
-                         ))}
+                    <Grid centered relaxed padded='horizontally' verticalAlign='middle' columns='equal'>
                         {recipeCards}
-                      </Grid>
-                  </div>
+                    </Grid>
+                </div>
             </div>
         );
     }
