@@ -138,12 +138,12 @@ export class Users extends Component {
                 if (this.state.following.indexOf(userId) !== -1) {
                     followUserDiv =
                         <div className="UserStar" onClick={this.unfollowClick.bind(this, index)}>
-                            <i class="fa fa-star fa-3x"></i>
+                            <i className="fa fa-star fa-3x"></i>
                         </div>
                 } else {
                     followUserDiv =
                         <div className="UserStar" onClick={this.followClick.bind(this, index)}>
-                            <i class="fa fa-star-o fa-3x"></i>
+                            <i className="fa fa-star-o fa-3x"></i>
                         </div>
                 }
 

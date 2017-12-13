@@ -149,10 +149,11 @@ export class Recipes extends Component {
             return (
                 <Link key={index}
                       to={{
-                          pathname: '/recipe/' + recipe.title,
+                          pathname: '/recipe_details',
                           param: {
-                              recipe_id : recipe._id,
-                              recipe_index : index
+                              recipe: recipe,
+                              recipes: this.state.visible,
+                              index : index
                           }
                       }}>
                     <div className="Recipe">
@@ -165,7 +166,7 @@ export class Recipes extends Component {
                         </div>
                     </div>
                 </Link>
-            )
+            );
         });
 
         return(
