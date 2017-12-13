@@ -174,7 +174,7 @@ export class Recipes extends Component {
                                               <h2>{recipe.title}</h2>
                                           </div>
                                           <div className="RecipeHeart">
-                                              <i class="fa fa-heart-o fa-3x"></i>
+                                              <i className="fa fa-heart-o fa-3x"></i>
                                           </div>
                                           <div className="RecipeImage">
                                               <Image size='medium' src={recipe.imageUrl} />
