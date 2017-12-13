@@ -98,6 +98,9 @@ export class Users extends Component {
 																					<div className="UserText">
 																							<h2>{user.name}</h2>
 																					</div>
+																					<div className="UserStar">
+																							<i class="fa fa-star-o fa-3x"></i>
+																					</div>
 																					<div className="UserImage">
 																							<Image size='medium' src={user.profilePicUrl} />
 																					</div>
