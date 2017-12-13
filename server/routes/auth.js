@@ -16,13 +16,10 @@ module.exports = function (router) {
 	*/
 	regRoute.post(function(req, res) {
 
-		// Encrypt password with Bcrypt's hashing method
-		var hashedPassword = bcrypt.hashSync(req.body.password, 8);
-
 		User.create({
 			name: req.body.name,
 			username: req.body.username,
-			password: hashedPassword
+			password: req.body.password
 		}, function(err, user) {
 			if (err) return res.status(500).send({message: 'There was a problem registering the user.', data: err}); // 500 Server Error
 
@@ -62,7 +59,7 @@ module.exports = function (router) {
 			if (!user) return res.status(404).send({message: 'User not found.', data: []}); // 404 Not Found
 
 			// Check if provided password is valid
-			var passwordValid = bcrypt.compareSync(req.body.password, user.password);
+			var passwordValid = (req.body.password === user.password);
 			if(!passwordValid) return res.status(401).send({message: 'Invalid password.', auth: false, token: null, data: []});
 
 			var token = jwt.sign({id: user._id}, secrets.secret, {
