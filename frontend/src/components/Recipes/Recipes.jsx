@@ -131,10 +131,8 @@ export class Recipes extends Component {
                     <div className="RecipeText">
                         <h2>{recipe.title}</h2>
                     </div>
-                    <div className="RecipeHeart">
-                        <Button id="favorite" onClick={this.favoriteClick.bind(this, index)}>
-                            Favorite
-                        </Button>
+                    <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
+                        <i className="fa fa-heart-o fa-3x"></i>
                     </div>
                     <div className="RecipeImage">
                         <Image size='medium' src={recipe.imageUrl} />
