@@ -7,6 +7,7 @@ import Recipes from './Recipes/Recipes.jsx';
 import Users from './Users/Users.jsx';
 import Favorites from './Favorites/Favorites.jsx';
 import Profile from './Profile/Profile.jsx';
+import RecipesDetailed from './Recipes/RecipesDetailed.jsx';
 
 require('../styles/main.css');
 
@@ -22,21 +23,21 @@ export class Main extends Component {
 	}
 
 	handler(username) {
-		const user = '';
-		const url = 'http://localhost:3000/api/users?&where={"username":"' + username + '"}';
-		axios.get(url)
-		.then(function(response) {
-                this.setState({id: response.data.data[0]._id});
-            }.bind(this))
-            .catch(function(error) {
-                console.log(error);
-        });
+				const user = '';
+				const url = 'http://localhost:3000/api/users?&where={"username":"' + username + '"}';
+				axios.get(url)
+				.then(function(response) {
+		                this.setState({id: response.data.data[0]._id});
+		            }.bind(this))
+		            .catch(function(error) {
+		                console.log(error);
+		        });
 
-    	this.setState({ 
-    		show: "block", 
-    		id: user
-    	});
-    	window.location = '/#/recipes';
+		    	this.setState({
+		    		show: "block",
+		    		id: user
+		    	});
+		    	window.location = '/#/recipes';
 	}
 
     render(){
@@ -57,24 +58,25 @@ export class Main extends Component {
         }
 
         return(
-        	<Router>
-		        <div className='Router'>
-		            <div className="NavBar" style = {headerStyle}>
-		                <span className="nav_title">Foodgram</span>
-		                <span><Link to="/profile">Profile</Link></span>
-		                <span><Link to="/favorites">Favorites</Link></span>
-		                <span><Link to="/users">Users</Link></span>
-		                <span><Link to="/recipes">Recipes</Link></span>
-		            </div>
-		            <Route exact path="/" render={(props) => (
-  						<Login handler={this.handler} />
-					)}/>
-					{recipeRoute}
-					{userRoute}
-					{favoriteRoute}
-					{profileRoute}
-		        </div>
-		    </Router>
+	        	<Router>
+		        	<div className='Router'>
+			            <div className="header" style = {headerStyle}>
+			                <span className="nav_title">Foodgram</span>
+			                <span><Link to="/profile">Profile</Link></span>
+			                <span><Link to="/favorites">Favorites</Link></span>
+			                <span><Link to="/users">Users</Link></span>
+			                <span><Link to="/recipes">Recipes</Link></span>
+			            </div>
+							<Route path="/recipe_details" component={RecipesDetailed} />
+		            		<Route exact path="/" render={(props) => (
+	  								<Login handler={this.handler} />
+								)}/>
+							{recipeRoute}
+							{userRoute}
+							{favoriteRoute}
+							{profileRoute}
+			        </div>
+		    	</Router>
         );
     }
 }
