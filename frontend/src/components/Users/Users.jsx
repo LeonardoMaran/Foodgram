@@ -63,7 +63,6 @@ export class Users extends Component {
     }
 
     render() {
-
     	const sortOptions = [
             {
               text: 'Name',
@@ -74,7 +73,7 @@ export class Users extends Component {
               value: 'username'
             }
         ];
-
+				var userprof = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg";
         return(
             <div className="Users">
                 <h1>Users</h1>

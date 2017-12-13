@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Dropdown, Image, Grid, Divider} from 'semantic-ui-react';
+import { Input, Dropdown, Image, Grid, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -101,6 +101,9 @@ export class Recipes extends Component {
                                       <div className="Recipe">
                                           <div className="RecipeText">
                                               <h2>{recipe.title}</h2>
+                                          </div>
+                                          <div className="RecipeHeart">
+                                              <i class="fa fa-heart-o fa-3x"></i>
                                           </div>
                                           <div className="RecipeImage">
                                               <Image size='medium' src={recipe.imageUrl} />

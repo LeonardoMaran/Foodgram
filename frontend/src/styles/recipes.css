@@ -1,5 +1,8 @@
+
 .Recipes {
     margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 .search_bar {
     width: 70%;
@@ -19,17 +22,22 @@
     position: relative;
     margin: 5px;
 }
-
 .Recipe:hover {
     border: 1px solid rgba(0,0,0,0.5);
     background-color: rgba(0, 0, 0, 0.4);
     transform: translateY(-3px);
     transition: .2s ease-in-out;
 }
-
 .Found {
     margin-top: 40px;
     margin-bottom: 30px;
+}
+.RecipeHeart {
+    color: red;
+    z-index: 10;
+    position: absolute;
+    right: 0;
+    margin: 10px;
 }
 .RecipeImage {
     z-index: -1;
