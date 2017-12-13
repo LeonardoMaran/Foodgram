@@ -26,7 +26,7 @@ export class RecipesDetailed extends Component {
             });
             getUser(this.props.location.param.recipe.postedBy)
                   .then(function(response) {
-                      this.setState({user: response.data.data});
+                      this.setState({ user: response.data.data });
                   }.bind(this))
                   .catch(function(error) {
                         console.log(error);
@@ -50,6 +50,13 @@ export class RecipesDetailed extends Component {
                   index : JSON.stringify(recipes.length-1)
               });
           }
+          getUser(recipe.postedBy)
+                .then(function(response) {
+                    this.setState({ user: response.data.data });
+                }.bind(this))
+                .catch(function(error) {
+                      console.log(error);
+                });
       }
       handleNext(){
           let recipes = JSON.parse(this.state.recipes);
@@ -68,6 +75,13 @@ export class RecipesDetailed extends Component {
                    index : JSON.stringify(0)
               });
           }
+          getUser(recipe.postedBy)
+                .then(function(response) {
+                    this.setState({ user: response.data.data });
+                }.bind(this))
+                .catch(function(error) {
+                      console.log(error);
+                });
       }
       render() {
           if(JSON.parse(this.state.index) === -1)
@@ -82,7 +96,8 @@ export class RecipesDetailed extends Component {
               let recipes = JSON.parse(this.state.recipes);
               let recipe = JSON.parse(this.state.recipe);
               let index = JSON.parse(this.state.index);
-              //let user = getUser(recipe.postedBy);
+              let user = this.state.user;
+              console.log(user);
               return(
                   <div className="RecipesDetailed">
                       <h1> {index+1} / {recipes.length}</h1>
@@ -108,7 +123,8 @@ export class RecipesDetailed extends Component {
                           <Divider section></Divider>
                           <div className="RecipesContentStuff">
                               <h2>Posted By:</h2>
-                              <p>{}</p>
+                              <img className="img-circle" src={user.profilePicUrl} />
+                              <h3>{user.name}</h3>
                           </div>
                       </div>
                   </div>

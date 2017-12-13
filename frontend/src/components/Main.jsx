@@ -65,10 +65,10 @@ export class Main extends Component {
 								<a href="" id="logo_text">Foodgram <i class="fa fa-cutlery" aria-hidden="true"></i></a>
 								<nav>
 									<ul className="nav_bar_items">
-										<li><Link to="/profile"><p>Profile</p></Link></li>
-										<li><Link to="/favorites"><p>Favorites</p></Link></li>
-										<li><Link to="/users"><p>Users</p></Link></li>
-										<li><Link to="/recipes"><p>Recipes</p></Link></li>
+										<li><Link to="/profile"><p className="navLinks">Profile</p></Link></li>
+										<li><Link to="/favorites"><p className="navLinks">Favorites</p></Link></li>
+										<li><Link to="/users"><p className="navLinks">Users</p></Link></li>
+										<li><Link to="/recipes"><p className="navLinks">Recipes</p></Link></li>
 									</ul>
 								</nav>
 							</div>

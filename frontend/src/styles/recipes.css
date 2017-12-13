@@ -24,7 +24,6 @@
 }
 .Recipe:hover {
     border: 1px solid rgba(0,0,0,0.5);
-    background-color: rgba(0, 0, 0, 0.4);
     transform: translateY(-3px);
     transition: .2s ease-in-out;
 }
@@ -45,7 +44,7 @@
 .RecipeText {
     z-index: 2;
     padding: 10px;
-    width: 100%;
+    width: 80%;
     height: auto;
     background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
