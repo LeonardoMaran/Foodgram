@@ -118,28 +118,40 @@ export class Recipes extends Component {
                 </div>
             </div>;
 
-        let recipeCards = this.state.visible.map((recipe, index) => (
-            <Link key={index}
-                  to={{
-                      pathname: '/recipe/' + recipe.title,
-                      param: {
-                          recipe_id : recipe._id,
-                          recipe_index : index
-                      }
-                  }}>
-                <div className="Recipe">
-                    <div className="RecipeText">
-                        <h2>{recipe.title}</h2>
-                    </div>
-                    <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
-                        <i className="fa fa-heart-o fa-3x"></i>
-                    </div>
-                    <div className="RecipeImage">
-                        <Image size='medium' src={recipe.imageUrl} />
-                    </div>
+        let recipeCards = this.state.visible.map((recipe, index) => {
+            let recipeId = recipe._id;
+            let favoriteImageDiv;
+            if (this.state.favorites.indexOf(recipeId) !== -1) {
+                favoriteImageDiv = <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
+                    <i className="fa fa-heart fa-3x"></i>
                 </div>
-            </Link>
-        ));
+            } else {
+                favoriteImageDiv = <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
+                    <i className="fa fa-heart-o fa-3x"></i>
+                </div>
+            }
+
+            return (
+                <Link key={index}
+                      to={{
+                          pathname: '/recipe/' + recipe.title,
+                          param: {
+                              recipe_id : recipe._id,
+                              recipe_index : index
+                          }
+                      }}>
+                    <div className="Recipe">
+                        <div className="RecipeText">
+                            <h2>{recipe.title}</h2>
+                        </div>
+                        {favoriteImageDiv}
+                        <div className="RecipeImage">
+                            <Image size='medium' src={recipe.imageUrl} />
+                        </div>
+                    </div>
+                </Link>
+            )
+        });
 
         return(
             <div className="Recipes">
