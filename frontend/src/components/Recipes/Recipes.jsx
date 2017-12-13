@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Dropdown, Image, Grid, Divider} from 'semantic-ui-react';
+import { Input, Dropdown, Image, Grid, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -10,9 +10,10 @@ export class Recipes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentUser: "samhanke",
+            currentUser: props.user,
             recipes: [],
             visible: [],
+            favorites: [],
             searchBy: ""
         };
         this.searchRecipes = this.searchRecipes.bind(this);
@@ -23,6 +24,14 @@ export class Recipes extends Component {
         getRecipes()
             .then(function(response) {
                 this.setState({recipes: response.data.data, visible: response.data.data});
+            }.bind(this))
+            .catch(function(error) {
+                console.log(error);
+        });
+        const url = 'http://localhost:4000/api/users/favorites/' + this.props.user;
+        axios.get(url)
+            .then(function(response) {
+                this.setState({favorites: response.data.data});
             }.bind(this))
             .catch(function(error) {
                 console.log(error);
@@ -101,6 +110,9 @@ export class Recipes extends Component {
                                       <div className="Recipe">
                                           <div className="RecipeText">
                                               <h2>{recipe.title}</h2>
+                                          </div>
+                                          <div className="RecipeHeart">
+                                              <i class="fa fa-heart-o fa-3x"></i>
                                           </div>
                                           <div className="RecipeImage">
                                               <Image size='medium' src={recipe.imageUrl} />

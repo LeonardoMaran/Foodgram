@@ -10,9 +10,10 @@ export class Users extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-            currentUser: "samhanke",
+            currentUser: props.user,
             users: [],
             visible: [],
+            following: [],
             searchBy: ""
         };
         this.searchUsers = this.searchUsers.bind(this);
@@ -23,6 +24,14 @@ export class Users extends Component {
         getUsers()
             .then(function(response) {
                 this.setState({users: response.data.data, visible: response.data.data});
+            }.bind(this))
+            .catch(function(error) {
+                console.log(error);
+        });
+        const url = 'http://localhost:4000/api/users/following/' + this.props.user;
+        axios.get(url)
+            .then(function(response) {
+                this.setState({following: response.data.data});
             }.bind(this))
             .catch(function(error) {
                 console.log(error);
@@ -63,7 +72,6 @@ export class Users extends Component {
     }
 
     render() {
-
     	const sortOptions = [
             {
               text: 'Name',
@@ -74,7 +82,7 @@ export class Users extends Component {
               value: 'username'
             }
         ];
-
+				var userprof = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg";
         return(
             <div className="Users">
                 <h1>Users</h1>
@@ -98,6 +106,9 @@ export class Users extends Component {
 																			<div className="User">
 																					<div className="UserText">
 																							<h2>{user.name}</h2>
+																					</div>
+																					<div className="UserStar">
+																							<i class="fa fa-star-o fa-3x"></i>
 																					</div>
 																					<div className="UserImage">
 																							<Image size='medium' src={user.profilePicUrl} />
