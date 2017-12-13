@@ -140,7 +140,7 @@ export class RecipesDetailed extends Component {
 function getUser(id){
     return axios({
         method: 'get',
-        baseURL: 'http://localhost:4000/api/',
+        baseURL: 'http://104.131.161.44:4000/api/',
         url: 'users/' + id
     });
 }

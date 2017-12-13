@@ -29,7 +29,7 @@ export class Recipes extends Component {
             .catch(function(error) {
                 console.log(error);
             });
-        const url = 'http://localhost:4000/api/users/favorites/' + this.state.currentUserId;
+        const url = 'http://104.131.161.44:4000/api/users/favorites/' + this.state.currentUserId;
         axios.get(url)
             .then(function(response) {
                 this.setState({favorites: response.data.data});
@@ -83,7 +83,7 @@ export class Recipes extends Component {
         let recipeId = favoritedRecipe._id;
         // check if this recipe is favorited or unfavorited
         if (this.state.favorites.indexOf(recipeId) !== -1) {
-            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUserId;
+            let url = 'http://104.131.161.44:4000/api/users/unfavoriteRecipe/' + this.state.currentUserId;
             axios.put(url, {
                 recipeId: recipeId
             }).then(function(response) {
@@ -98,7 +98,7 @@ export class Recipes extends Component {
                     console.log(error);
                 });
         } else {
-            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUserId;
+            let url = 'http://104.131.161.44:4000/api/users/favoriteRecipe/' + this.state.currentUserId;
             axios.put(url, {
                 recipeId: recipeId
             }).then(function(response) {
@@ -206,7 +206,7 @@ export class Recipes extends Component {
 function getRecipes(){
     return axios({
         method: 'get',
-        baseURL: 'http://localhost:4000/api/',
+        baseURL: 'http://104.131.161.44:4000/api/',
         url: 'recipes'
     });
 }

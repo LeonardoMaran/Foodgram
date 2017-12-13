@@ -30,7 +30,7 @@ export class Users extends Component {
             .catch(function(error) {
                 console.log(error);
         });
-        const url = 'http://localhost:4000/api/users/following/' + this.props.user;
+        const url = 'http://104.131.161.44:4000/api/users/following/' + this.props.user;
         axios.get(url)
             .then(function(response) {
                 this.setState({following: response.data.data});
@@ -81,7 +81,7 @@ export class Users extends Component {
         let followUser = this.state.visible[idx];
         let followUserId = followUser._id;
         // follow user
-        let url = 'http://localhost:4000/api/users/follow/' + this.state.currentUserId;
+        let url = 'http://104.131.161.44:4000/api/users/follow/' + this.state.currentUserId;
         axios.put(url, {
             followingId: followUserId
         }).then(function(response) {
@@ -104,7 +104,7 @@ export class Users extends Component {
         let unfollowUserId = unfollowUser._id;
         // unfollow user
         // follow user
-        let url = 'http://localhost:4000/api/users/unfollow/' + this.state.currentUserId;
+        let url = 'http://104.131.161.44:4000/api/users/unfollow/' + this.state.currentUserId;
         axios.put(url, {
             followingId: unfollowUserId
         }).then(function(response) {
@@ -216,7 +216,7 @@ export class Users extends Component {
 function getUsers(){
     return axios({
         method: 'get',
-        baseURL: 'http://localhost:4000/api/',
+        baseURL: 'http://104.131.161.44:4000/api/',
         url: 'users'
     });
 }
