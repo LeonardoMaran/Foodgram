@@ -26,7 +26,7 @@ export class Main extends Component {
 
 	handler(username) {
 		const user = '';
-		const url = 'http://localhost:3000/api/users?&where={"username":"' + username + '"}';
+		const url = 'http://104.131.161.44:4000/api/users?&where={"username":"' + username + '"}';
 		axios.get(url)
 		.then(function(response) {
                 this.setState({id: response.data.data[0]._id});
