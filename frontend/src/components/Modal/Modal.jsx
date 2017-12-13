@@ -26,7 +26,8 @@ class Modal extends Component {
       minHeight: 300,
       margin: '0 auto',
       padding: 50,
-      paddingTop: 70
+      paddingTop: 70,
+      zIndex: 3
     };
 
 

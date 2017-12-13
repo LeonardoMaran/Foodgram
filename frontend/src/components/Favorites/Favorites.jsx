@@ -174,6 +174,12 @@ export class Favorites extends Component {
             );
         });
 
+        let favoriteDisplay;
+        if(this.state.favorites.length > 0)
+            favoriteDisplay = favoriteCards;
+        else
+            favoriteDisplay = <div className="Remind"><h1>Add Some Favorites!!</h1></div>
+
 
         return(
 
@@ -189,7 +195,7 @@ export class Favorites extends Component {
                 <Divider section></Divider>
                 <div className="Found">
 									<Grid centered relaxed padded='horizontally' verticalAlign='middle' columns='equal'>
-											{favoriteCards}
+											{favoriteDisplay}
 									</Grid>
                 </div>
             </div>
