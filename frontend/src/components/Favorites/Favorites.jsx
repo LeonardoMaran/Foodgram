@@ -18,6 +18,7 @@ export class Favorites extends Component {
         };
         this.searchFavorites = this.searchFavorites.bind(this);
         this.handleChange = this.handleChange.bind(this);
+				this.favoriteClick = this.favoriteClick.bind(this);
     }
 
     componentWillMount(){
@@ -83,7 +84,44 @@ export class Favorites extends Component {
 
         }
     }
+		favoriteClick(idx, e) {
+		        //e.stopPropagation();
 
+		        let favoritedRecipe = this.state.visible[idx];
+		        let recipeId = favoritedRecipe._id;
+		        // check if this recipe is favorited or unfavorited
+		        if (this.state.favorites.indexOf(recipeId) !== -1) {
+		            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUser;
+		            axios.put(url, {
+		                recipeId: recipeId
+		            }).then(function(response) {
+		                // Log response
+		                let user = response.data.data;
+		                this.setState({
+		                    favorites: user.favorites
+		                });
+		            }.bind(this))
+		                .catch(function(error) {
+		                    // Log response
+		                    console.log(error);
+		                });
+		        } else {
+		            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUser;
+		            axios.put(url, {
+		                recipeId: recipeId
+		            }).then(function(response) {
+		                // Log response
+		                let user = response.data.data;
+		                this.setState({
+		                    favorites: user.favorites
+		                });
+		            }.bind(this))
+		            .catch(function(error) {
+		                // Log response
+		                console.log(error);
+		            });
+		        }
+		    }
     render() {
         const sortOptions = [
             {
@@ -95,8 +133,60 @@ export class Favorites extends Component {
               value: 'ingredients'
             }
         ];
-        
+
+				let favoriteCards = this.state.visible.map((recipe, index) => {
+            let recipeId = recipe._id;
+            let favoriteImageDiv;
+            if (this.state.favorites.indexOf(recipeId) !== -1) {
+                favoriteImageDiv =
+                    <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
+                        <i className="fa fa-heart fa-3x"></i>
+                    </div>
+            } else {
+                favoriteImageDiv =
+                    <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
+                        <i className="fa fa-heart-o fa-3x"></i>
+                    </div>
+            }
+
+            return (
+              <div key={index} className="RecipeCard">
+                    <div className="Recipe">
+                        {favoriteImageDiv}
+                        <div className="RecipeImage">
+                          <Link key={index} style={{color: 'white'}}
+                                to={{
+                                    pathname: '/recipe_details',
+                                    param: {
+                                        recipe: recipe,
+                                        recipes: this.state.visible,
+                                        index : index
+                                    }
+                                }}>
+                                <Image size='medium' src={recipe.imageUrl} />
+                          </Link>
+                        </div>
+                        <div className="RecipeText">
+                          <Link key={index} style={{color: 'white'}}
+                                to={{
+                                    pathname: '/user_details',
+                                    param: {
+                                        recipe: recipe,
+                                        recipes: this.state.visible,
+                                        index : index
+                                    }
+                                }}>
+                            <h2>{recipe.title}</h2>
+                          </Link>
+                        </div>
+                   </div>
+              </div>
+            );
+        });
+
+
         return(
+
             <div className="Favorites">
                 <h1>Favorites</h1>
                 <div className="Search">
@@ -108,29 +198,10 @@ export class Favorites extends Component {
                 </div>
                 <Divider section></Divider>
                 <div className="Found">
-                    <Grid centered relaxed padded='vertically'
-                          verticalAlign='middle' columns='equal'>
-                        { this.state.visible.map((recipe, index) => (
-                            <Link key={index} to={{ pathname: '/recipe/' + recipe.title,
-                                        param: {  recipe_id : recipe._id,
-                                                  recipe_index : index
-                                                }
-                                      }}>
-                                      <div className="Favorite">
-                                          <div className="FavoriteText">
-                                              <h2>{recipe.title}</h2>
-                                          </div>
-                                          <div className="FavoriteHeart">
-                                              <i class="fa fa-heart fa-3x"></i>
-                                          </div>
-                                          <div className="FavoriteImage">
-                                              <Image size='medium' src={recipe.imageUrl} />
-                                          </div>
-                                      </div>
-                              </Link>
-                         ))}
-                      </Grid>
-                  </div>
+									<Grid centered relaxed padded='horizontally' verticalAlign='middle' columns='equal'>
+											{favoriteCards}
+									</Grid>
+                </div>
             </div>
         );
     }

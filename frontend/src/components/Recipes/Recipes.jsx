@@ -77,7 +77,7 @@ export class Recipes extends Component {
     }
 
     favoriteClick(idx, e) {
-        e.stopPropagation();
+        //e.stopPropagation();
 
         let favoritedRecipe = this.state.visible[idx];
         let recipeId = favoritedRecipe._id;
@@ -153,7 +153,7 @@ export class Recipes extends Component {
             }
 
             return (
-              <div className="RecipeCard">
+              <div key={index} className="RecipeCard">
                     <div className="Recipe">
                         {favoriteImageDiv}
                         <div className="RecipeImage">
