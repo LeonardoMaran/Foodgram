@@ -26,7 +26,7 @@ export class Recipes extends Component {
             }.bind(this))
             .catch(function(error) {
                 console.log(error);
-        });
+            });
     }
 
     searchRecipes(event) {
@@ -93,9 +93,11 @@ export class Recipes extends Component {
                     <Grid centered relaxed padded='vertically' padded='horizontally'
                           verticalAlign='middle' columns='equal'>
                         { this.state.visible.map((recipe, index) => (
-                            <Link key={index} to={{ pathname: '/recipe/' + recipe.title,
-                                        param: {  recipe_id : recipe._id,
-                                                  recipe_index : index
+                            <Link key={index} to={{ pathname: '/recipe_details',
+                                        param: {  recipe : recipe,
+                                                  recipes: this.state.visible,
+                                                  index : index,
+                                                  user : this.props.user
                                                 }
                                       }}>
                                       <div className="Recipe">
