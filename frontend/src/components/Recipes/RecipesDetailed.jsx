@@ -17,7 +17,7 @@ export class RecipesDetailed extends Component {
         this.handlePrev = this.handlePrev.bind(this);
         this.handleNext = this.handleNext.bind(this);
     }
-    componentWillMount(){
+    componentDidMount(){
         if(typeof this.props.location.param !== "undefined"){
             this.setState({
                 recipes : JSON.stringify(this.props.location.param.recipes),
@@ -82,7 +82,7 @@ export class RecipesDetailed extends Component {
               let recipes = JSON.parse(this.state.recipes);
               let recipe = JSON.parse(this.state.recipe);
               let index = JSON.parse(this.state.index);
-              let user = getUser(recipe.postedBy);
+              //let user = getUser(recipe.postedBy);
               return(
                   <div className="RecipesDetailed">
                       <h1> {index+1} / {recipes.length}</h1>
@@ -108,7 +108,7 @@ export class RecipesDetailed extends Component {
                           <Divider section></Divider>
                           <div className="RecipesContentStuff">
                               <h2>Posted By:</h2>
-                              <p>{user.name}</p>
+                              <p>{}</p>
                           </div>
                       </div>
                   </div>
