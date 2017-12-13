@@ -14,7 +14,7 @@ export class Recipes extends Component {
             recipes: [],
             visible: [],
             favorites: [],
-            searchBy: ""
+            searchBy: "title"
         };
         this.searchRecipes = this.searchRecipes.bind(this);
         this.handleChange = this.handleChange.bind(this);

@@ -14,7 +14,7 @@ export class Favorites extends Component {
             visible: [],
             favorites: [],
             recipes: [],
-            searchBy: ""
+            searchBy: "title"
         };
         this.searchFavorites = this.searchFavorites.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -52,13 +52,13 @@ export class Favorites extends Component {
         var favorites = [];
         for(var i = 0; i < this.state.recipes.length; i++) {
           if(this.state.searchBy === "title") {
-              if(this.state.recipes[i].title.toLowerCase().indexOf(event.currentTarget.value) >= 0 && event.currentTarget.value !== '') {
+              if(this.state.recipes[i].title.toLowerCase().includes(event.currentTarget.value.toLowerCase()) && event.currentTarget.value !== '') {
                   favorites.push(this.state.recipes[i]);
               }
           } else {
               var added = false;
               for(var j = 0; j < this.state.recipes[i].ingredients.length; j++) {
-                if(!added && this.state.recipes[i].ingredients[j].toLowerCase().indexOf(event.currentTarget.value) >= 0 && event.currentTarget.value !== '') {
+                if(!added && this.state.recipes[i].ingredients[j].toLowerCase().includes(event.currentTarget.value.toLowerCase()) && event.currentTarget.value !== '') {
                     favorites.push(this.state.recipes[i]);
                     added = true;
                 }
@@ -180,7 +180,7 @@ export class Favorites extends Component {
             <div className="Favorites">
                 <h1>Favorites</h1>
                 <div className="Search">
-                    <Input className='search_bar' type='text' placeholder='Search recipes...' onChange={this.searchRecipes} />
+                    <Input className='search_bar' type='text' placeholder='Search recipes...' onChange={this.searchFavorites} />
                     <div className="SortBy">
                         <p className="sort_text">Search By:</p>
                         <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />

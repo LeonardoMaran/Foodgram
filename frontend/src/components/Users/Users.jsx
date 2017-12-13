@@ -14,7 +14,7 @@ export class Users extends Component {
             users: [],
             visible: [],
             following: [],
-            searchBy: ""
+            searchBy: "name"
         };
         this.searchUsers = this.searchUsers.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -44,16 +44,12 @@ export class Users extends Component {
         var users = [];
         for(var i = 0; i < this.state.users.length; i++) {
           if(this.state.searchBy === "name") {
-              console.log(this.state.users[i].name.toLowerCase());
-              console.log(event.currentTarget.value.toLowerCase());
-              if(this.state.users[i].name.toLowerCase().indexOf(event.currentTarget.value.toLowerCase()) >= 0
+              if(this.state.users[i].name.toLowerCase().includes(event.currentTarget.value.toLowerCase())
                   && event.currentTarget.value !== '') {
                   users.push(this.state.users[i]);
               }
           } else {
-              console.log(this.state.users[i].name.toLowerCase());
-              console.log(event.currentTarget.value);
-              if(this.state.users[i].username.toLowerCase().indexOf(event.currentTarget.value.toLowerCase()) >= 0
+              if(this.state.users[i].username.toLowerCase().includes(event.currentTarget.value.toLowerCase())
                   && event.currentTarget.value !== '') {
                   users.push(this.state.users[i]);
               }
