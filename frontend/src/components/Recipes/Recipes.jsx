@@ -127,79 +127,80 @@ export class Recipes extends Component {
               value: 'ingredients'
             }
         ];
+          let topButtonDiv =
+              <div className="Search">
+                  <Input className='search_bar' type='text' placeholder='Search recipes...' onChange={this.searchRecipes} />
+                  <div className="SortBy">
+                      <p className="sort_text">Search By:</p>
+                      <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
+                  </div>
+              </div>;
 
-        let topButtonDiv =
-            <div className="Search">
-                <Input className='search_bar' type='text' placeholder='Search recipes...' onChange={this.searchRecipes} />
-                <div className="SortBy">
-                    <p className="sort_text">Search By:</p>
-                    <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
+          let recipeCards = this.state.visible.map((recipe, index) => {
+              let recipeId = recipe._id;
+              let favoriteImageDiv;
+              if (this.state.favorites.indexOf(recipeId) !== -1) {
+                  favoriteImageDiv =
+                      <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
+                          <i className="fa fa-heart fa-3x"></i>
+                      </div>
+              } else {
+                  favoriteImageDiv =
+                      <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
+                          <i className="fa fa-heart-o fa-3x"></i>
+                      </div>
+              }
+
+              return (
+                <div key={index} className="RecipeCard">
+                      <div className="Recipe">
+                          {favoriteImageDiv}
+                          <div className="RecipeImage">
+                            <Link key={index} style={{color: 'white'}}
+                                  to={{
+                                      pathname: '/recipe_details',
+                                      param: {
+                                          original: 'Your Search Results',
+                                          recipe: recipe,
+                                          recipes: this.state.visible,
+                                          index : index,
+                                      }
+                                  }}>
+                                  <Image size='medium' src={recipe.imageUrl} />
+                            </Link>
+                          </div>
+                          <div className="RecipeText">
+                            <Link key={index} style={{color: 'white'}}
+                                  to={{
+                                      pathname: '/recipe_details',
+                                      param: {
+                                          original: 'Your Search Results',
+                                          recipe: recipe,
+                                          recipes: this.state.visible,
+                                          index : index
+                                      }
+                                  }}>
+                              <h2>{recipe.title}</h2>
+                            </Link>
+                          </div>
+                     </div>
                 </div>
-            </div>;
+              );
+          });
 
-        let recipeCards = this.state.visible.map((recipe, index) => {
-            let recipeId = recipe._id;
-            let favoriteImageDiv;
-            if (this.state.favorites.indexOf(recipeId) !== -1) {
-                favoriteImageDiv =
-                    <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
-                        <i className="fa fa-heart fa-3x"></i>
-                    </div>
-            } else {
-                favoriteImageDiv =
-                    <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
-                        <i className="fa fa-heart-o fa-3x"></i>
-                    </div>
-            }
-
-            return (
-              <div key={index} className="RecipeCard">
-                    <div className="Recipe">
-                        {favoriteImageDiv}
-                        <div className="RecipeImage">
-                          <Link key={index} style={{color: 'white'}}
-                                to={{
-                                    pathname: '/recipe_details',
-                                    param: {
-                                        recipe: recipe,
-                                        recipes: this.state.visible,
-                                        index : index
-                                    }
-                                }}>
-                                <Image size='medium' src={recipe.imageUrl} />
-                          </Link>
-                        </div>
-                        <div className="RecipeText">
-                          <Link key={index} style={{color: 'white'}}
-                                to={{
-                                    pathname: '/recipe_details',
-                                    param: {
-                                        recipe: recipe,
-                                        recipes: this.state.visible,
-                                        index : index
-                                    }
-                                }}>
-                            <h2>{recipe.title}</h2>
-                          </Link>
-                        </div>
-                   </div>
+          return(
+              <div className="Recipes">
+                  <h1>Recipes</h1>
+                  {topButtonDiv}
+                  <Divider section></Divider>
+                  <div className="Found">
+                      <Grid centered relaxed padded='horizontally' verticalAlign='middle' columns='equal'>
+                          {recipeCards}
+                      </Grid>
+                  </div>
               </div>
-            );
-        });
-
-        return(
-            <div className="Recipes">
-                <h1>Recipes</h1>
-                {topButtonDiv}
-                <Divider section></Divider>
-                <div className="Found">
-                    <Grid centered relaxed padded='horizontally' verticalAlign='middle' columns='equal'>
-                        {recipeCards}
-                    </Grid>
-                </div>
-            </div>
-        );
-    }
+          );
+        }
 }
 
 function getRecipes(){

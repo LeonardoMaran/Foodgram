@@ -148,6 +148,7 @@ export class Favorites extends Component {
                                 to={{
                                     pathname: '/recipe_details',
                                     param: {
+																				original: 'Your Favorite List',
                                         recipe: recipe,
                                         recipes: this.state.visible,
                                         index : index
@@ -159,8 +160,9 @@ export class Favorites extends Component {
                         <div className="RecipeText">
                           <Link key={index} style={{color: 'white'}}
                                 to={{
-                                    pathname: '/user_details',
+                                    pathname: '/recipe_details',
                                     param: {
+																				original: 'Your Favorite List',
                                         recipe: recipe,
                                         recipes: this.state.visible,
                                         index : index

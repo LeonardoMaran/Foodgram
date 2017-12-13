@@ -90,6 +90,7 @@ export class RecipesDetailed extends Component {
                   <div className="Error">
                       <h1>ERROR: This page is unavailable.</h1>
                       <h3>Please return to recipes and select one to view detailed information.</h3>
+                      <a href="/">To Login Page</a>
                   </div>
               );
           } else {
@@ -103,7 +104,7 @@ export class RecipesDetailed extends Component {
               }
               return(
                   <div className="RecipesDetailed">
-                      <h1> {index+1} / {recipes.length}</h1>
+                      <h1> {this.props.location.param.original} : {index+1} / {recipes.length}</h1>
                       <div className="prev" onClick={this.handlePrev}>&#x21E6;</div>
                       <div className="next" onClick={this.handleNext}>&#x21E8;</div>
                       <h1> {recipe.title}</h1>

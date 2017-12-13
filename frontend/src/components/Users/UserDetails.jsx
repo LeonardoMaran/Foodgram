@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Dropdown, Image, Item, Grid, Divider} from 'semantic-ui-react';
+import { Image, Item, Grid, Divider} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -9,7 +9,9 @@ export class UserDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentUser: this.props.location.param.user_id,
+            me: "",
+            me_obj: "",
+            currentUser: -1,
             name: "",
             profilePicUrl: "",
             favorites: [],
@@ -26,7 +28,19 @@ export class UserDetails extends Component {
     }
     componentWillMount(){
         if(typeof this.props.location.param !== "undefined"){
+            this.setState({
+                  me: this.props.location.param.curr_user_id,
+                  currentUser: this.props.location.param.user_id
+            });
             const url = 'http://localhost:4000/api/users/' + this.props.location.param.user_id;
+            const me_url = 'http://localhost:4000/api/users/' + this.props.location.param.curr_user_id;
+            axios.get(me_url)
+                .then(function(response) {
+                    this.setState({ me_obj : response.data.data});
+                }.bind(this))
+                .catch(function(error) {
+                  console.log(error);
+                });
             axios.get(url)
                 .then(function(response) {
                     this.setState({
@@ -75,31 +89,35 @@ export class UserDetails extends Component {
     		        let favoritedRecipe = this.state.recipes[idx];
     		        let recipeId = favoritedRecipe._id;
     		        // check if this recipe is favorited or unfavorited
-    		        if (this.state.favorites.indexOf(recipeId) !== -1) {
-    		            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUser;
+    		        if (this.state.me_obj.favorites.indexOf(recipeId) !== -1) {
+    		            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.me;
     		            axios.put(url, {
     		                recipeId: recipeId
     		            }).then(function(response) {
-    		                // Log response
-    		                let user = response.data.data;
-    		                this.setState({
-    		                    favorites: user.favorites
-    		                });
+                        axios.get('http://localhost:4000/api/users/' + this.state.me)
+                            .then(function(response) {
+                               this.setState({me_obj:response.data.data});
+                            }.bind(this))
+                            .catch(function(error) {
+                              console.log(error);
+                            });
     		            }.bind(this))
     		                .catch(function(error) {
     		                    // Log response
     		                    console.log(error);
     		                });
     		        } else {
-    		            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUser;
+    		            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.me;
     		            axios.put(url, {
     		                recipeId: recipeId
     		            }).then(function(response) {
-    		                // Log response
-    		                let user = response.data.data;
-    		                this.setState({
-    		                    favorites: user.favorites
-    		                });
+                      axios.get('http://localhost:4000/api/users/' + this.state.me)
+                          .then(function(response) {
+                             this.setState({me_obj:response.data.data});
+                          }.bind(this))
+                          .catch(function(error) {
+                            console.log(error);
+                          });
     		            }.bind(this))
     		            .catch(function(error) {
     		                // Log response
@@ -113,49 +131,46 @@ export class UserDetails extends Component {
 
             let followUser = this.state.following[idx];
             let followUserId = followUser._id;
-            var id = this.state.followingId
+            var id = this.state.followingId;
             // follow user
-            let url = 'http://localhost:4000/api/users/follow/' + this.state.currentUser;
+            let url = 'http://localhost:4000/api/users/follow/' + this.state.me;
             axios.put(url, {
                 followingId: followUserId
             }).then(function(response) {
                 // Log response
-                let user = response.data.data;
-    					id.push(id.indexOf(followUserId));
-    					this.setState({
-    							following : user.following,
-    							followingId: id
-    					});
+                axios.get('http://localhost:4000/api/users/' + this.state.me)
+                    .then(function(response) {
+                       this.setState({me_obj:response.data.data});
+                    }.bind(this))
+                    .catch(function(error) {
+                      console.log(error);
+                    });
             }.bind(this))
                 .catch(function(error) {
                     // Log response
                     console.log(error);
                 });
         }
-
         unfollowClick(idx, e) {
             e.stopPropagation();
 
             let unfollowUser = this.state.following[idx];
             let unfollowUserId = unfollowUser._id;
-            var id = this.state.followingId
+            var id = this.state.followingId;
             var following = this.state.following;
             // unfollow user
             // follow user
-            let url = 'http://localhost:4000/api/users/unfollow/' + this.state.currentUser;
+            let url = 'http://localhost:4000/api/users/unfollow/' + this.state.me;
             axios.put(url, {
                 followingId: unfollowUserId
             }).then(function(response) {
-    					let user = response.data.data;
-    					id.splice(id.indexOf(unfollowUserId), 1);
-    					for (var i = 0; i < following.length; i++) {
-    						if(following[i]._id === unfollowUserId)
-    							following.splice(i, 1);
-    					}
-    					this.setState({
-    							following : following,
-    							followingId: id
-    					});
+              axios.get('http://localhost:4000/api/users/' + this.state.me)
+                  .then(function(response) {
+                     this.setState({me_obj:response.data.data});
+                  }.bind(this))
+                  .catch(function(error) {
+                    console.log(error);
+                  });
             }.bind(this))
                 .catch(function(error) {
                     // Log response
@@ -163,11 +178,20 @@ export class UserDetails extends Component {
             });
     }
     render() {
-
+      if(this.state.currentUser === -1)
+      {
+          return(
+              <div className="Error">
+                  <h1>ERROR: This page is unavailable.</h1>
+                  <h3>Please return to users and select one to view detailed information.</h3>
+                  <a href="/">To Login Page</a>
+              </div>
+          );
+      } else {
           let recipeCards = this.state.recipes.map((recipe, index) => {
               let recipeId = recipe._id;
               let favoriteImageDiv;
-              if (this.state.favorites.indexOf(recipeId) !== -1) {
+              if (this.state.me_obj.favorites.indexOf(recipeId) !== -1) {
                   favoriteImageDiv =
                       <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
                           <i className="fa fa-heart fa-3x"></i>
@@ -188,6 +212,7 @@ export class UserDetails extends Component {
                                   to={{
                                       pathname: '/recipe_details',
                                       param: {
+                                          original: this.state.name + "'s Recipes",
                                           recipe: recipe,
                                           recipes: this.state.recipes,
                                           index : index
@@ -201,6 +226,7 @@ export class UserDetails extends Component {
                                   to={{
                                       pathname: '/recipe_details',
                                       param: {
+                                          original: this.state.name + "'s Recipes",
                                           recipe: recipe,
                                           recipes: this.state.visible,
                                           index : index
@@ -230,13 +256,9 @@ export class UserDetails extends Component {
               var recipeDisplay = null;
 
           let userCards = this.state.following.map((user, index) => {
-              if (user._id === this.state.currentUser) {
-                  // This user should not be shown
-                  return;
-              }
               let userId = user._id;
               let followUserDiv;
-              if (this.state.followingId.indexOf(userId) !== -1) {
+              if (this.state.me_obj.following.indexOf(userId) !== -1) {
                   followUserDiv =
                       <div className="UserStar" onClick={this.unfollowClick.bind(this, index)}>
                           <i className="fa fa-star fa-3x"></i>
@@ -252,22 +274,10 @@ export class UserDetails extends Component {
                       <div className="User">
                           {followUserDiv}
                           <div className="UserText">
-                            <Link key={index} style={{color: 'white'}}
-                                  to={{ pathname: '/user_details',
-                                      param: {
-                                          user_id: user._id
-                                      }}}>
-                                      <h2>{user.name}</h2>
-                              </Link>
+                              <h2>{user.name}</h2>
                           </div>
                           <div className="UserImage">
-                            <Link key={index} style={{color: 'white'}}
-                                  to={{ pathname: '/user_details',
-                                      param: {
-                                          user_id: user._id
-                                      }}}>
-                                  <Image size='medium' src={user.profilePicUrl} />
-                            </Link>
+                              <Image size='medium' src={user.profilePicUrl} />
                           </div>
                       </div>
                   </div>
@@ -301,7 +311,7 @@ export class UserDetails extends Component {
                               <Item.Header>
                                   <h1 className="Names">{this.state.name}</h1>
                               </Item.Header>
-                              <Item.Description>Number of Followers: {this.state.followers}</Item.Description>
+                              <Item.Description>People Following: {this.state.following.length}</Item.Description>
                               <Item.Description>Number of Recipes: {this.state.recipes.length}</Item.Description>
                           </Item.Content>
                       </Item>
@@ -311,6 +321,7 @@ export class UserDetails extends Component {
               { followingDisplay }
           </div>
       );
+    }
   }
 }
 

@@ -159,18 +159,20 @@ export class Users extends Component {
                             <div className="UserText">
 																<Link key={index} style={{color: 'white'}}
 																			to={{ pathname: '/user_details',
-																					param: {
-																							user_id: user._id
-																					}}}>
-																				<h2>{user.name}</h2>
+																						param: {
+																								user_id: user._id,
+																								curr_user_id: this.state.currentUserId
+																						}}}>
+																					<h2>{user.name}</h2>
 																</Link>
                             </div>
                             <div className="UserImage">
 															<Link key={index} style={{color: 'white'}}
 																		to={{ pathname: '/user_details',
-																				param: {
-																						user_id: user._id
-																				}}}>
+																					param: {
+																							user_id: user._id,
+																							curr_user_id: this.state.currentUserId
+																					}}}>
                                 		<Image size='medium' src={user.profilePicUrl} />
 															</Link>
                             </div>

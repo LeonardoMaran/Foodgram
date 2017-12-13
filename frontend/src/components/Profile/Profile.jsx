@@ -8,7 +8,7 @@ import '../../styles/profile.css';
 import Modal from '../Modal/Modal.jsx'
 
 export class Profile extends Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
@@ -244,6 +244,7 @@ export class Profile extends Component {
                                 to={{
                                     pathname: '/recipe_details',
                                     param: {
+                                        original: 'Your Personal Recipes',
                                         recipe: recipe,
                                         recipes: this.state.recipes,
                                         index : index
@@ -257,6 +258,7 @@ export class Profile extends Component {
                                 to={{
                                     pathname: '/recipe_details',
                                     param: {
+                                        original: 'Your Personal Recipes',
                                         recipe: recipe,
                                         recipes: this.state.visible,
                                         index : index
@@ -311,21 +313,21 @@ export class Profile extends Component {
 														{followUserDiv}
                             <div className="UserText">
 																<Link key={index} style={{color: 'white'}}
-																			to={{ pathname: '/user_details/' + user.username,
-																					param: {
-																							user_id: user.id,
-																							user_index: index
-																					}}}>
+																			to={{ pathname: '/user_details',
+                                            param: {
+                                                user_id: user._id,
+  																							curr_user_id: this.state.currentUser
+                                            }}}>
 																				<h2>{user.name}</h2>
 																</Link>
                             </div>
                             <div className="UserImage">
 															<Link key={index} style={{color: 'white'}}
-																		to={{ pathname: '/user_details/' + user.username,
-																				param: {
-																						user_id: user.id,
-																						user_index: index
-																				}}}>
+																		to={{ pathname: '/user_details',
+                                          param: {
+                                              user_id: user._id,
+                                              curr_user_id: this.state.currentUser
+                                          }}}>
                                 		<Image size='medium' src={user.profilePicUrl} />
 															</Link>
                             </div>
@@ -363,7 +365,7 @@ export class Profile extends Component {
 					        <Item.Description>Number of Followers: {this.state.followers}</Item.Description>
 					        <Item.Description>Number of Recipes: {this.state.recipes.length}</Item.Description>
                             <Button className="ProfileButton" onClick={this.toggleModal}>Add Recipe</Button>
-                            <Button className="ProfileButton" onClick={this.props.handler}>Log out</Button>					       
+                            <Button className="ProfileButton" onClick={this.props.handler}>Log out</Button>
                           </Item.Content>
 					    </Item>
 					</Item.Group>
