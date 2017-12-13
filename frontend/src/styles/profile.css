@@ -2,13 +2,14 @@
     margin-top: 30px;
 }
 
+
 .Bio {
     margin-left: 150px;
     margin-right: 200px;
 }
 
 .Names {
-    font-size: 50px;
+    font-size: 40px;
     text-align: left;
 }
 
@@ -121,4 +122,8 @@
 
 .LoginButton, .SignupButton {
     margin-top:4% !important;
+}
+
+.ProfileButton {
+    margin-top: 2% !important;
 }

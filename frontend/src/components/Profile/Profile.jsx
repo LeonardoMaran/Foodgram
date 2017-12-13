@@ -300,14 +300,9 @@ export class Profile extends Component {
 					        </Item.Header>
 					        <Item.Description>Number of Followers: {this.state.followers}</Item.Description>
 					        <Item.Description>Number of Recipes: {this.state.recipes.length}</Item.Description>
-					      </Item.Content>
-					      <Item.Content verticalAlign='bottom'>
-					      	<Item.Extra>
-					          <Button floated='right' onClick={this.toggleModal}>
-					            Add Recipe
-					          </Button>
-					        </Item.Extra>
-					      </Item.Content>
+                            <Button className="ProfileButton" onClick={this.toggleModal}>Add Recipe</Button>
+                            <Button className="ProfileButton" onClick={this.props.handler}>Log out</Button>					       
+                          </Item.Content>
 					    </Item>
 					</Item.Group>
                 </div>
@@ -318,7 +313,7 @@ export class Profile extends Component {
 	                	<div className="ui input"><input type="text" value={this.state.title} onChange={this.handleUpdateTitle} placeholder="Title"/></div><br/>
 		                <div className="ui input"><input type="text" value={this.state.description} onChange={this.handleUpdateDescription} placeholder="Description"/></div><br/>
 		                <div className="ui input"><input type="text"  value={this.state.ingredients} onChange={this.handleUpdateIngredients} placeholder="Ingredients"/></div><br/>
-		                <div className="ui input"><input type="text" value={this.state.instructions} onChange={this.handleUpdateInstructions} placeholder="instructions"/></div><br/>
+		                <div className="ui input"><input type="text" value={this.state.instructions} onChange={this.handleUpdateInstructions} placeholder="Instructions"/></div><br/>
 				        <div className="ui input"><input type="text" value={this.state.imageUrl} onChange={this.handleUpdateUrl} placeholder="Link to recipe photo"/></div><br/>
 		                <button className="SignupButton ui primary button" onClick = {this.handleAddRecipe.bind(this)}>Add</button>
                 	</div>

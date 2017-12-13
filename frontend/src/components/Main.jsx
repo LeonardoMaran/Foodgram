@@ -20,24 +20,32 @@ export class Main extends Component {
 			id: ""
 		};
 		this.handler = this.handler.bind(this);
+		this.handleLogout = this.handleLogout.bind(this);
 	}
 
 	handler(username) {
-				const user = '';
-				const url = 'http://localhost:3000/api/users?&where={"username":"' + username + '"}';
-				axios.get(url)
-				.then(function(response) {
-		                this.setState({id: response.data.data[0]._id});
-		            }.bind(this))
-		            .catch(function(error) {
-		                console.log(error);
-		        });
+		const user = '';
+		const url = 'http://localhost:3000/api/users?&where={"username":"' + username + '"}';
+		axios.get(url)
+		.then(function(response) {
+                this.setState({id: response.data.data[0]._id});
+            }.bind(this))
+            .catch(function(error) {
+                console.log(error);
+        });
 
-		    	this.setState({
-		    		show: "block",
-		    		id: user
-		    	});
-		    	window.location = '/#/recipes';
+    	this.setState({
+    		show: "block",
+    		id: user
+    	});
+    	window.location = '/#/recipes';
+	}
+
+	handleLogout() {
+		this.setState({
+    		show: "none",
+    	});
+    	window.location = '/#/';
 	}
 
     render(){
@@ -54,7 +62,7 @@ export class Main extends Component {
         	recipeRoute = <Route path="/recipes" render={(props) => (<Recipes user={this.state.id} />)} />;
         	userRoute = <Route path="/users" render={(props) => (<Users user={this.state.id} />)} />;
         	favoriteRoute = <Route path="/favorites" render={(props) => (<Favorites user={this.state.id} />)} />;
-        	profileRoute = <Route path="/profile" render={(props) => (<Profile user={this.state.id} />)} />;
+        	profileRoute = <Route path="/profile" render={(props) => (<Profile handler = {this.handleLogout} user={this.state.id} />)} />;
         } else {
         	recipeRoute = null;
         	userRoute = null;

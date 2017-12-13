@@ -153,25 +153,37 @@ export class Recipes extends Component {
             }
 
             return (
-                    <div className="Recipe" key={index}>
+              <div className="RecipeCard">
+                    <div className="Recipe">
                         {favoriteImageDiv}
-                        <Link
-                              to={{
-                                  pathname: '/recipe_details',
-                                  param: {
-                                      recipe: recipe,
-                                      recipes: this.state.visible,
-                                      index : index
-                                  }
-                              }}>
-                              <div className="RecipeText">
-                                  <h2>{recipe.title}</h2>
-                              </div>
-                              <div className="RecipeImage">
-                                  <Image size='medium' src={recipe.imageUrl} />
-                              </div>
-                        </Link>
-                    </div>
+                        <div className="RecipeImage">
+                          <Link key={index} style={{color: 'white'}}
+                                to={{
+                                    pathname: '/recipe_details',
+                                    param: {
+                                        recipe: recipe,
+                                        recipes: this.state.visible,
+                                        index : index
+                                    }
+                                }}>
+                                <Image size='medium' src={recipe.imageUrl} />
+                          </Link>
+                        </div>
+                        <div className="RecipeText">
+                          <Link key={index} style={{color: 'white'}}
+                                to={{
+                                    pathname: '/recipe_details',
+                                    param: {
+                                        recipe: recipe,
+                                        recipes: this.state.visible,
+                                        index : index
+                                    }
+                                }}>
+                            <h2>{recipe.title}</h2>
+                          </Link>
+                        </div>
+                   </div>
+              </div>
             );
         });
 
