@@ -62,7 +62,7 @@ export class Main extends Component {
 		        	<div className='Router'>
 						<header style = {headerStyle}>
 							<div className="nav_bar_container">
-								<a href="" id="logo_text">Foodgram <i class="fa fa-cutlery" aria-hidden="true"></i></a>
+								<a href="" id="logo_text">Foodgram <i className="fa fa-cutlery" aria-hidden="true"></i></a>
 								<nav>
 									<ul className="nav_bar_items">
 										<li><Link to="/profile"><p className="navLinks">Profile</p></Link></li>
