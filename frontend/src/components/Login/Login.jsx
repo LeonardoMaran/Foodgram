@@ -46,7 +46,7 @@ export class Login extends Component {
 
 
 	handleLogin(event) {
-		axios.post('http://localhost:4000/api/auth/login', {
+		axios.post('https://localhost:4000/api/auth/login', {
 			  username: this.state.username,
 			  password: this.state.password
 			})
@@ -65,7 +65,7 @@ export class Login extends Component {
 
 	handleRegister(event) {
 		if (this.state.password === this.state.verify) {
-			axios.post('http://localhost:4000/api/auth/register', {
+			axios.post('https://localhost:4000/api/auth/register', {
 			  name: this.state.name,
 			  username: this.state.username,
 			  password: this.state.password,
