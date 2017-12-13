@@ -32,10 +32,10 @@ export class Profile extends Component {
         this.unfollowClick = this.unfollowClick.bind(this);
         this.favoriteClick = this.favoriteClick.bind(this);
         this.handleUpdateTitle = this.handleUpdateTitle.bind(this);
-		this.handleUpdateDescription = this.handleUpdateDescription.bind(this);
-		this.handleUpdateIngredients = this.handleUpdateIngredients.bind(this);
-		this.handleUpdateInstructions = this.handleUpdateInstructions.bind(this);
-		this.handleUpdateUrl = this.handleUpdateUrl.bind(this);
+    		this.handleUpdateDescription = this.handleUpdateDescription.bind(this);
+    		this.handleUpdateIngredients = this.handleUpdateIngredients.bind(this);
+    		this.handleUpdateInstructions = this.handleUpdateInstructions.bind(this);
+    		this.handleUpdateUrl = this.handleUpdateUrl.bind(this);
     }
 
     toggleModal() {
@@ -69,15 +69,27 @@ export class Profile extends Component {
 			  description: this.state.description,
 			  ingredients: (this.state.ingredients === '') ? [] : this.state.ingredients.split(','),
 			  instructions: this.state.instructions,
-			  imageUrl: this.state.url
+			  imageUrl: this.state.imageUrl
 			})
 			.then(function(response) {
-				console.log(response.data.message);
+            var recipes = [];
+            axios.get('http://localhost:4000/api/recipes/')
+            .then(function(response) {
+                for(var i = 0; i < response.data.data.length; i++) {
+                    if(response.data.data[i].postedBy === this.props.user)
+                      recipes.push(response.data.data[i]);
+                }
+                this.setState({recipes: recipes});
+            }.bind(this))
+            .catch(function(error) {
+                console.log(error);
+            });
 			}.bind(this))
 			.catch(function(error) {
 				// Log response
 				console.log(error);
 			});
+      this.toggleModal();
 	}
 
 	favoriteClick(idx, e) {
@@ -362,7 +374,7 @@ export class Profile extends Component {
 					        <Item.Header>
 					        	<h1 className="Names">{this.state.name}</h1>
 					        </Item.Header>
-					        <Item.Description>Number of Followers: {this.state.followers}</Item.Description>
+					        <Item.Description>People Following: {this.state.following.length}</Item.Description>
 					        <Item.Description>Number of Recipes: {this.state.recipes.length}</Item.Description>
                             <Button className="ProfileButton" onClick={this.toggleModal}>Add Recipe</Button>
                             <Button className="ProfileButton" onClick={this.props.handler}>Log out</Button>

@@ -5,7 +5,7 @@ var bcrypt = require('bcryptjs');
 var VerifyToken = require('./verifyToken');
 
 module.exports = function (router) {
-	var regRoute = router.route('/register'); // Register 
+	var regRoute = router.route('/register'); // Register
 	var userRoute = router.route('/me'); // User
 	var loginRoute = router.route('/login') // Log in
 	var logoutRoute = router.route('/logout') // Log out
@@ -19,7 +19,8 @@ module.exports = function (router) {
 		User.create({
 			name: req.body.name,
 			username: req.body.username,
-			password: req.body.password
+			password: req.body.password,
+			profilePicUrl: req.body.imageUrl
 		}, function(err, user) {
 			if (err) return res.status(500).send({message: 'There was a problem registering the user.', data: err}); // 500 Server Error
 
@@ -72,12 +73,12 @@ module.exports = function (router) {
 
 
 	/**
-	* @api {get} /logout Log a user out. 
+	* @api {get} /logout Log a user out.
 	*
 	*/
 
 	logoutRoute.get(function(req, res) {
-		if (err) return res.status(500).send({message: 'Server Error', data: []}); 
+		if (err) return res.status(500).send({message: 'Server Error', data: []});
 		res.status(200).send({message: 'Logout successful.', auth: false, token: null });
 	});
 
