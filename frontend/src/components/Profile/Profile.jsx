@@ -169,7 +169,6 @@ export class Profile extends Component {
         axios.put(url, {
             followingId: unfollowUserId
         }).then(function(response) {
-					let user = response.data.data;
 					id.splice(id.indexOf(unfollowUserId), 1);
 					for (var i = 0; i < following.length; i++) {
 						if(following[i]._id === unfollowUserId)
