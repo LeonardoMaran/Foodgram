@@ -60,7 +60,7 @@ export class Main extends Component {
         return(
 	        	<Router>
 		        	<div className='Router'>
-			            <div className="header" style = {headerStyle}>
+			            <div className="NavBar" style = {headerStyle}>
 			                <span className="nav_title">Foodgram</span>
 			                <span><Link to="/profile">Profile</Link></span>
 			                <span><Link to="/favorites">Favorites</Link></span>
