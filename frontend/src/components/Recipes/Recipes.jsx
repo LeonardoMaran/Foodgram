@@ -175,34 +175,10 @@ export class Recipes extends Component {
                 {topButtonDiv}
                 <Divider section></Divider>
                 <div className="Found">
-                    <Grid centered relaxed padded='horizontally'
-                          verticalAlign='middle' columns='equal'>
-                            <div className="Recipe">
-                                { this.state.visible.map((recipe, index) => (
-                                      <Link key={index} to={{ pathname: '/recipe_details',
-                                                        param: {  recipe : recipe,
-                                                                  recipes: this.state.visible,
-                                                                  index : index,
-                                                                  user : this.props.user
-                                                                }
-                                                              }}>
-                                      <div className="RecipeText">
-                                              <h2>{recipe.title}</h2>
-                                      </div>
-                                      <div className="RecipeImage">
-                                              <Image size='medium' src={recipe.imageUrl} />
-                                      </div>
-
-                                    </Link>
-                                  ))}
-                                  <div className="RecipeHeart">
-                                      <i className="fa fa-heart-o fa-3x"></i>
-                                  </div>
-                        </div>
-
+                    <Grid centered relaxed padded='horizontally' verticalAlign='middle' columns='equal'>
                         {recipeCards}
-                      </Grid>
-                  </div>
+                    </Grid>
+                </div>
             </div>
         );
     }
