@@ -3,7 +3,7 @@ import { Button, Item, Image, Grid, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import styles from '../../styles/profile.css';
+import '../../styles/profile.css';
 
 import Modal from '../Modal/Modal.jsx'
 
@@ -19,16 +19,64 @@ export class Profile extends Component {
             favorites: [],
             recipes: [],
             following: [],
-            followers: 0
+            followers: 0,
+            title: "",
+            description: "",
+            ingredients: "",
+            instructions: "",
+            imageUrl: ""
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.followClick = this.followClick.bind(this);
         this.unfollowClick = this.unfollowClick.bind(this);
         this.favoriteClick = this.favoriteClick.bind(this);
+        this.handleUpdateTitle = this.handleUpdateTitle.bind(this);
+		this.handleUpdateDescription = this.handleUpdateDescription.bind(this);
+		this.handleUpdateIngredients = this.handleUpdateIngredients.bind(this);
+		this.handleUpdateInstructions = this.handleUpdateInstructions.bind(this);
+		this.handleUpdateUrl = this.handleUpdateUrl.bind(this);
     }
 
     toggleModal() {
 		this.setState({modalOpen: !this.state.modalOpen});
+	}
+
+	handleUpdateTitle(event) {
+		this.setState({title: event.target.value});
+	}
+
+	handleUpdateDescription(event) {
+		this.setState({description: event.target.value});
+	}
+
+	handleUpdateIngredients(event) {
+		this.setState({ingredients: event.target.value});
+	}
+
+	handleUpdateInstructions(event) {
+		this.setState({instructions: event.target.value});
+	}
+
+	handleUpdateUrl(event) {
+		this.setState({imageUrl: event.target.value});
+	}
+
+	handleAddRecipe(event) {
+		axios.post('http://localhost:4000/api/recipes', {
+			  postedBy: this.state.currentUser,
+			  title: this.state.title,
+			  description: this.state.description,
+			  ingredients: (this.state.ingredients === '') ? [] : this.state.ingredients.split(','),
+			  instructions: this.state.instructions,
+			  imageUrl: this.state.url
+			})
+			.then(function(response) {
+				console.log(response.data.message);
+			}.bind(this))
+			.catch(function(error) {
+				// Log response
+				console.log(error);
+			});
 	}
 
 	favoriteClick(idx, e) {
@@ -146,10 +194,6 @@ export class Profile extends Component {
         });
     }
 
-    handleLogout(event) {
-        window.location = '/#/';
-    }
-
     render() {
 
     	let recipeCards = this.state.recipes.map((recipe, index) => {
@@ -207,7 +251,7 @@ export class Profile extends Component {
             this.state.following.map((user, index) => {
                 var followUserDiv =
                         <div className="UserStar" onClick={this.unfollowClick.bind(this, index)}>
-                            <i class="fa fa-star fa-3x"></i>
+                            <i className="fa fa-star fa-3x"></i>
                         </div>;
 
                 return (
@@ -256,14 +300,24 @@ export class Profile extends Component {
 					        </Item.Header>
 					        <Item.Description>Number of Followers: {this.state.followers}</Item.Description>
 					        <Item.Description>Number of Recipes: {this.state.recipes.length}</Item.Description>
-                            <Button className="ProfileButton">Add Recipe</Button>
-                            <Button className="ProfileButton" onClick={this.handleLogout}>Log out</Button>					       
+                            <Button className="ProfileButton" onClick={this.toggleModal}>Add Recipe</Button>
+                            <Button className="ProfileButton" onClick={this.props.handler}>Log out</Button>					       
                           </Item.Content>
 					    </Item>
 					</Item.Group>
                 </div>
                 { recipeDisplay }
 	            { followingDisplay }
+	            <Modal show={this.state.modalOpen} onClose={this.toggleModal}>
+                	<div className="Modal">
+	                	<div className="ui input"><input type="text" value={this.state.title} onChange={this.handleUpdateTitle} placeholder="Title"/></div><br/>
+		                <div className="ui input"><input type="text" value={this.state.description} onChange={this.handleUpdateDescription} placeholder="Description"/></div><br/>
+		                <div className="ui input"><input type="text"  value={this.state.ingredients} onChange={this.handleUpdateIngredients} placeholder="Ingredients"/></div><br/>
+		                <div className="ui input"><input type="text" value={this.state.instructions} onChange={this.handleUpdateInstructions} placeholder="Instructions"/></div><br/>
+				        <div className="ui input"><input type="text" value={this.state.imageUrl} onChange={this.handleUpdateUrl} placeholder="Link to recipe photo"/></div><br/>
+		                <button className="SignupButton ui primary button" onClick = {this.handleAddRecipe.bind(this)}>Add</button>
+                	</div>
+                </Modal>
             </div>
         );
     }
