@@ -9,12 +9,13 @@ import Modal from '../Modal/Modal.jsx'
 export class Login extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {modalOpen: false, username: '', password: '', verify: '', name: ''};
+		this.state = {modalOpen: false, username: '', password: '', verify: '', name: '', url: ''};
 		this.toggleModal = this.toggleModal.bind(this);
 		this.handleUpdateUser = this.handleUpdateUser.bind(this);
 		this.handleUpdateName = this.handleUpdateName.bind(this);
 		this.handleUpdatePassword = this.handleUpdatePassword.bind(this);
 		this.handleUpdateVerify = this.handleUpdateVerify.bind(this);
+		this.handleUpdateUrl = this.handleUpdateUrl.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
 	}
 
@@ -37,6 +38,10 @@ export class Login extends Component {
 
 	handleUpdateVerify(event) {
 		this.setState({verify: event.target.value});
+	}
+
+	handleUpdateUrl(event) {
+		this.setState({url: event.target.value});
 	}
 
 
@@ -63,7 +68,8 @@ export class Login extends Component {
 			axios.post('http://localhost:4000/api/auth/register', {
 			  name: this.state.name,
 			  username: this.state.username,
-			  password: this.state.password
+			  password: this.state.password,
+			  imageUrl: this.state.url
 			})
 			.then(function(response) {
 

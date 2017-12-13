@@ -75,7 +75,7 @@
 
 .UserStar {
     color: yellow;
-    z-index: 10;
+    z-index: 3;
     position: absolute;
     right: 0;
     margin: 10px;
@@ -112,4 +112,13 @@
     bottom: 0;
     text-align: center;
     color: white;
+}
+
+.input {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.LoginButton, .SignupButton {
+    margin-top:4% !important;
 }
