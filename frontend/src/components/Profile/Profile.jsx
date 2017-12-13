@@ -19,6 +19,7 @@ export class Profile extends Component {
             favorites: [],
             recipes: [],
             following: [],
+            followingId: [],
             followers: 0,
             title: "",
             description: "",
@@ -115,7 +116,7 @@ export class Profile extends Component {
 	followClick(idx, e) {
         e.stopPropagation();
 
-        let followUser = this.state.visible[idx];
+        let followUser = this.state.following[idx];
         let followUserId = followUser._id;
         // follow user
         let url = 'http://localhost:4000/api/users/follow/' + this.state.currentUserId;
@@ -134,7 +135,7 @@ export class Profile extends Component {
     unfollowClick(idx, e) {
         e.stopPropagation();
 
-        let unfollowUser = this.state.visible[idx];
+        let unfollowUser = this.state.following[idx];
         let unfollowUserId = unfollowUser._id;
         // unfollow user
         // follow user
@@ -159,7 +160,8 @@ export class Profile extends Component {
                 	name: response.data.data.name,
                 	profilePicUrl: response.data.data.profilePicUrl,
                 	followers: response.data.data.followers.length,
-                	favorites: response.data.data.favorites
+                	favorites: response.data.data.favorites,
+                	followingId: response.data.data.following
                 });
                 var recipes = [];
 		        axios.get('http://localhost:4000/api/recipes/')
@@ -249,10 +251,19 @@ export class Profile extends Component {
 
 	    let userCards =
             this.state.following.map((user, index) => {
-                var followUserDiv =
+                let userId = user._id;
+                let followUserDiv;
+                if (this.state.followingId.indexOf(userId) !== -1) {
+                    followUserDiv =
                         <div className="UserStar" onClick={this.unfollowClick.bind(this, index)}>
                             <i className="fa fa-star fa-3x"></i>
-                        </div>;
+                        </div>
+                } else {
+                    followUserDiv =
+                        <div className="UserStar" onClick={this.followClick.bind(this, index)}>
+                            <i className="fa fa-star-o fa-3x"></i>
+                        </div>
+                }
 
                 return (
                     <Link key={index}

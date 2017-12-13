@@ -115,6 +115,10 @@
     color: white;
 }
 
+.Modal {
+    z-index: 900;
+}
+
 .input {
     margin-top: 1%;
     margin-bottom: 1%;
