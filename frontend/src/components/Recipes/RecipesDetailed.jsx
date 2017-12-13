@@ -97,10 +97,9 @@ export class RecipesDetailed extends Component {
               let recipe = JSON.parse(this.state.recipe);
               let index = JSON.parse(this.state.index);
               let user = this.state.user;
-              if(typeof user === "undefined"){
+              if(typeof user.name === "undefined"){
                   user.name = "unknown";
                   user.profilePicUrl = "http://laoblogger.com/images/default-profile-picture-5.jpg";
-                  console.log(user.name);
               }
               return(
                   <div className="RecipesDetailed">

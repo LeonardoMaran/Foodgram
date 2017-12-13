@@ -86,7 +86,10 @@ export class Users extends Component {
             followingId: followUserId
         }).then(function(response) {
             // Log response
-            console.log(response.data);
+            let user = response.data.data;
+						this.setState({
+								following : user.following
+						});
         }.bind(this))
             .catch(function(error) {
                 // Log response
@@ -105,8 +108,10 @@ export class Users extends Component {
         axios.put(url, {
             followingId: unfollowUserId
         }).then(function(response) {
-            // Log response
-            console.log(response.data.message);
+					let user = response.data.data;
+					this.setState({
+							following : user.following
+					});
         }.bind(this))
             .catch(function(error) {
                 // Log response
@@ -148,22 +153,31 @@ export class Users extends Component {
                 }
 
                 return (
-                    <Link key={index}
-                          to={{ pathname: '/user/' + user.username,
-                              param: {
-                                  user_id: user.id,
-                                  user_index: index
-                              }}}>
+											<div key={index} className="UserCard">
                         <div className="User">
+														{followUserDiv}
                             <div className="UserText">
-                                <h2>{user.name}</h2>
+																<Link key={index} style={{color: 'white'}}
+																			to={{ pathname: '/user_details/' + user.username,
+																					param: {
+																							user_id: user.id,
+																							user_index: index
+																					}}}>
+																				<h2>{user.name}</h2>
+																</Link>
                             </div>
-                            {followUserDiv}
                             <div className="UserImage">
-                                <Image size='medium' src={user.profilePicUrl} />
+															<Link key={index} style={{color: 'white'}}
+																		to={{ pathname: '/user_details/' + user.username,
+																				param: {
+																						user_id: user.id,
+																						user_index: index
+																				}}}>
+                                		<Image size='medium' src={user.profilePicUrl} />
+															</Link>
                             </div>
                         </div>
-                    </Link>
+										</div>
                 )
             });
 

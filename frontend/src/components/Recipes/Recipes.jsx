@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Dropdown, Image, Grid, Divider, Button } from 'semantic-ui-react';
+import { Input, Dropdown, Image, Grid, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 

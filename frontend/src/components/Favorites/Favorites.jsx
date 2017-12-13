@@ -207,12 +207,4 @@ export class Favorites extends Component {
     }
 }
 
-function getRecipes(){
-    return axios({
-        method: 'get',
-        baseURL: 'http://localhost:4000/api/',
-        url: 'recipes'
-    });
-}
-
 export default Favorites
