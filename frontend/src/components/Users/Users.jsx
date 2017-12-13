@@ -86,7 +86,7 @@ export class Users extends Component {
             followingId: followUserId
         }).then(function(response) {
             // Log response
-            console.log(response.data.message);
+            console.log(response.data);
         }.bind(this))
             .catch(function(error) {
                 // Log response

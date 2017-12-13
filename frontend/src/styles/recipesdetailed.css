@@ -21,7 +21,7 @@
     background-color: lightblue;
 }
 .Error {
-    margin-top: 30%;
+    margin-top: 40%;
     word-wrap: normal;
 }
 .RecipesDetailed {
@@ -37,8 +37,6 @@
     margin: 20px;
 }
 .RecipesContent {
-    margin-left: 50px;
-    margin-right: 50px;
     padding: 15px;
 }
 .RecipesContentStuff {

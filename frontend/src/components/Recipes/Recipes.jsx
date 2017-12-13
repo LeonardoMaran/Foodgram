@@ -88,7 +88,10 @@ export class Recipes extends Component {
                 recipeId: recipeId
             }).then(function(response) {
                 // Log response
-                console.log(response.data.message);
+                let user = response.data.data;
+                this.setState({
+                    favorites: user.favorites
+                });
             }.bind(this))
                 .catch(function(error) {
                     // Log response
@@ -100,7 +103,10 @@ export class Recipes extends Component {
                 recipeId: recipeId
             }).then(function(response) {
                 // Log response
-                console.log(response.data.message);
+                let user = response.data.data;
+                this.setState({
+                    favorites: user.favorites
+                });
             }.bind(this))
             .catch(function(error) {
                 // Log response

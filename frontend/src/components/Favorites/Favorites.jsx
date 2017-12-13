@@ -108,7 +108,7 @@ export class Favorites extends Component {
                 </div>
                 <Divider section></Divider>
                 <div className="Found">
-                    <Grid centered relaxed padded='vertically' padded='horizontally'
+                    <Grid centered relaxed padded='vertically'
                           verticalAlign='middle' columns='equal'>
                         { this.state.visible.map((recipe, index) => (
                             <Link key={index} to={{ pathname: '/recipe/' + recipe.title,
