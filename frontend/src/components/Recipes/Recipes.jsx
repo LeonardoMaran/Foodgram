@@ -29,7 +29,7 @@ export class Recipes extends Component {
             .catch(function(error) {
                 console.log(error);
             });
-        const url = 'http://localhost:4000/api/users/favorites/' + this.props.user;
+        const url = 'http://localhost:4000/api/users/favorites/' + this.state.currentUser;
         axios.get(url)
             .then(function(response) {
                 this.setState({favorites: response.data.data});
@@ -80,13 +80,25 @@ export class Recipes extends Component {
         e.stopPropagation();
 
         let favoritedRecipe = this.state.visible[idx];
-        let id = favoritedRecipe._id;
-        // Now add this id to user's favorite list
-        let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUser;
-        axios.put(url, {
-                recipeId: id
-            })
-            .then(function(response) {
+        let recipeId = favoritedRecipe._id;
+        // check if this recipe is favorited or unfavorited
+        if (this.state.favorites.indexOf(recipeId) !== -1) {
+            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUser;
+            axios.put(url, {
+                recipeId: recipeId
+            }).then(function(response) {
+                // Log response
+                console.log(response.data.message);
+            }.bind(this))
+                .catch(function(error) {
+                    // Log response
+                    console.log(error);
+                });
+        } else {
+            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUser;
+            axios.put(url, {
+                recipeId: recipeId
+            }).then(function(response) {
                 // Log response
                 console.log(response.data.message);
             }.bind(this))
@@ -94,6 +106,8 @@ export class Recipes extends Component {
                 // Log response
                 console.log(error);
             });
+        }
+
     }
 
 
@@ -122,13 +136,15 @@ export class Recipes extends Component {
             let recipeId = recipe._id;
             let favoriteImageDiv;
             if (this.state.favorites.indexOf(recipeId) !== -1) {
-                favoriteImageDiv = <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
-                    <i className="fa fa-heart fa-3x"></i>
-                </div>
+                favoriteImageDiv =
+                    <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
+                        <i className="fa fa-heart fa-3x"></i>
+                    </div>
             } else {
-                favoriteImageDiv = <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
-                    <i className="fa fa-heart-o fa-3x"></i>
-                </div>
+                favoriteImageDiv =
+                    <div className="RecipeHeart" onClick={this.favoriteClick.bind(this, index)}>
+                        <i className="fa fa-heart-o fa-3x"></i>
+                    </div>
             }
 
             return (
