@@ -166,7 +166,6 @@ export class Recipes extends Component {
                               </div>
                         </Link>
                     </div>
-
             );
         });
 
