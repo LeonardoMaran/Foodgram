@@ -81,7 +81,7 @@ export class Users extends Component {
                 <div className="Search">
                     <Input className='search_bar' type='text' placeholder='Search users...' onChange={this.searchUsers} />
 										<div className="SortBy">
-									    	<p className="sort_text">Search By</p>
+									    	<p className="sort_text">Search By:</p>
 		                    <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
 										</div>
 								</div>
