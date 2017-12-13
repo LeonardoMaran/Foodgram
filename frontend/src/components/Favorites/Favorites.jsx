@@ -3,7 +3,7 @@ import { Input, Dropdown, Image, Grid, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import styles from '../../styles/favorites.css';
+import '../../styles/favorites.css';
 
 export class Favorites extends Component {
 
@@ -32,7 +32,7 @@ export class Favorites extends Component {
 		            .then(function(response) {
 		                for(var i = 0; i < response.data.data.length; i++) {
 		                	for(var j = 0; j < data.length; j++) {
-		                		if(response.data.data[i]._id == data[j])
+		                		if(response.data.data[i]._id === data[j])
 		                			recipes.push(response.data.data[i]);
 		                	}
 		                }
@@ -51,20 +51,20 @@ export class Favorites extends Component {
         var favorites = [];
         for(var i = 0; i < this.state.recipes.length; i++) {
           if(this.state.searchBy === "title") {
-              if(this.state.recipes[i].title.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value != '') {
+              if(this.state.recipes[i].title.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value !== '') {
                   favorites.push(this.state.recipes[i]);
               }
           } else {
               var added = false;
               for(var j = 0; j < this.state.recipes[i].ingredients.length; j++) {
-                if(!added && this.state.recipes[i].ingredients[j].toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value != '') {
+                if(!added && this.state.recipes[i].ingredients[j].toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value !== '') {
                     favorites.push(this.state.recipes[i]);
                     added = true;
                 }
               }
           }
         }
-        if(favorites.length == 0 && event.currentTarget.value == "") {
+        if(favorites.length === 0 && event.currentTarget.value === "") {
             this.setState({visible: this.state.recipes});
         } else {
             this.setState({visible: favorites});

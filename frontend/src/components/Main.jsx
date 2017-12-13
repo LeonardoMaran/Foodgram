@@ -45,16 +45,21 @@ export class Main extends Component {
             display: this.state.show
         };
 
-        if(this.state.id != "") {
-        	var recipeRoute = <Route path="/recipes" render={(props) => (<Recipes user={this.state.id} />)} />;
-        	var userRoute = <Route path="/users" render={(props) => (<Users user={this.state.id} />)} />;
-        	var favoriteRoute = <Route path="/favorites" render={(props) => (<Favorites user={this.state.id} />)} />;
-        	var profileRoute = <Route path="/profile" render={(props) => (<Profile user={this.state.id} />)} />;
+        var recipeRoute;
+        var userRoute;
+        var favoriteRoute;
+        var profileRoute;
+
+        if(this.state.id !== "") {
+        	recipeRoute = <Route path="/recipes" render={(props) => (<Recipes user={this.state.id} />)} />;
+        	userRoute = <Route path="/users" render={(props) => (<Users user={this.state.id} />)} />;
+        	favoriteRoute = <Route path="/favorites" render={(props) => (<Favorites user={this.state.id} />)} />;
+        	profileRoute = <Route path="/profile" render={(props) => (<Profile user={this.state.id} />)} />;
         } else {
-        	var recipeRoute = null;
-        	var userRoute = null;
-        	var favoriteRoute = null;
-        	var profileRoute = null;
+        	recipeRoute = null;
+        	userRoute = null;
+        	favoriteRoute = null;
+        	profileRoute = null;
         }
 
         return(
@@ -62,7 +67,7 @@ export class Main extends Component {
 		        	<div className='Router'>
 						<header style = {headerStyle}>
 							<div className="nav_bar_container">
-								<a href="" id="logo_text">Foodgram <i class="fa fa-cutlery" aria-hidden="true"></i></a>
+								<a href="" id="logo_text">Foodgram <i className="fa fa-cutlery" aria-hidden="true"></i></a>
 								<nav>
 									<ul className="nav_bar_items">
 										<li><Link to="/profile"><p className="navLinks">Profile</p></Link></li>

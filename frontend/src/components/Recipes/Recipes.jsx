@@ -147,9 +147,9 @@ export class Recipes extends Component {
             }
 
             return (
-                    <div className="Recipe">
+                    <div className="Recipe" key={index}>
                         {favoriteImageDiv}
-                        <Link key={index}
+                        <Link
                               to={{
                                   pathname: '/recipe_details',
                                   param: {

@@ -3,7 +3,7 @@ import { Button, Item, Image, Grid, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import styles from '../../styles/profile.css';
+import '../../styles/profile.css';
 
 import Modal from '../Modal/Modal.jsx'
 
@@ -19,7 +19,8 @@ export class Profile extends Component {
             favorites: [],
             recipes: [],
             following: [],
-            followers: 0
+            followers: 0,
+
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.followClick = this.followClick.bind(this);
@@ -203,7 +204,7 @@ export class Profile extends Component {
             this.state.following.map((user, index) => {
                 var followUserDiv =
                         <div className="UserStar" onClick={this.unfollowClick.bind(this, index)}>
-                            <i class="fa fa-star fa-3x"></i>
+                            <i className="fa fa-star fa-3x"></i>
                         </div>;
 
                 return (
@@ -265,6 +266,16 @@ export class Profile extends Component {
                 </div>
                 { recipeDisplay }
 	            { followingDisplay }
+	            <Modal show={this.state.modalOpen} onClose={this.toggleModal}>
+                	<div className="Modal">
+	                	<div className="ui input"><input type="text" value={this.state.title} onChange={this.handleUpdateTitle} placeholder="Title"/></div><br/>
+		                <div className="ui input"><input type="text" value={this.state.description} onChange={this.handleUpdateDescription} placeholder="Description"/></div><br/>
+		                <div className="ui input"><input type="password"  value={this.state.ingredients} onChange={this.handleUpdateIngredients} placeholder="Ingredients"/></div><br/>
+		                <div className="ui input"><input type="password" value={this.state.instructions} onChange={this.handleUpdateInstructions} placeholder="instructions"/></div><br/>
+				        <div className="ui input"><input type="text" value={this.state.imageUrl} onChange={this.handleUpdateUrl} placeholder="Link to recipe photo"/></div><br/>
+		                <button className="SignupButton ui primary button" onClick = {this.handleRegister.bind(this)}>Add</button>
+                	</div>
+                </Modal>
             </div>
         );
     }
