@@ -4,7 +4,7 @@
 
 import React from 'react';
 import {render} from 'react-dom';
-import {HashRouter as Router, Route, Link} from 'react-router-dom';
+//import {HashRouter as Router, Route, Link} from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 
 // import Login from './components/Login/Login.jsx';

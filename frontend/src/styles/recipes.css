@@ -3,11 +3,8 @@
     height: auto;
     width: auto;
     border: 1px solid rgba(0,0,0,0.1);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: rgba(0,0,0,0.2);
     position: relative;
+    margin: 5px;
 }
 
 .Recipe:hover {
@@ -20,12 +17,11 @@
 .search_bar {
     width: 70%;
 }
-
-.Search {
-    display: inline;
+.sort_menu {
+    margin-bottom: 30px;
 }
 .Found {
-    margin-top: 20px;
+    margin-bottom: 30px;
 }
 .RecipeImage {
     z-index: -1;

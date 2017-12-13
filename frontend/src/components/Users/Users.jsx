@@ -34,16 +34,16 @@ export class Users extends Component {
         var users = [];
         for(var i = 0; i < this.state.users.length; i++) {
           if(this.state.searchBy === "name") {
-              if(this.state.users[i].name.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value != '') {
+              if(this.state.users[i].name.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value !== '') {
                   users.push(this.state.users[i]);
               }
           } else {
-              if(this.state.users[i].username.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value != '') {
+              if(this.state.users[i].username.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value !== '') {
                   users.push(this.state.users[i]);
               }
           }
         }
-        if(users.length == 0 && event.currentTarget.value == "") {
+        if(users.length === 0 && event.currentTarget.value === "") {
             this.setState({visible: this.state.users});
         } else {
             this.setState({visible: users});

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Dropdown, List, Image } from 'semantic-ui-react';
+import { Input, Dropdown, List, Image, Grid, Segment} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -34,20 +34,20 @@ export class Recipes extends Component {
         var recipes = [];
         for(var i = 0; i < this.state.recipes.length; i++) {
           if(this.state.searchBy === "title") {
-              if(this.state.recipes[i].title.toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value != '') {
+              if(this.state.recipes[i].title.toLocaleLowerCase().includes(event.currentTarget.value.toLocaleLowerCase()) && event.currentTarget.value !== '') {
                   recipes.push(this.state.recipes[i]);
               }
           } else {
               var added = false;
               for(var j = 0; j < this.state.recipes[i].ingredients.length; j++) {
-                if(!added && this.state.recipes[i].ingredients[j].toLowerCase().includes(event.currentTarget.value) && event.currentTarget.value != '') {
+                if(!added && this.state.recipes[i].ingredients[j].toLocaleLowerCase().includes(event.currentTarget.value.toLocaleLowerCase()) && event.currentTarget.value !== '') {
                     recipes.push(this.state.recipes[i]);
                     added = true;
                 }
               }
           }
         }
-        if(recipes.length == 0 && event.currentTarget.value == "") {
+        if(recipes.length === 0 && event.currentTarget.value === "") {
             this.setState({visible: this.state.recipes});
         } else {
             this.setState({visible: recipes});
@@ -78,7 +78,7 @@ export class Recipes extends Component {
               value: 'ingredients'
             }
         ];
-        
+
         return(
             <div className="Recipes">
                 <h1>Recipes</h1>
@@ -88,21 +88,26 @@ export class Recipes extends Component {
                     <Dropdown className='sort_menu' defaultValue={sortOptions[0].value} onChange={this.handleChange} search selection options={sortOptions} />
                 </div>
                 <div className="Found">
-                    <List horizontal animated relaxed="very">
+                    <Grid centered relaxed padded='vertically' padded='horizontally'
+                          verticalAlign='middle' columns='equal'>
                         { this.state.visible.map((recipe, index) => (
-                            <List.Item key={index}>
+                            <Link key={index} to={{ pathname: '/recipe/' + recipe.title,
+                                        param: {  results : recipe._id,
+                                                  index : index
+                                                }
+                                      }}>
                                       <div className="Recipe">
                                           <div className="RecipeText">
                                               <h2>{recipe.title}</h2>
                                           </div>
                                           <div className="RecipeImage">
-                                              <Image inline size='medium' src={recipe.imageUrl} />
+                                              <Image size='medium' src={recipe.imageUrl} />
                                           </div>
                                       </div>
-                            </List.Item>
+                              </Link>
                          ))}
-                      </List>
-                </div>
+                      </Grid>
+                  </div>
             </div>
         );
     }
