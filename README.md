@@ -4,7 +4,7 @@ Fall 17 CS498RK - The Art of Web Programming Final Project
 Live Demo: http://bit.ly/2ktEEvn  
 Video Introduction: https://youtu.be/zzx-pv6K97I  
 
-In this day and age, there are many food related applications that help people find recipes to cook. However, there isn’t many apps that allow for the social media aspect to finding recipes. This is why we created Foodgram, a database-backed web application which utilizes a RESTful API. Foodgram offers an interactive platform for cooks of all different levels to search and learn about recipes while connecting with one another. Users can sign up for an account and keep track of their favorite recipes, follow other users who’s recipes they enjoy, and even create their own recipes to share.
+In this day and age, there are many food related applications that help people find recipes to cook. However, there aren't many apps that allow for the social media aspect to finding recipes. This is why we created Foodgram, a database-backed web application which utilizes a RESTful API. Foodgram offers an interactive platform for chefs and enthusiasts of all different levels to search and learn about recipes while connecting with one another. Users can sign up for an account and keep track of their favorite recipes, follow other users who’s recipes they enjoy, and even create their own recipes to share.
 
 ## Setup Instructions
 1. Clone this repo
