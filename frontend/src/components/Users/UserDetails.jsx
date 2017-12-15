@@ -32,8 +32,8 @@ export class UserDetails extends Component {
                   me: this.props.location.param.curr_user_id,
                   currentUser: this.props.location.param.user_id
             });
-            const url = 'http://104.131.161.44:4000/api/users/' + this.props.location.param.user_id;
-            const me_url = 'http://104.131.161.44:4000/api/users/' + this.props.location.param.curr_user_id;
+            const url = 'http://localhost:4000/api/users/' + this.props.location.param.user_id;
+            const me_url = 'http://localhost:4000/api/users/' + this.props.location.param.curr_user_id;
             axios.get(me_url)
                 .then(function(response) {
                     this.setState({ me_obj : response.data.data});
@@ -51,7 +51,7 @@ export class UserDetails extends Component {
                         followingId: response.data.data.following
                     });
                     var recipes = [];
-                axios.get('http://104.131.161.44:4000/api/recipes/')
+                axios.get('http://localhost:4000/api/recipes/')
                     .then(function(response) {
                         for(var i = 0; i < response.data.data.length; i++) {
                           if(response.data.data[i].postedBy === this.props.location.param.user_id)
@@ -64,7 +64,7 @@ export class UserDetails extends Component {
                 });
                 var follow = response.data.data.following;
                 var following = [];
-                axios.get('http://104.131.161.44:4000/api/users/')
+                axios.get('http://localhost:4000/api/users/')
                     .then(function(response) {
                         for(var i = 0; i < response.data.data.length; i++) {
                           for(var j = 0; j < follow.length; j++) {
@@ -90,11 +90,11 @@ export class UserDetails extends Component {
     		        let recipeId = favoritedRecipe._id;
     		        // check if this recipe is favorited or unfavorited
     		        if (this.state.me_obj.favorites.indexOf(recipeId) !== -1) {
-    		            let url = 'http://104.131.161.44:4000/api/users/unfavoriteRecipe/' + this.state.me;
+    		            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.me;
     		            axios.put(url, {
     		                recipeId: recipeId
     		            }).then(function(response) {
-                        axios.get('http://104.131.161.44:4000/api/users/' + this.state.me)
+                        axios.get('http://localhost:4000/api/users/' + this.state.me)
                             .then(function(response) {
                                this.setState({me_obj:response.data.data});
                             }.bind(this))
@@ -107,11 +107,11 @@ export class UserDetails extends Component {
     		                    console.log(error);
     		                });
     		        } else {
-    		            let url = 'http://104.131.161.44:4000/api/users/favoriteRecipe/' + this.state.me;
+    		            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.me;
     		            axios.put(url, {
     		                recipeId: recipeId
     		            }).then(function(response) {
-                      axios.get('http://104.131.161.44:4000/api/users/' + this.state.me)
+                      axios.get('http://localhost:4000/api/users/' + this.state.me)
                           .then(function(response) {
                              this.setState({me_obj:response.data.data});
                           }.bind(this))
@@ -133,12 +133,12 @@ export class UserDetails extends Component {
             let followUserId = followUser._id;
             var id = this.state.followingId;
             // follow user
-            let url = 'http://104.131.161.44:4000/api/users/follow/' + this.state.me;
+            let url = 'http://localhost:4000/api/users/follow/' + this.state.me;
             axios.put(url, {
                 followingId: followUserId
             }).then(function(response) {
                 // Log response
-                axios.get('http://104.131.161.44:4000/api/users/' + this.state.me)
+                axios.get('http://localhost:4000/api/users/' + this.state.me)
                     .then(function(response) {
                        this.setState({me_obj:response.data.data});
                     }.bind(this))
@@ -160,11 +160,11 @@ export class UserDetails extends Component {
             var following = this.state.following;
             // unfollow user
             // follow user
-            let url = 'http://104.131.161.44:4000/api/users/unfollow/' + this.state.me;
+            let url = 'http://localhost:4000/api/users/unfollow/' + this.state.me;
             axios.put(url, {
                 followingId: unfollowUserId
             }).then(function(response) {
-              axios.get('http://104.131.161.44:4000/api/users/' + this.state.me)
+              axios.get('http://localhost:4000/api/users/' + this.state.me)
                   .then(function(response) {
                      this.setState({me_obj:response.data.data});
                   }.bind(this))

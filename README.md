@@ -9,13 +9,13 @@ In this day and age, there are many food related applications that help people f
 ## Setup Instructions
 1. Clone this repo
 2. cd into Foodgram directory
-3. Run the command: npm install
+3. Run the command: `npm install`
 4. cd into frontend directory
-5. Run the command: npm install
+5. Run the command: `npm install`
 6. cd back into Foodgram directory
-7. Run the command: npm start
+7. Run the command: `npm start`
 8. Check to see if dependencies in npm_installs.txt are all installed
-9. In browser, view frontend at localhost:3000 and backend at localhost:4000
+9. In browser, view frontend at `localhost:3000` and backend at `localhost:4000`
 10. Sign in using test user (sghuang2, password)
 
 ## Project Guidelines

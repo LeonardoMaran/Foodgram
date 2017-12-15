@@ -22,13 +22,13 @@ export class Favorites extends Component {
     }
 
     componentWillMount(){
-        const url = 'http://104.131.161.44:4000/api/users/favorites/' + this.props.user;
+        const url = 'http://localhost:3000/api/users/favorites/' + this.props.user;
         axios.get(url)
             .then(function(response) {
                 this.setState({favorites: response.data.data});
                 var recipes = [];
                 var data = response.data.data;
-				const url = 'http://104.131.161.44:4000/api/recipes/';
+				const url = 'http://localhost:4000/api/recipes/';
 		        axios.get(url)
 		            .then(function(response) {
 		                for(var i = 0; i < response.data.data.length; i++) {
@@ -92,7 +92,7 @@ export class Favorites extends Component {
             var visible = this.state.visible;
 		        // check if this recipe is favorited or unfavorited
 		        if (this.state.favorites.indexOf(recipeId) !== -1) {
-		            let url = 'http://104.131.161.44:4000/api/users/unfavoriteRecipe/' + this.state.currentUser;
+		            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUser;
 		            axios.put(url, {
 		                recipeId: recipeId
 		            }).then(function(response) {

@@ -63,7 +63,7 @@ export class Profile extends Component {
 	}
 
 	handleAddRecipe(event) {
-		axios.post('http://104.131.161.44:4000/api/recipes', {
+		axios.post('http://localhost:4000/api/recipes', {
 			  postedBy: this.state.currentUser,
 			  title: this.state.title,
 			  description: this.state.description,
@@ -73,7 +73,7 @@ export class Profile extends Component {
 			})
 			.then(function(response) {
             var recipes = [];
-            axios.get('http://104.131.161.44:4000/api/recipes/')
+            axios.get('http://localhost:4000/api/recipes/')
             .then(function(response) {
                 for(var i = 0; i < response.data.data.length; i++) {
                     if(response.data.data[i].postedBy === this.props.user)
@@ -99,7 +99,7 @@ export class Profile extends Component {
 		        let recipeId = favoritedRecipe._id;
 		        // check if this recipe is favorited or unfavorited
 		        if (this.state.favorites.indexOf(recipeId) !== -1) {
-		            let url = 'http://104.131.161.44:4000/api/users/unfavoriteRecipe/' + this.state.currentUser;
+		            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUser;
 		            axios.put(url, {
 		                recipeId: recipeId
 		            }).then(function(response) {
@@ -114,7 +114,7 @@ export class Profile extends Component {
 		                    console.log(error);
 		                });
 		        } else {
-		            let url = 'http://104.131.161.44:4000/api/users/favoriteRecipe/' + this.state.currentUser;
+		            let url = 'http://localhost:4000/api/users/favoriteRecipe/' + this.state.currentUser;
 		            axios.put(url, {
 		                recipeId: recipeId
 		            }).then(function(response) {
@@ -138,7 +138,7 @@ export class Profile extends Component {
         let followUserId = followUser._id;
         var id = this.state.followingId
         // follow user
-        let url = 'http://104.131.161.44:4000/api/users/follow/' + this.state.currentUser;
+        let url = 'http://localhost:4000/api/users/follow/' + this.state.currentUser;
         axios.put(url, {
             followingId: followUserId
         }).then(function(response) {
@@ -165,7 +165,7 @@ export class Profile extends Component {
         var following = this.state.following;
         // unfollow user
         // follow user
-        let url = 'http://104.131.161.44:4000/api/users/unfollow/' + this.state.currentUser;
+        let url = 'http://localhost:4000/api/users/unfollow/' + this.state.currentUser;
         axios.put(url, {
             followingId: unfollowUserId
         }).then(function(response) {
@@ -186,7 +186,7 @@ export class Profile extends Component {
     }
 
     componentWillMount(){
-        const url = 'http://104.131.161.44:4000/api/users/' + this.props.user;
+        const url = 'http://localhost:4000/api/users/' + this.props.user;
         axios.get(url)
             .then(function(response) {
                 this.setState({
@@ -197,7 +197,7 @@ export class Profile extends Component {
                 	followingId: response.data.data.following
                 });
                 var recipes = [];
-		        axios.get('http://104.131.161.44:4000/api/recipes/')
+		        axios.get('http://localhost:4000/api/recipes/')
 		            .then(function(response) {
 		                for(var i = 0; i < response.data.data.length; i++) {
 		                	if(response.data.data[i].postedBy === this.props.user)
@@ -210,7 +210,7 @@ export class Profile extends Component {
 		        });
 		        var follow = response.data.data.following;
 		        var following = [];
-		        axios.get('http://104.131.161.44:4000/api/users/')
+		        axios.get('http://localhost:4000/api/users/')
 		            .then(function(response) {
 		                for(var i = 0; i < response.data.data.length; i++) {
 		                	for(var j = 0; j < follow.length; j++) {
