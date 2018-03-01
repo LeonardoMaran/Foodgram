@@ -1,14 +1,15 @@
 import json
 import random
+import io
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-client = MongoClient("mongodb://hshssingh4:password@ds133876.mlab.com:33876/foodgram_db")
-db = client.foodgram_db
+client = MongoClient("mongodb://sghuang2:password@ds015879.mlab.com:15879/foodgram")
+db = client.foodgram
 
 
 try:
-    with open('temp.json', encoding = "utf8") as json_data:
+    with io.open('temp.json', encoding="utf8") as json_data:
     # Do things with fileh here
         data = json.load(json_data)
     #recipe table values
@@ -16,10 +17,10 @@ try:
         for r in (data['hits']):
             #replace prints with update table command for recipes
             postedByArray = []
-            postedByArray.append("5a2f91af35107b200bc056ff") # Harpreet
-            postedByArray.append("5a2f91f835107b200bc05702") # Jeff
-            postedByArray.append("5a2f920335107b200bc05703") # Vanessa
-            postedByArray.append("5a2f91c135107b200bc05700") # Sam
+            postedByArray.append("5a98631c92f631dfbcc4f12c") # Sam
+            postedByArray.append("5a98636c92f631dfbcc4f12d") # Jeff
+            postedByArray.append("5a9863d292f631dfbcc4f12e") # Sean
+            postedByArray.append("5a98642092f631dfbcc4f12f") # Kevin
             postedBy = postedByArray[random.randint(0,3)]
 
             title = r['recipe']['label']
@@ -46,4 +47,3 @@ try:
 
 except Exception as e:
     print(e)
-
