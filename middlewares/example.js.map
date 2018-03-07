@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../server/middlewares/example.js"],"names":["req","res","next"],"mappings":";;;;;;kBAMe,UAASA,GAAT,EAAcC,GAAd,EAAmBC,IAAnB,EAAyB;AACtCA;AACD,C","file":"example.js","sourcesContent":["/**\n *\n * Example custom middlewre\n *\n */\n\nexport default function(req, res, next) {\n  next();\n}\n"]}
