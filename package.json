@@ -1,0 +1,79 @@
+{
+  "name": "create-express-react",
+  "version": "1.0.2",
+  "description": "create template for create-react-app and express",
+  "scripts": {
+    "setup": "create-react-app frontend && npm run addProxy",
+    "start": "concurrently -k \"npm run dev\" \"npm run react\"",
+    "test-server": "jest",
+    "test-react": "cd frontend && npm test",
+    "lint": "eslint ./server/**/*.js",
+    "build": "rm -rf dist && npm run buildServer && npm run buildReact",
+    "deploy": "pm2 start deploy.json",
+    "dev": "NODE_ENV=dev nodemon -e js ./server/server.js --exec babel-node --presets es2015,stage-2 --ignore ./server/__test__/ --ignore ./frontend/ --ignore ./scripts/",
+    "buildServer": "babel ./server -s -D -d dist",
+    "buildReact": "cd frontend && npm run build && mv build ../dist/public",
+    "react": "node ./scripts/reactDev",
+    "addProxy": "node ./scripts/addProxy"
+  },
+  "keywords": [
+    "react",
+    "express",
+    "javascript",
+    "full-stack",
+    "template",
+    "node"
+  ],
+  "author": "Haochuan Liu<haochuan.liu@gmail.com>(https://haochuan.io)",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.17.2",
+    "compression": "^1.7.0",
+    "express": "^4.15.3",
+    "helmet": "^3.8.0",
+    "jsonwebtoken": "^8.1.0",
+    "mongoose": "^4.13.6",
+    "morgan": "^1.8.2",
+    "normalize.css": "^6.0.0",
+    "npm-sass": "^2.2.1",
+    "react": "^15.4.2",
+    "react-component-password": "^0.3.0",
+    "react-dom": "^15.4.2",
+    "react-modal": "^3.1.7",
+    "react-password": "^0.1.0",
+    "react-router": "^4.0.0",
+    "react-router-dom": "^4.0.0",
+    "sass": "^1.0.0-beta.4",
+    "save": "^2.3.1",
+    "semantic-ui-css": "^2.2.12",
+    "semantic-ui-react": "^0.74.2",
+    "serve-favicon": "^2.4.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chalk": "^2.1.0",
+    "concurrently": "^3.5.0",
+    "create-react-app": "^1.3.3",
+    "css-loader": "^0.27.3",
+    "eslint": "^4.3.0",
+    "jest": "^20.0.4",
+    "node-sass": "^4.7.2",
+    "nodemon": "^1.12.1",
+    "postcss-loader": "^1.3.3",
+    "react-script": "^2.0.5",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.16.1"
+  },
+  "jest": {
+    "verbose": true,
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "frontend",
+      "dist"
+    ]
+  }
+}
