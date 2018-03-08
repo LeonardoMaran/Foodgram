@@ -1,4 +1,3 @@
-
 .prev, .next {
     cursor: pointer;
     top: 50%;
@@ -10,20 +9,25 @@
     z-index: 10;
     padding: 25px 10px;
 }
+
 .prev {
     float: left;
 }
+
 .next {
     float: right;
 }
+
 .prev:hover, .next:hover {
     transition: .2s ease-in-out;
     background-color: lightblue;
 }
+
 .Error {
     margin-top: 30%;
     word-wrap: normal;
 }
+
 .RecipesDetailed {
     border: 1px double #888;
     width: 80%;
@@ -33,12 +37,15 @@
     margin-left: 10%;
     position: relative
 }
+
 .RecipesImage {
     margin: 20px;
 }
+
 .RecipesContent {
     padding: 15px;
 }
+
 .RecipesContentStuff {
     padding: 5px;
 }

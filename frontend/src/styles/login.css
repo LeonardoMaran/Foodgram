@@ -1,24 +1,23 @@
 .Main {
-	text-align: center;
-	position: fixed;
-  	top: 45%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
+    text-align: center;
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .input {
-	margin-top: 1%;
-	margin-bottom: 1%;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 .LoginButton, .SignupButton {
-	margin-top:4% !important;
+    margin-top: 4% !important;
 }
 
 .Register {
-	position: fixed;
-  	top: 80%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
+    position: fixed;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
-

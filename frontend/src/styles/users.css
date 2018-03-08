@@ -3,23 +3,29 @@
     margin-left: 50px;
     margin-right: 50px;
 }
+
 .Search {
     display: inline;
 }
+
 .search_bar {
     width: 70%;
 }
+
 .sort_text {
     display: inline-block;
     margin-right: 10px;
 }
+
 .sort_menu {
     display: inline-block;
 }
+
 .Found {
     margin-top: 40px;
     margin-bottom: 30px;
 }
+
 .UserStar {
     color: yellow;
     z-index: 10;
@@ -27,24 +33,28 @@
     right: 0;
     margin: 10px;
 }
+
 .User {
     display: block;
-    border: 1px solid rgba(0,0,0,0.1);
-    background-color: rgba(0,0,0,0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.2);
     position: relative;
     margin: 5px;
 }
+
 .User:hover {
-    border: 1px solid rgba(0,0,0,0.4);
+    border: 1px solid rgba(0, 0, 0, 0.4);
     transform: translateY(-3px);
     transition: .2s ease-in-out;
 }
+
 .UserImage {
     z-index: -1;
     width: 300px;
     height: 300px;
     overflow: hidden;
 }
+
 .UserText {
     z-index: 2;
     padding: 10px;

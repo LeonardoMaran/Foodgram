@@ -4,6 +4,6 @@
  *
  */
 
-export default function(req, res, next) {
-  next();
+export default function (req, res, next) {
+    next();
 }

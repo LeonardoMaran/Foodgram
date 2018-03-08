@@ -5,11 +5,10 @@ module.exports = function (router) {
 
     homeRoute.get(function (req, res) {
         var connectionString = secrets.token;
-        res.json(
-            {
-                message: 'Nothing here. Go to /users or /recipes to use the API.',
-                data: []
-            });
+        res.json({
+            message: 'Nothing here. Go to /users or /recipes to use the API.',
+            data: []
+        });
     });
 
     return router;

@@ -4,7 +4,7 @@ let express = require('express'),
     recipeSchema = require('../models/recipe.js');
 
 // GET ALL RECIPES
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
     let queryParams = getParsedParamObject(req);
     let query = recipeSchema.find({});
     applyQueryParamsToQuery(query, queryParams);
@@ -13,16 +13,17 @@ router.get('/', function(req, res) {
         if (err) {
             sendError(res, err.message, 500);
         } else {
-            res.status(200).send({
-                message: 'OK',
-                data: recipes
-            });
+            res.status(200)
+                .send({
+                    message: 'OK',
+                    data: recipes
+                });
         }
     });
 });
 
 // GET A SINGLE RECIPE BY ID
-router.get('/:id', function(req, res) {
+router.get('/:id', function (req, res) {
     let queryParams = getParsedParamObject(req);
     let query = recipeSchema.findById(req.params.id);
     applyQueryParamsToQuery(query, queryParams);
@@ -31,16 +32,17 @@ router.get('/:id', function(req, res) {
         if (err) {
             sendError(res, err.message, 500);
         } else {
-            res.status(200).send({
-                message: 'OK',
-                data: recipes
-            });
+            res.status(200)
+                .send({
+                    message: 'OK',
+                    data: recipes
+                });
         }
     });
 });
 
 // POST A RECIPE
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
     let recipe = {
         title: req.body.title,
         description: req.body.description,
@@ -54,30 +56,34 @@ router.post('/', function(req, res) {
         if (err) {
             sendError(res, err.message, 500);
         } else {
-            res.status(201).send({
-                message: 'Recipe added',
-                data: createdRecipe
-            });
+            res.status(201)
+                .send({
+                    message: 'Recipe added',
+                    data: createdRecipe
+                });
         }
     });
 });
 
 // DELETE A RECIPE BY ID
-router.delete('/:id', function(req, res) {
+router.delete('/:id', function (req, res) {
     recipeSchema.findById(req.params.id, function (err, recipe) {
         if (err || recipe === null) {
             let errorMessage = "Recipe not found";
             sendError(res, errorMessage, 404);
         } else {
-            recipeSchema.remove({"_id": mongoose.Types.ObjectId(req.params.id)}, function (err, recipe) {
+            recipeSchema.remove({
+                "_id": mongoose.Types.ObjectId(req.params.id)
+            }, function (err, recipe) {
                 if (err) {
                     let errorMessage = "Recipe not found";
                     sendError(res, errorMessage, 404);
                 } else {
-                    res.status(200).send({
-                        message: 'Recipe deleted',
-                        data: recipe
-                    });
+                    res.status(200)
+                        .send({
+                            message: 'Recipe deleted',
+                            data: recipe
+                        });
                 }
             });
         }
@@ -87,10 +93,11 @@ router.delete('/:id', function(req, res) {
 
 // HELPER FUNCTIONS
 function sendError(res, errorMessage, errorNumber) {
-    res.status(errorNumber).send({
-        message: errorMessage,
-        data: []
-    });
+    res.status(errorNumber)
+        .send({
+            message: errorMessage,
+            data: []
+        });
 }
 
 function getParsedParamObject(req) {
@@ -133,4 +140,6 @@ function applyQueryParamsToQuery(query, queryParams) {
 }
 
 mongoose.Promise = global.Promise;
-module.exports = function() {return router};
+module.exports = function () {
+    return router
+};

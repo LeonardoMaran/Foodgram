@@ -16,7 +16,9 @@ require('./models/recipe.js');
 var port = 4000;
 
 // Connect to a MongoDB
-mongoose.connect(secrets.mongo_connection, { useMongoClient: true});
+mongoose.connect(secrets.mongo_connection, {
+    useMongoClient: true
+});
 
 // Allow CORS so that backend and frontend could be put on different servers
 var allowCrossDomain = function (req, res, next) {
