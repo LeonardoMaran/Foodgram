@@ -37,11 +37,11 @@ export class Favorites extends Component {
 		                			recipes.push(response.data.data[i]);
 		                	}
 		                }
-	        			this.setState({recipes: recipes, visible: recipes});
+								this.setState({recipes: recipes, visible: recipes});
 		            }.bind(this))
 		            .catch(function(error) {
 		                console.log(error);
-		        });
+		        		});
             }.bind(this))
             .catch(function(error) {
                 console.log(error);
@@ -81,37 +81,36 @@ export class Favorites extends Component {
             this.setState({searchBy: value});
             break;
           default:
-
         }
     }
+
 		favoriteClick(idx, e) {
 		        //e.stopPropagation();
-
 		        let favoritedRecipe = this.state.visible[idx];
-		        let recipeId = favoritedRecipe._id;
-            var visible = this.state.visible;
-		        // check if this recipe is favorited or unfavorited
-		        if (this.state.favorites.indexOf(recipeId) !== -1) {
-		            let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUser;
-		            axios.put(url, {
-		                recipeId: recipeId
-		            }).then(function(response) {
-		                // Log response
-		                let user = response.data.data;
-                    for (var i = 0; i < visible.length; i++) {
-                      if(visible[i]._id === recipeId)
-                        visible.splice(i, 1);
-                    }
-		                this.setState({
-		                    favorites: user.favorites, visible: visible
-		                });
-		            }.bind(this))
-		                .catch(function(error) {
-		                    // Log response
-		                    console.log(error);
-		                });
-		        }
-		    }
+						let recipeId = favoritedRecipe._id;
+						var visible = this.state.visible;
+						// check if this recipe is favorited or unfavorited
+						if (this.state.favorites.indexOf(recipeId) !== -1) {
+							let url = 'http://localhost:4000/api/users/unfavoriteRecipe/' + this.state.currentUser;
+								axios.put(url, {
+									recipeId: recipeId
+								}).then(function(response) {
+									// Log response
+									let user = response.data.data;
+									for (var i = 0; i < visible.length; i++) {
+										if(visible[i]._id === recipeId)
+											visible.splice(i, 1);
+										}
+										this.setState({
+											favorites: user.favorites, visible: visible
+										});
+									}.bind(this))
+									.catch(function(error) {
+										// Log response
+										 console.log(error);
+									});
+						}
+		}
     render() {
         const sortOptions = [
             {
@@ -123,7 +122,6 @@ export class Favorites extends Component {
               value: 'ingredients'
             }
         ];
-
 				let favoriteCards = this.state.visible.map((recipe, index) => {
             let recipeId = recipe._id;
             let favoriteImageDiv;
@@ -177,14 +175,13 @@ export class Favorites extends Component {
         });
 
         let favoriteDisplay;
-        if(this.state.favorites.length > 0)
+        if (this.state.favorites.length > 0)
             favoriteDisplay = favoriteCards;
         else
             favoriteDisplay = <div className="Remind"><h1>Add Some Favorites!!</h1></div>
 
 
         return(
-
             <div className="Favorites">
                 <h1>Favorites</h1>
                 <div className="Search">
@@ -197,9 +194,9 @@ export class Favorites extends Component {
                 <Divider section></Divider>
                 <div className="Found">
 									<Grid centered relaxed padded='horizontally' verticalAlign='middle' columns='equal'>
-											{favoriteDisplay}
+										{favoriteDisplay}
 									</Grid>
-                </div>
+								</div>
             </div>
         );
     }
