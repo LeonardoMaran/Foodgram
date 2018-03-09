@@ -9,7 +9,7 @@ db = client.foodgram
 
 
 try:
-    with io.open('temp.json', encoding="utf8") as json_data:
+    with io.open('recipe_data.json', encoding="utf8") as json_data:
     # Do things with fileh here
         data = json.load(json_data)
     #recipe table values
