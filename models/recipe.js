@@ -2,6 +2,7 @@
 
 // Load required packages
 var mongoose = require('mongoose');
+var passportlocalmongoose = require("passport-local-mongoose");
 
 // Define our user schema
 var RecipeSchema = new mongoose.Schema({
@@ -14,5 +15,6 @@ var RecipeSchema = new mongoose.Schema({
 });
 
 // Export the Mongoose model
+RecipeSchema.plugin(passportlocalmongoose);
 module.exports = mongoose.model('Recipe', RecipeSchema);
 //# sourceMappingURL=recipe.js.map
