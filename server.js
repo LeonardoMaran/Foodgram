@@ -15,7 +15,14 @@ require('./models/user.js');
 require('./models/recipe.js');
 
 // Use environment defined port or 4000
-var port = 4000;
+var port = process.env.PORT || 4000;
+
+app.use(express.static(__dirname + '/public'));
+
+// views is directory for all template files
+app.get('/', function (request, response) {
+    response.sendFile(__dirname + '/index.html');
+});
 
 // Connect to a MongoDB
 mongoose.connect(secrets.mongo_connection, { useMongoClient: true });
