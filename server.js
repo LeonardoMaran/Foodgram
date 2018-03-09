@@ -11,8 +11,8 @@ var express = require('express'),
 var app = express();
 
 // include Schema
-require('./models/user.js');
-require('./models/recipe.js');
+require('/models/user.js');
+require('/models/recipe.js');
 
 // Use environment defined port or 4000
 var port = process.env.PORT || 4000;
