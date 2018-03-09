@@ -10,7 +10,7 @@
     "lint": "eslint ./server/**/*.js",
     "build": "rm -rf dist && npm run buildServer && npm run buildReact",
     "deploy": "pm2 start deploy.json",
-    "dev": "NODE_ENV=dev nodemon -e js ./server/server.js --exec babel-node --presets es2015,stage-2 --ignore ./server/__test__/ --ignore ./frontend/ --ignore ./scripts/",
+    "dev": "NODE_ENV=dev nodemon -e js ./server.js --exec babel-node --presets es2015,stage-2 --ignore ./__test__/",
     "buildServer": "babel ./server -s -D -d dist",
     "buildReact": "cd frontend && npm run build && mv build ../dist/public",
     "react": "node ./scripts/reactDev",
