@@ -11,7 +11,7 @@ const APP_DIR = path.resolve(__dirname, 'source');
 const config = {
 
     entry: {
-        app: [APP_DIR + '/index.jsx'],
+        app: [APP_DIR + '/index.js'],
         vendor: ['react', 'react-dom', 'react-router', 'react-router-dom']
     },
 
@@ -22,14 +22,14 @@ const config = {
 
     context: path.join(__dirname, 'source'),
 
-	module: {
-        loaders : [
+    module: {
+        loaders: [
 
             {
                 test: /\.jsx?/,
-                exclude : [/node_modules/, /bower_components/],
-                include : APP_DIR,
-                loader : 'babel-loader',
+                exclude: [/node_modules/, /bower_components/],
+                include: APP_DIR,
+                loader: 'babel-loader',
                 query: {
                     presets: ['es2015']
                 }
@@ -50,8 +50,8 @@ const config = {
 
     plugins: [
         new copy([
-            {from: APP_DIR + '/html/', to: BUILD_DIR},
-            {from: APP_DIR + '/assets/', to: BUILD_DIR + '/assets/'}
+            { from: APP_DIR + '/html/', to: BUILD_DIR },
+            { from: APP_DIR + '/assets/', to: BUILD_DIR + '/assets/' }
         ], {
             copyUnmodified: false,
             debug: 'debug'

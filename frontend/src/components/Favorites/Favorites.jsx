@@ -21,7 +21,7 @@ export class Favorites extends Component {
    }
 
    componentWillMount() {
-      const url = 'http://localhost:3000/api/users/favorites/' + this.props.user;
+      const url = 'http://localhost:4000/api/users/favorites/' + this.props.user;
       axios.get(url)
          .then(function (response) {
             this.setState({ favorites: response.data.data });
